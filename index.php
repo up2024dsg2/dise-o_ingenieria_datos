@@ -14,9 +14,17 @@ function getRecords($object, $params){
     $hubspot_key = $params['hapikey'];
     unset($params['hapikey']);
 
-    $url = 'https://api.hubapi.com/crm/v3/';
-    if(in_array($object, array('companies', 'contacts', 'deals'))) $url .= 'objects/';
-    $url .= $object.'?'.http_build_query($params);
+    
+    if(in_array($object, array('companies', 'contacts', 'deals'))){
+        $url = 'https://api.hubapi.com/crm/v3/objects/';
+        $url .= $object.'?'.http_build_query($params);
+    }
+
+    if(in_array($object, array('deals_to_contacts'))){
+        $url = 'https://api.hubapi.com/crm/v4/deals/contact/batch/read';
+        $url .= $object.'?'.http_build_query($params);
+    }
+     
 
     $headers = array(
         'Authorization:Bearer '.$hubspot_key,
@@ -37,9 +45,16 @@ function getRecords($object, $params){
         foreach($result['results'] as $record){
             if($object == "deals"){
                 $companies = $record['associations']['companies']['results'];
+                $contacts = $record['associations']['contacts']['results'];
                 foreach($companies as $company){
                     if($company['type'] == "deal_to_company"){
                         $record['properties']['company_id'] = $company['id'];
+                        break;
+                    }
+                }
+                foreach($contacts as $contact){
+                    if($contact['type'] == "deal_to_contact"){
+                        $record['properties']['contact_id'] = $contact['id'];
                         break;
                     }
                 }
