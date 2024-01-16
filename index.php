@@ -20,11 +20,10 @@ function getRecords($object, $params){
         $url .= $object.'?'.http_build_query($params);
     }
 
-    if(in_array($object, array('deals_to_contacts'))){
-        $url = 'https://api.hubapi.com/crm/v4/deals/contact/batch/read';
+    if(in_array($object, array('owners'))){
+        $url = 'https://api.hubapi.com/crm/v3/owners/';
         $url .= $object.'?'.http_build_query($params);
     }
-     
 
     $headers = array(
         'Authorization:Bearer '.$hubspot_key,
