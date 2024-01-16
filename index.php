@@ -20,7 +20,7 @@ function getRecords($object, $params){
         $url .= $object.'?'.http_build_query($params);
     }
 
-    if(in_array($object, array('owners'))){
+    if(in_array($object, array('owners', 'tickets'))){
         $url = 'https://api.hubapi.com/crm/v3/owners/';
         $url .= $object.'?'.http_build_query($params);
     }
