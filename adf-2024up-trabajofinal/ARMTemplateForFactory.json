@@ -23,13 +23,13 @@
 			"type": "string",
 			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=companies"
 		},
-		"AZKV_hubspot_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://AZKVuptrabajofinal.vault.azure.net/"
-		},
 		"APIREST_HSPacientes_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=contacts&properties=',linkedService().hs_contact_properties)}"
+		},
+		"AZKV_hubspot_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://AZKVuptrabajofinal.vault.azure.net/"
 		}
 	},
 	"variables": {
@@ -300,7 +300,10 @@
 			"properties": {
 				"linkedServiceName": {
 					"referenceName": "APIREST_HSPacientes",
-					"type": "LinkedServiceReference"
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"hs_contact_properties": "firstname,lastname,fecha_de_nacimiento,edad,dni,mobilephone,country,state,city,distrito,tipo_de_contacto,hubspot_owner_id,link_de_mapa,zona,condicion,tipo_de_lider,gerencia,gerente_de_negocio,industry,codigo_grupo,codigo_lider"
+					}
 				},
 				"annotations": [],
 				"type": "RestResource",
@@ -396,19 +399,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AZKV_hubspot')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('AZKV_hubspot_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/APIREST_HSPacientes')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -424,7 +414,26 @@
 				"typeProperties": {
 					"url": "[parameters('APIREST_HSPacientes_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous"
+					"authenticationType": "Anonymous",
+					"authHeaders": {
+						"Authorization": {
+							"type": "SecureString",
+							"value": "**********"
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AZKV_hubspot')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AZKV_hubspot_properties_typeProperties_baseUrl')]"
 				}
 			},
 			"dependsOn": []
