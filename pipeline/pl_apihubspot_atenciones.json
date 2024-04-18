@@ -18,22 +18,8 @@
 					"method": "GET",
 					"headers": {
 						"Content-Type": "application/json",
-						"Accept-Encoding": "gzip, deflate, br",
-						"Accept-Language": "en-US",
 						"Authorization": "Bearer FREETOKEN"
 					},
-					"linkedServices": [
-						{
-							"referenceName": "ADLS_HubspotAtenciones",
-							"type": "LinkedServiceReference"
-						}
-					],
-					"datasets": [
-						{
-							"referenceName": "ds_hs_in_atenciones",
-							"type": "DatasetReference"
-						}
-					],
 					"url": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
 				}
 			},
