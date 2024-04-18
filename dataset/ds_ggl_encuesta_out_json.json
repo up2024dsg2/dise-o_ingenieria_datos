@@ -1,0 +1,113 @@
+{
+	"name": "ds_ggl_encuesta_out_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_linkedservices_trabajofinal",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "ggl_encuesta.json",
+				"folderPath": "output",
+				"fileSystem": "raw"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"properties": {
+					"type": "object",
+					"properties": {
+						"city": {
+							"type": "string"
+						},
+						"codigo_grupo": {
+							"type": "string"
+						},
+						"codigo_lider": {
+							"type": "string"
+						},
+						"condicion": {
+							"type": "string"
+						},
+						"country": {
+							"type": "string"
+						},
+						"createdate": {
+							"type": "string"
+						},
+						"distrito": {
+							"type": "string"
+						},
+						"dni": {
+							"type": "string"
+						},
+						"edad": {
+							"type": "string"
+						},
+						"fecha_de_nacimiento": {
+							"type": "string"
+						},
+						"firstname": {
+							"type": "string"
+						},
+						"gerencia": {
+							"type": "string"
+						},
+						"gerente_de_negocio": {
+							"type": "string"
+						},
+						"hs_object_id": {
+							"type": "string"
+						},
+						"hubspot_owner_id": {
+							"type": "string"
+						},
+						"industry": {
+							"type": "string"
+						},
+						"lastmodifieddate": {
+							"type": "string"
+						},
+						"lastname": {
+							"type": "string"
+						},
+						"link_de_mapa": {
+							"type": "string"
+						},
+						"mobilephone": {
+							"type": "string"
+						},
+						"state": {
+							"type": "string"
+						},
+						"tipo_de_contacto": {
+							"type": "string"
+						},
+						"tipo_de_lider": {
+							"type": "string"
+						},
+						"zona": {
+							"type": "string"
+						}
+					}
+				},
+				"createdAt": {
+					"type": "string"
+				},
+				"updatedAt": {
+					"type": "string"
+				},
+				"archived": {
+					"type": "boolean"
+				}
+			}
+		}
+	}
+}
