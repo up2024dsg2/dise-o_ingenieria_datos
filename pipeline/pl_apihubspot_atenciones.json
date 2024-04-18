@@ -17,9 +17,10 @@
 				"typeProperties": {
 					"method": "GET",
 					"headers": {
-						"Authorization": "Bearer FREETOKEN",
 						"Content-Type": "application/json",
-						"Accept-Encoding": "gzip, deflate, br"
+						"Accept-Encoding": "gzip, deflate, br",
+						"Accept-Language": "en-US",
+						"Authorization": "Bearer FREETOKEN"
 					},
 					"linkedServices": [
 						{
