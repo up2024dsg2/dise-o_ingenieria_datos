@@ -1,30 +1,9 @@
 {
 	"name": "ds_hs_in_atenciones",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "ADLS_HubspotAtenciones",
-			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"hapikey": {
-				"type": "string",
-				"defaultValue": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
-			},
-			"action": {
-				"type": "string",
-				"defaultValue": "getRecords"
-			},
-			"object": {
-				"type": "string",
-				"defaultValue": "deals"
-			}
-		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {
-			"location": {
-				"type": "HttpServerLocation"
-			},
 			"encodingName": "UTF-8"
 		},
 		"schema": {}
