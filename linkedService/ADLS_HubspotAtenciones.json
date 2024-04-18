@@ -19,7 +19,7 @@
 		"type": "HttpServer",
 		"typeProperties": {
 			"url": "https://power-bi-hubspot-connector.nacdcm.com/index.php",
-			"enableServerCertificateValidation": true,
+			"enableServerCertificateValidation": false,
 			"authenticationType": "Anonymous"
 		}
 	},
