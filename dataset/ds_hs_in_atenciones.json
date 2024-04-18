@@ -24,7 +24,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "HttpServerLocation"
-			}
+			},
+			"encodingName": "UTF-8"
 		},
 		"schema": {}
 	}
