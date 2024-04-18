@@ -15,10 +15,6 @@
 			"type": "string",
 			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
 		},
-		"AZKV_hubspot_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://AZKVuptrabajofinal.vault.azure.net/"
-		},
 		"APIREST_HSAtenciones_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=deals"
@@ -27,9 +23,13 @@
 			"type": "string",
 			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=companies"
 		},
+		"AZKV_hubspot_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://AZKVuptrabajofinal.vault.azure.net/"
+		},
 		"APIREST_HSPacientes_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=contacts"
+			"defaultValue": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=contacts&properties=',linkedService().hs_contact_properties)}"
 		},
 		"containerUri": {
 			"type": "string",
@@ -64,14 +64,14 @@
 					"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 						"value": "[parameters('ADLS_linkedservices_trabajofinal_properties_typeProperties_url')]"
 					},
-					"AZKV_hubspot_properties_typeProperties_baseUrl": {
-						"value": "[parameters('AZKV_hubspot_properties_typeProperties_baseUrl')]"
-					},
 					"APIREST_HSAtenciones_properties_typeProperties_url": {
 						"value": "[parameters('APIREST_HSAtenciones_properties_typeProperties_url')]"
 					},
 					"APIREST_HSCentrosMedicos_properties_typeProperties_url": {
 						"value": "[parameters('APIREST_HSCentrosMedicos_properties_typeProperties_url')]"
+					},
+					"AZKV_hubspot_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AZKV_hubspot_properties_typeProperties_baseUrl')]"
 					},
 					"APIREST_HSPacientes_properties_typeProperties_url": {
 						"value": "[parameters('APIREST_HSPacientes_properties_typeProperties_url')]"
