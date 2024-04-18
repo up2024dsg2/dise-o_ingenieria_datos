@@ -1,0 +1,33 @@
+{
+	"name": "ADLS_HubspotContactos",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"type": "HttpServer",
+		"parameters": {
+			"action": {
+				"type": "string",
+				"defaultValue": "getRecords"
+			},
+			"object": {
+				"type": "string",
+				"defaultValue": "deals"
+			},
+			"hapikey": {
+				"type": "string",
+				"defaultValue": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
+			}
+		},
+		"annotations": [],
+		"typeProperties": {
+			"url": "https://power-bi-hubspot-connector.nacdcm.com/index.php",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous",
+			"authHeaders": {
+				"Authorization": {
+					"type": "SecureString",
+					"value": "**********"
+				}
+			}
+		}
+	}
+}

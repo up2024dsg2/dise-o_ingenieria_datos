@@ -1,0 +1,9 @@
+{
+	"name": "adf-2024up-trabajofinal",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5f19ba20-c34a-440e-9c77-af147ad4f761",
+		"tenantId": "3705cdfe-1991-48fc-9579-b0da85eec9ee"
+	}
+}
