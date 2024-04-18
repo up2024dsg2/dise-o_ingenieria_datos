@@ -17,15 +17,9 @@
 				"typeProperties": {
 					"method": "GET",
 					"headers": {
-						"Content-Type": "application/json",
+						"Content-Type": "text/html",
 						"Authorization": "Bearer FREETOKEN"
 					},
-					"datasets": [
-						{
-							"referenceName": "ds_hs_out_atenciones",
-							"type": "DatasetReference"
-						}
-					],
 					"url": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
 				}
 			},
