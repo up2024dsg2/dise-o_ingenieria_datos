@@ -2,10 +2,16 @@
 	"name": "APIREST_HSAtenciones",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
-		"type": "RestService",
+		"parameters": {
+			"hs_deal_properties": {
+				"type": "String",
+				"defaultValue": "hs_object_id,dealname,dealtype,etapa_de_ejecucion,fecha_de_ejecucion,horario_de_atencion,fecha_entrega_resultados,resultado_de_mamas,resultados_de_cuello_uterino,amount,tipo_de_pago,abono_1,abono_1_fecha,abono_1_tipo"
+			}
+		},
 		"annotations": [],
+		"type": "RestService",
 		"typeProperties": {
-			"url": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=deals",
+			"url": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=deals&properties=',linkedService().hs_deal_properties)}",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous",
 			"authHeaders": {
