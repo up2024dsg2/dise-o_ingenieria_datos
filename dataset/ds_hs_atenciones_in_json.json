@@ -2,7 +2,7 @@
 	"name": "ds_hs_atenciones_in_json",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ADLS_HSAtenciones",
+			"referenceName": "APIREST_HSAtenciones",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],

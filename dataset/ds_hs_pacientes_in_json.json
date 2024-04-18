@@ -2,7 +2,7 @@
 	"name": "ds_hs_pacientes_in_json",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ADLS_HSPacientes",
+			"referenceName": "APIREST_HSPacientes",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],

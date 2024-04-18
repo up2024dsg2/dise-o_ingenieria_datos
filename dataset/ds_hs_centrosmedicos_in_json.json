@@ -2,7 +2,7 @@
 	"name": "ds_hs_centrosmedicos_in_json",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ADLS_HSClinicas",
+			"referenceName": "APIREST_HSCentrosMedicos",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
