@@ -1,5 +1,6 @@
 {
 	"name": "ADLS_HubspotAtenciones",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"parameters": {
 			"hapikey": {
@@ -13,10 +14,6 @@
 			"object": {
 				"type": "string",
 				"defaultValue": "deals"
-			},
-			"Authorization": {
-				"type": "string",
-				"defaultValue": "Bearer FREETOKEN"
 			}
 		},
 		"annotations": [],
@@ -24,8 +21,13 @@
 		"typeProperties": {
 			"url": "https://power-bi-hubspot-connector.nacdcm.com/index.php",
 			"enableServerCertificateValidation": true,
-			"authenticationType": "Anonymous"
+			"authenticationType": "Anonymous",
+			"authHeaders": {
+				"Authorization": {
+					"type": "SecureString",
+					"value": "**********"
+				}
+			}
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/linkedservices"
+	}
 }
