@@ -1,5 +1,5 @@
 {
-	"name": "ds_hs_clinicas_in_json",
+	"name": "ds_hs_centrosmedicos_in_json",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ADLS_HSClinicas",

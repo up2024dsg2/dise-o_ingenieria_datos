@@ -1,0 +1,20 @@
+{
+	"name": "ds_hs_centrosmedicos_out_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_linkedservices_trabajofinal",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "hs_centrosmedicos.json",
+				"folderPath": "output",
+				"fileSystem": "raw"
+			}
+		},
+		"schema": {}
+	}
+}
