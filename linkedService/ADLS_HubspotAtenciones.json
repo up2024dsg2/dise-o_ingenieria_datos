@@ -2,6 +2,20 @@
 	"name": "ADLS_HubspotAtenciones",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
+		"parameters": {
+			"hapikey": {
+				"type": "string",
+				"defaultValue": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
+			},
+			"action": {
+				"type": "string",
+				"defaultValue": "getRecords"
+			},
+			"object": {
+				"type": "string",
+				"defaultValue": "deals"
+			}
+		},
 		"annotations": [],
 		"type": "HttpServer",
 		"typeProperties": {
