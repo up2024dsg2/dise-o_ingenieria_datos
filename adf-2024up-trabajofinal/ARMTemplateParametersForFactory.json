@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-2024up-trabajofinal"
+		},
+		"ADLS_linkedservices_trabajofinal_accountKey": {
+			"value": ""
+		},
+		"Hubspot1_clientSecret": {
+			"value": ""
+		},
+		"Hubspot1_accessToken": {
+			"value": ""
+		},
+		"Hubspot1_refreshToken": {
+			"value": ""
+		},
+		"ADLS_HubspotAtenciones_properties_typeProperties_url": {
+			"value": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
+		},
+		"ADLS_HubspotContactos_properties_typeProperties_url": {
+			"value": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
+		},
+		"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
+			"value": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
+		},
+		"ADSL_HusbpotCl_properties_typeProperties_url": {
+			"value": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
+		},
+		"Hubspot1_properties_typeProperties_clientId": {
+			"value": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
+		}
+	}
+}
