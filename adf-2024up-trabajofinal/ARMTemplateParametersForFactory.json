@@ -22,6 +22,15 @@
 		},
 		"ADLS_HSPacientes_properties_typeProperties_url": {
 			"value": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=contacts"
+		},
+		"APIREST_HSAtenciones_properties_typeProperties_url": {
+			"value": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=deals"
+		},
+		"APIREST_HSCentrosMedicos_properties_typeProperties_url": {
+			"value": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=companies"
+		},
+		"APIREST_HSPacientes_properties_typeProperties_url": {
+			"value": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=contacts"
 		}
 	}
 }

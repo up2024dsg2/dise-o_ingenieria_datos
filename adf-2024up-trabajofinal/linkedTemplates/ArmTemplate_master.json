@@ -31,6 +31,18 @@
 			"type": "string",
 			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=contacts"
 		},
+		"APIREST_HSAtenciones_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=deals"
+		},
+		"APIREST_HSCentrosMedicos_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=companies"
+		},
+		"APIREST_HSPacientes_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=contacts"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -75,6 +87,15 @@
 					},
 					"ADLS_HSPacientes_properties_typeProperties_url": {
 						"value": "[parameters('ADLS_HSPacientes_properties_typeProperties_url')]"
+					},
+					"APIREST_HSAtenciones_properties_typeProperties_url": {
+						"value": "[parameters('APIREST_HSAtenciones_properties_typeProperties_url')]"
+					},
+					"APIREST_HSCentrosMedicos_properties_typeProperties_url": {
+						"value": "[parameters('APIREST_HSCentrosMedicos_properties_typeProperties_url')]"
+					},
+					"APIREST_HSPacientes_properties_typeProperties_url": {
+						"value": "[parameters('APIREST_HSPacientes_properties_typeProperties_url')]"
 					}
 				}
 			},
