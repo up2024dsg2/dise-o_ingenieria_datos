@@ -17,11 +17,11 @@
 		},
 		"APIREST_HSAtenciones_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=deals"
+			"defaultValue": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=deals&properties=',linkedService().hs_deal_properties,'&associations=',linkedService().hs_associations)}"
 		},
 		"APIREST_HSCentrosMedicos_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=companies"
+			"defaultValue": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=companies&properties=',linkedService().hs_companies_properties)}"
 		},
 		"APIREST_HSPacientes_properties_typeProperties_url": {
 			"type": "string",
