@@ -1,13 +1,19 @@
 {
 	"name": "APIREST_HSPacientes",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
 			"url": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=contacts&hs_contact_properties=firstname,lastname,fecha_de_nacimiento,edad,dni,mobilephone,country,state,city,distrito,tipo_de_contacto,hubspot_owner_id,link_de_mapa,zona,condicion,tipo_de_lider,gerencia,gerente_de_negocio,industry,codigo_grupo,codigo_lider",
 			"enableServerCertificateValidation": true,
-			"authenticationType": "Anonymous"
+			"authenticationType": "Anonymous",
+			"authHeaders": {
+				"Authorization": {
+					"type": "SecureString",
+					"value": "**********"
+				}
+			}
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/linkedservices"
+	}
 }
