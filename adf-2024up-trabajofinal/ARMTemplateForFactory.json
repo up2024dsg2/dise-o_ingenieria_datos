@@ -11,173 +11,19 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS_linkedservices_trabajofinal'"
 		},
-		"Hubspot1_clientSecret": {
-			"type": "secureString",
-			"metadata": "Secure string for 'clientSecret' of 'Hubspot1'"
-		},
-		"Hubspot1_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'Hubspot1'"
-		},
-		"Hubspot1_refreshToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'refreshToken' of 'Hubspot1'"
-		},
-		"ADLS_HubspotAtenciones_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
-		},
-		"ADLS_HubspotContactos_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
-		},
 		"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
 		},
-		"ADSL_HusbpotCl_properties_typeProperties_url": {
+		"AZKV_hubspot_properties_typeProperties_baseUrl": {
 			"type": "string",
-			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
-		},
-		"Hubspot1_properties_typeProperties_clientId": {
-			"type": "string",
-			"defaultValue": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
+			"defaultValue": "https://AZKVuptrabajofinal.vault.azure.net/"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/pl_apihubspot_atenciones')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "api_hs_atenciones",
-						"type": "WebActivity",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "GET",
-							"headers": {
-								"action": "getRecords",
-								"object": "companies",
-								"hapikey": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
-							},
-							"linkedServices": [
-								{
-									"referenceName": "ADLS_HubspotContactos",
-									"type": "LinkedServiceReference"
-								}
-							],
-							"url": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
-						}
-					},
-					{
-						"name": "api_hs_atenciones_cp",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "api_hs_atenciones",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "JsonSource",
-								"storeSettings": {
-									"type": "HttpReadSettings",
-									"requestMethod": "GET"
-								},
-								"formatSettings": {
-									"type": "JsonReadSettings"
-								}
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings",
-									"copyBehavior": "FlattenHierarchy"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "ds_hs_in_atenciones",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_hs_out_atenciones",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLS_HubspotContactos')]",
-				"[concat(variables('factoryId'), '/datasets/ds_hs_in_atenciones')]",
-				"[concat(variables('factoryId'), '/datasets/ds_hs_out_atenciones')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_hs_in_atenciones')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADLS_HubspotContactos",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"action": "getRecords",
-						"object": "deals",
-						"hapikey": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
-					}
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "HttpServerLocation"
-					}
-				},
-				"schema": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLS_HubspotContactos')]"
-			]
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ds_hs_out_atenciones')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -204,76 +50,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ADLS_HubspotAtenciones')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"action": {
-						"type": "string",
-						"defaultValue": "getRecords"
-					},
-					"object": {
-						"type": "string",
-						"defaultValue": "deals"
-					},
-					"hapikey": {
-						"type": "string",
-						"defaultValue": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
-					}
-				},
-				"annotations": [],
-				"type": "HttpServer",
-				"typeProperties": {
-					"url": "[parameters('ADLS_HubspotAtenciones_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous",
-					"authHeaders": {
-						"Authorization": {
-							"type": "SecureString",
-							"value": "**********"
-						}
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ADLS_HubspotContactos')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"action": {
-						"type": "string",
-						"defaultValue": "getRecords"
-					},
-					"object": {
-						"type": "string",
-						"defaultValue": "deals"
-					},
-					"hapikey": {
-						"type": "string",
-						"defaultValue": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
-					}
-				},
-				"annotations": [],
-				"type": "HttpServer",
-				"typeProperties": {
-					"url": "[parameters('ADLS_HubspotContactos_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous",
-					"authHeaders": {
-						"Authorization": {
-							"type": "SecureString",
-							"value": "**********"
-						}
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ADLS_linkedservices_trabajofinal')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -291,64 +67,14 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ADSL_HusbpotCl')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"action": {
-						"type": "string",
-						"defaultValue": "getRecords"
-					},
-					"object": {
-						"type": "string",
-						"defaultValue": "companies"
-					},
-					"hapikey": {
-						"type": "string",
-						"defaultValue": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
-					}
-				},
-				"annotations": [],
-				"type": "HttpServer",
-				"typeProperties": {
-					"url": "[parameters('ADSL_HusbpotCl_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous",
-					"authHeaders": {
-						"Authorization": {
-							"type": "SecureString",
-							"value": "**********"
-						}
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Hubspot1')]",
+			"name": "[concat(parameters('factoryName'), '/AZKV_hubspot')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"type": "Hubspot",
+				"type": "AzureKeyVault",
 				"typeProperties": {
-					"clientId": "[parameters('Hubspot1_properties_typeProperties_clientId')]",
-					"clientSecret": {
-						"type": "SecureString",
-						"value": "[parameters('Hubspot1_clientSecret')]"
-					},
-					"accessToken": {
-						"type": "SecureString",
-						"value": "[parameters('Hubspot1_accessToken')]"
-					},
-					"refreshToken": {
-						"type": "SecureString",
-						"value": "[parameters('Hubspot1_refreshToken')]"
-					},
-					"useEncryptedEndpoints": true,
-					"useHostVerification": true,
-					"usePeerVerification": true
+					"baseUrl": "[parameters('AZKV_hubspot_properties_typeProperties_baseUrl')]"
 				}
 			},
 			"dependsOn": []

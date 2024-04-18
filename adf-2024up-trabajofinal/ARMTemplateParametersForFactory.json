@@ -8,29 +8,11 @@
 		"ADLS_linkedservices_trabajofinal_accountKey": {
 			"value": ""
 		},
-		"Hubspot1_clientSecret": {
-			"value": ""
-		},
-		"Hubspot1_accessToken": {
-			"value": ""
-		},
-		"Hubspot1_refreshToken": {
-			"value": ""
-		},
-		"ADLS_HubspotAtenciones_properties_typeProperties_url": {
-			"value": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
-		},
-		"ADLS_HubspotContactos_properties_typeProperties_url": {
-			"value": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
-		},
 		"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 			"value": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
 		},
-		"ADSL_HusbpotCl_properties_typeProperties_url": {
-			"value": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
-		},
-		"Hubspot1_properties_typeProperties_clientId": {
-			"value": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
+		"AZKV_hubspot_properties_typeProperties_baseUrl": {
+			"value": "https://AZKVuptrabajofinal.vault.azure.net/"
 		}
 	}
 }

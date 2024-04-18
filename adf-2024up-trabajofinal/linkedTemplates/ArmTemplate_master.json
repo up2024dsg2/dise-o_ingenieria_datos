@@ -11,37 +11,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS_linkedservices_trabajofinal'"
 		},
-		"Hubspot1_clientSecret": {
-			"type": "secureString",
-			"metadata": "Secure string for 'clientSecret' of 'Hubspot1'"
-		},
-		"Hubspot1_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'Hubspot1'"
-		},
-		"Hubspot1_refreshToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'refreshToken' of 'Hubspot1'"
-		},
-		"ADLS_HubspotAtenciones_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
-		},
-		"ADLS_HubspotContactos_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
-		},
 		"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
 		},
-		"ADSL_HusbpotCl_properties_typeProperties_url": {
+		"AZKV_hubspot_properties_typeProperties_baseUrl": {
 			"type": "string",
-			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
-		},
-		"Hubspot1_properties_typeProperties_clientId": {
-			"type": "string",
-			"defaultValue": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
+			"defaultValue": "https://AZKVuptrabajofinal.vault.azure.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -73,29 +49,11 @@
 					"ADLS_linkedservices_trabajofinal_accountKey": {
 						"value": "[parameters('ADLS_linkedservices_trabajofinal_accountKey')]"
 					},
-					"Hubspot1_clientSecret": {
-						"value": "[parameters('Hubspot1_clientSecret')]"
-					},
-					"Hubspot1_accessToken": {
-						"value": "[parameters('Hubspot1_accessToken')]"
-					},
-					"Hubspot1_refreshToken": {
-						"value": "[parameters('Hubspot1_refreshToken')]"
-					},
-					"ADLS_HubspotAtenciones_properties_typeProperties_url": {
-						"value": "[parameters('ADLS_HubspotAtenciones_properties_typeProperties_url')]"
-					},
-					"ADLS_HubspotContactos_properties_typeProperties_url": {
-						"value": "[parameters('ADLS_HubspotContactos_properties_typeProperties_url')]"
-					},
 					"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 						"value": "[parameters('ADLS_linkedservices_trabajofinal_properties_typeProperties_url')]"
 					},
-					"ADSL_HusbpotCl_properties_typeProperties_url": {
-						"value": "[parameters('ADSL_HusbpotCl_properties_typeProperties_url')]"
-					},
-					"Hubspot1_properties_typeProperties_clientId": {
-						"value": "[parameters('Hubspot1_properties_typeProperties_clientId')]"
+					"AZKV_hubspot_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AZKV_hubspot_properties_typeProperties_baseUrl')]"
 					}
 				}
 			},
