@@ -1,9 +1,9 @@
 {
-	"name": "pipeline1",
+	"name": "pl_apihubspot_atenciones",
 	"properties": {
 		"activities": [
 			{
-				"name": "API_HS_",
+				"name": "api_hs_atenciones",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
@@ -20,13 +20,26 @@
 						"object": "companies",
 						"hapikey": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
 					},
+					"linkedServices": [
+						{
+							"referenceName": "ADLS_HubspotContactos",
+							"type": "LinkedServiceReference"
+						}
+					],
 					"url": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "api_hs_atenciones_cp",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "api_hs_atenciones",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -36,8 +49,40 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_hs_in_atenciones",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_hs_out_atenciones",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []

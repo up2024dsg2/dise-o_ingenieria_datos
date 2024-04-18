@@ -1,5 +1,5 @@
 {
-	"name": "ds_hs_atenciones",
+	"name": "ds_hs_in_atenciones",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ADLS_HubspotContactos",
