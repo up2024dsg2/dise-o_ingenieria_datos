@@ -20,6 +20,12 @@
 						"Content-Type": "application/json",
 						"Authorization": "Bearer FREETOKEN"
 					},
+					"datasets": [
+						{
+							"referenceName": "ds_hs_out_atenciones",
+							"type": "DatasetReference"
+						}
+					],
 					"url": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
 				}
 			},
