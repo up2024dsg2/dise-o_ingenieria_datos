@@ -18,7 +18,7 @@
 					"method": "GET",
 					"headers": {
 						"Content-Type": "text/html",
-						"Authorization": "FREETOKEN"
+						"Authorization": "Bearer FREETOKEN"
 					},
 					"url": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
 				}
