@@ -1,0 +1,23 @@
+{
+	"name": "Out",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_linkedservices_trabajofinal",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "hsatenciones",
+				"folderPath": "output",
+				"fileSystem": "raw"
+			},
+			"compression": {
+				"type": "bzip2",
+				"level": "Fastest"
+			}
+		}
+	}
+}
