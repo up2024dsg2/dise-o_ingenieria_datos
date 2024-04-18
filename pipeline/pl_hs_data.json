@@ -1,9 +1,9 @@
 {
-	"name": "cp_rest_to_json_atenciones",
+	"name": "pl_hs_data",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "cp_rest_to_json_atenciones",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -24,11 +24,27 @@
 							"supportRFC5988": "true"
 						}
 					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
 						"referenceName": "ds_hs_pacientes_in_json",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_hs_atenciones_out_json",
 						"type": "DatasetReference"
 					}
 				]

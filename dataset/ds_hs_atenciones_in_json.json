@@ -1,5 +1,5 @@
 {
-	"name": "ds_hs_atenciones_json",
+	"name": "ds_hs_atenciones_in_json",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ADLS_HSAtenciones",
