@@ -1,0 +1,22 @@
+{
+	"name": "APIREST_GGLEncuesta",
+	"properties": {
+		"parameters": {
+			"spreadsheetId": {
+				"type": "string",
+				"defaultValue": "1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14"
+			},
+			"range": {
+				"type": "string",
+				"defaultValue": "A1:Z500"
+			}
+		},
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "@{concat('https://sheets.googleapis.com/v4/spreadsheets/',linkedService().spreadsheetId,'/values/',linkedService().range)}",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
