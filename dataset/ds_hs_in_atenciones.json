@@ -1,0 +1,17 @@
+{
+	"name": "ds_hs_in_atenciones",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_HSAtenciones",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"hapikey": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513",
+				"action": "getRecords",
+				"object": "deals"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	}
+}
