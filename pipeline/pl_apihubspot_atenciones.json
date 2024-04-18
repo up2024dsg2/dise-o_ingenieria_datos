@@ -17,10 +17,8 @@
 				"typeProperties": {
 					"method": "GET",
 					"headers": {
-						"action": "getRecords",
-						"object": "deals",
-						"hapikey": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513",
-						"Authorization": "Bearer FREETOKEN"
+						"Authorization": "Bearer FREETOKEN",
+						"Content-Type": "application/json"
 					},
 					"linkedServices": [
 						{
