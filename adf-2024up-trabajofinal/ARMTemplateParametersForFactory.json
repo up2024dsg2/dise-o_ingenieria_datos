@@ -8,11 +8,20 @@
 		"ADLS_linkedservices_trabajofinal_accountKey": {
 			"value": ""
 		},
+		"ADLS_HSAtenciones_properties_typeProperties_url": {
+			"value": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=deals"
+		},
 		"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 			"value": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
 		},
 		"AZKV_hubspot_properties_typeProperties_baseUrl": {
 			"value": "https://AZKVuptrabajofinal.vault.azure.net/"
+		},
+		"ADLS_HSClinicas_properties_typeProperties_url": {
+			"value": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=companies"
+		},
+		"ADLS_HSPacientes_properties_typeProperties_url": {
+			"value": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=contacts"
 		}
 	}
 }

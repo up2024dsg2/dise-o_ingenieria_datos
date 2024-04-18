@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS_linkedservices_trabajofinal'"
 		},
+		"ADLS_HSAtenciones_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=deals"
+		},
 		"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
@@ -18,12 +22,42 @@
 		"AZKV_hubspot_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://AZKVuptrabajofinal.vault.azure.net/"
+		},
+		"ADLS_HSClinicas_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=companies"
+		},
+		"ADLS_HSPacientes_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=contacts"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ADLS_HSAtenciones')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Consulta de atenciones",
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('ADLS_HSAtenciones_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous",
+					"authHeaders": {
+						"Authorization": {
+							"type": "SecureString",
+							"value": "**********"
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ADLS_linkedservices_trabajofinal')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -55,28 +89,99 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_hs_out_atenciones')]",
+			"name": "[concat(parameters('factoryName'), '/ADLS_HSClinicas')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('ADLS_HSClinicas_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous",
+					"authHeaders": {
+						"Authorization": {
+							"type": "SecureString",
+							"value": "**********"
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ADLS_HSPacientes')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('ADLS_HSPacientes_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous",
+					"authHeaders": {
+						"Authorization": {
+							"type": "SecureString",
+							"value": "**********"
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_hs_atenciones_json')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "ADLS_linkedservices_trabajofinal",
+					"referenceName": "ADLS_HSAtenciones",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "hsatenciones.json",
-						"folderPath": "output",
-						"fileSystem": "raw"
-					}
-				},
-				"schema": {}
+				"type": "RestResource",
+				"typeProperties": {},
+				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLS_linkedservices_trabajofinal')]"
+				"[concat(variables('factoryId'), '/linkedServices/ADLS_HSAtenciones')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_hs_clinicas_json')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_HSAtenciones",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLS_HSAtenciones')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_hs_pacientes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_HSAtenciones",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLS_HSAtenciones')]"
 			]
 		}
 	]
