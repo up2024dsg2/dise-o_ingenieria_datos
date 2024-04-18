@@ -3,7 +3,11 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "APIREST_HSAtenciones",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"hs_deal_properties": "hs_object_id,dealname,dealtype,etapa_de_ejecucion,fecha_de_ejecucion,horario_de_atencion,fecha_entrega_resultados,resultado_de_mamas,resultados_de_cuello_uterino,amount,tipo_de_pago,abono_1,abono_1_fecha,abono_1_tipo",
+				"hs_associations": "contacts"
+			}
 		},
 		"annotations": [],
 		"type": "RestResource",
