@@ -3,24 +3,10 @@
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"description": "Consulta de atenciones",
-		"parameters": {
-			"hapikey": {
-				"type": "string",
-				"defaultValue": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
-			},
-			"action": {
-				"type": "string",
-				"defaultValue": "getRecords"
-			},
-			"object": {
-				"type": "string",
-				"defaultValue": "deals"
-			}
-		},
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "https://power-bi-hubspot-connector.nacdcm.com/index.php",
+			"url": "https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=deals",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous",
 			"authHeaders": {
