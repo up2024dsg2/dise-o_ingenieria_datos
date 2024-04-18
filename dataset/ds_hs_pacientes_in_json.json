@@ -1,8 +1,8 @@
 {
-	"name": "ds_hs_pacientes",
+	"name": "ds_hs_pacientes_in_json",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ADLS_HSAtenciones",
+			"referenceName": "ADLS_HSPacientes",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
