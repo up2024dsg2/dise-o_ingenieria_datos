@@ -26,6 +26,10 @@
 				"Authorization": {
 					"type": "SecureString",
 					"value": "**********"
+				},
+				"APIKey": {
+					"type": "SecureString",
+					"value": "**********"
 				}
 			}
 		}
