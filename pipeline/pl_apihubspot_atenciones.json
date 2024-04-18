@@ -18,13 +18,19 @@
 					"method": "GET",
 					"headers": {
 						"action": "getRecords",
-						"object": "companies",
+						"object": "deals",
 						"hapikey": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513"
 					},
 					"linkedServices": [
 						{
-							"referenceName": "ADLS_HubspotContactos",
+							"referenceName": "ADLS_HubspotAtenciones",
 							"type": "LinkedServiceReference"
+						}
+					],
+					"datasets": [
+						{
+							"referenceName": "ds_hs_in_atenciones",
+							"type": "DatasetReference"
 						}
 					],
 					"url": "https://power-bi-hubspot-connector.nacdcm.com/index.php"
