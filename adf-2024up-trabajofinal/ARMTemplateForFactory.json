@@ -11,9 +11,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS_linkedservices_trabajofinal'"
 		},
+		"APIREST_GGLEncuesta_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'APIREST_GGLEncuesta'"
+		},
 		"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
+		},
+		"APIREST_GGLEncuesta_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{concat('https://sheets.googleapis.com/v4/spreadsheets/',linkedService().spreadsheetId,'/values/',linkedService().range)}"
+		},
+		"APIREST_GGLEncuesta_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "892588869947-01khdgf2l3euv57ra1cfccbaa4p08k48.apps.googleusercontent.com"
 		},
 		"APIREST_HSAtenciones_properties_typeProperties_url": {
 			"type": "string",
@@ -30,6 +42,10 @@
 		"AZKV_hubspot_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://AZKVuptrabajofinal.vault.azure.net/"
+		},
+		"REST_HubspotPHP_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=',linkedService().hs_object,'&properties=',linkedService().hs_properties,'&associations=',linkedService().hs_associations)}"
 		}
 	},
 	"variables": {
@@ -37,13 +53,13 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/pl_hs_data')]",
+			"name": "[concat(parameters('factoryName'), '/pl_ggl_encuesta')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "cp_rest_to_json_atenciones",
+						"name": "Copy data1",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -78,21 +94,41 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "ds_hs_atenciones_in_json",
+								"referenceName": "ds_src_ggl_encuesta_json",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_hs_atenciones_out_json",
+								"referenceName": "ds_snk_ggl_encuesta_json",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						]
-					},
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Google"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_src_ggl_encuesta_json')]",
+				"[concat(variables('factoryId'), '/datasets/ds_snk_ggl_encuesta_json')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_hs_infodata')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
 					{
-						"name": "cp_rest_to_json_centrosmedicos",
+						"name": "cp_rest2json_atenciones",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -127,23 +163,37 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "ds_hs_centrosmedicos_in_json",
+								"referenceName": "ds_src_hubspot_rest_json",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"object": "deals",
+									"properties": "hs_object_id,dealname,dealtype,etapa_de_ejecucion,fecha_de_ejecucion,horario_de_atencion,fecha_entrega_resultados,resultado_de_mamas,resultados_de_cuello_uterino,amount,tipo_de_pago,abono_1,abono_1_fecha,abono_1_tipo",
+									"associations": "contacts"
+								}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_hs_centrosmedicos_out_json",
+								"referenceName": "ds_snk_hubspot_adls_json",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"folder": "/Output",
+									"file": "hs_atenciones.json"
+								}
 							}
 						]
 					},
 					{
-						"name": "cp_rest_to_json_pacientes",
+						"name": "cp_rest2json_centrosmedicos",
 						"type": "Copy",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "cp_rest2json_atenciones",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -176,16 +226,85 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "ds_hs_pacientes_in_json",
+								"referenceName": "ds_src_hubspot_rest_json",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"object": "companies",
+									"properties": "name,state,city,distrito,address,tipo_de_centro_medico,etapa_de_centro_medico,numero_de_telefono_1,numero_de_telefono_2,numero_de_telefono_movil_1,numero_de_telefono_movil_2,link_en_mapa,website,hubspot_owner_id",
+									"associations": "_"
+								}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_hs_pacientes_out_json",
+								"referenceName": "ds_snk_hubspot_adls_json",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"folder": "Output",
+									"file": "hs_centrosmedicos.json"
+								}
+							}
+						]
+					},
+					{
+						"name": "cp_rest2json_pacientes",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "cp_rest2json_centrosmedicos",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_src_hubspot_rest_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"object": "contacts",
+									"properties": "firstname,lastname,fecha_de_nacimiento,edad,dni,mobilephone,country,state,city,distrito,tipo_de_contacto,hubspot_owner_id,link_de_mapa,zona,condicion,tipo_de_lider,gerencia,gerente_de_negocio,industry,codigo_grupo,codigo_lider",
+									"associations": "_"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_snk_hubspot_adls_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"folder": "Output",
+									"file": "hs_pacientes.json"
+								}
 							}
 						]
 					}
@@ -199,25 +318,21 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_hs_atenciones_in_json')]",
-				"[concat(variables('factoryId'), '/datasets/ds_hs_atenciones_out_json')]",
-				"[concat(variables('factoryId'), '/datasets/ds_hs_centrosmedicos_in_json')]",
-				"[concat(variables('factoryId'), '/datasets/ds_hs_centrosmedicos_out_json')]",
-				"[concat(variables('factoryId'), '/datasets/ds_hs_pacientes_in_json')]",
-				"[concat(variables('factoryId'), '/datasets/ds_hs_pacientes_out_json')]"
+				"[concat(variables('factoryId'), '/datasets/ds_src_hubspot_rest_json')]",
+				"[concat(variables('factoryId'), '/datasets/ds_snk_hubspot_adls_json')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_hs_atenciones_in_json')]",
+			"name": "[concat(parameters('factoryName'), '/ds_src_ggl_encuesta_json')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "APIREST_HSAtenciones",
+					"referenceName": "APIREST_GGLEncuesta",
 					"type": "LinkedServiceReference",
 					"parameters": {
-						"hs_deal_properties": "hs_object_id,dealname,dealtype,etapa_de_ejecucion,fecha_de_ejecucion,horario_de_atencion,fecha_entrega_resultados,resultado_de_mamas,resultados_de_cuello_uterino,amount,tipo_de_pago,abono_1,abono_1_fecha,abono_1_tipo",
-						"hs_associations": "contacts"
+						"spreadsheetId": "1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14",
+						"range": "A1:Z500"
 					}
 				},
 				"annotations": [],
@@ -226,11 +341,11 @@
 				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/APIREST_HSAtenciones')]"
+				"[concat(variables('factoryId'), '/linkedServices/APIREST_GGLEncuesta')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_hs_atenciones_out_json')]",
+			"name": "[concat(parameters('factoryName'), '/ds_snk_ggl_encuesta_json')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -243,104 +358,105 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "hs_atenciones.json",
+						"fileName": "ggl_encuesta.json",
 						"folderPath": "output",
 						"fileSystem": "raw"
 					}
 				},
-				"schema": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLS_linkedservices_trabajofinal')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_hs_centrosmedicos_in_json')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "APIREST_HSCentrosMedicos",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"hs_companies_properties": "name,state,city,distrito,address,tipo_de_centro_medico,etapa_de_centro_medico,numero_de_telefono_1,numero_de_telefono_2,numero_de_telefono_movil_1,numero_de_telefono_movil_2,link_en_mapa,website,hubspot_owner_id"
+				"schema": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"properties": {
+							"type": "object",
+							"properties": {
+								"city": {
+									"type": "string"
+								},
+								"codigo_grupo": {
+									"type": "string"
+								},
+								"codigo_lider": {
+									"type": "string"
+								},
+								"condicion": {
+									"type": "string"
+								},
+								"country": {
+									"type": "string"
+								},
+								"createdate": {
+									"type": "string"
+								},
+								"distrito": {
+									"type": "string"
+								},
+								"dni": {
+									"type": "string"
+								},
+								"edad": {
+									"type": "string"
+								},
+								"fecha_de_nacimiento": {
+									"type": "string"
+								},
+								"firstname": {
+									"type": "string"
+								},
+								"gerencia": {
+									"type": "string"
+								},
+								"gerente_de_negocio": {
+									"type": "string"
+								},
+								"hs_object_id": {
+									"type": "string"
+								},
+								"hubspot_owner_id": {
+									"type": "string"
+								},
+								"industry": {
+									"type": "string"
+								},
+								"lastmodifieddate": {
+									"type": "string"
+								},
+								"lastname": {
+									"type": "string"
+								},
+								"link_de_mapa": {
+									"type": "string"
+								},
+								"mobilephone": {
+									"type": "string"
+								},
+								"state": {
+									"type": "string"
+								},
+								"tipo_de_contacto": {
+									"type": "string"
+								},
+								"tipo_de_lider": {
+									"type": "string"
+								},
+								"zona": {
+									"type": "string"
+								}
+							}
+						},
+						"createdAt": {
+							"type": "string"
+						},
+						"updatedAt": {
+							"type": "string"
+						},
+						"archived": {
+							"type": "boolean"
+						}
 					}
-				},
-				"annotations": [],
-				"type": "RestResource",
-				"typeProperties": {},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/APIREST_HSCentrosMedicos')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_hs_centrosmedicos_out_json')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADLS_linkedservices_trabajofinal",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "hs_centrosmedicos.json",
-						"folderPath": "output",
-						"fileSystem": "raw"
-					}
-				},
-				"schema": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLS_linkedservices_trabajofinal')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_hs_pacientes_in_json')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "APIREST_HSPacientes",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"hs_contact_properties": "firstname,lastname,fecha_de_nacimiento,edad,dni,mobilephone,country,state,city,distrito,tipo_de_contacto,hubspot_owner_id,link_de_mapa,zona,condicion,tipo_de_lider,gerencia,gerente_de_negocio,industry,codigo_grupo,codigo_lider"
-					}
-				},
-				"annotations": [],
-				"type": "RestResource",
-				"typeProperties": {},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/APIREST_HSPacientes')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_hs_pacientes_out_json')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADLS_linkedservices_trabajofinal",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "hs_pacientes.json",
-						"folderPath": "output",
-						"fileSystem": "raw"
-					}
-				},
-				"schema": {}
+				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ADLS_linkedservices_trabajofinal')]"
@@ -359,6 +475,37 @@
 						"type": "SecureString",
 						"value": "[parameters('ADLS_linkedservices_trabajofinal_accountKey')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/APIREST_GGLEncuesta')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"spreadsheetId": {
+						"type": "string",
+						"defaultValue": "1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14"
+					},
+					"range": {
+						"type": "string",
+						"defaultValue": "A1:Z500"
+					}
+				},
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('APIREST_GGLEncuesta_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "OAuth2ClientCredential",
+					"clientId": "[parameters('APIREST_GGLEncuesta_properties_typeProperties_clientId')]",
+					"clientSecret": {
+						"type": "SecureString",
+						"value": "[parameters('APIREST_GGLEncuesta_clientSecret')]"
+					},
+					"tokenEndpoint": "https://oauth2.googleapis.com/token"
 				}
 			},
 			"dependsOn": []
@@ -461,6 +608,235 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/REST_HubspotPHP')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Conexión a API en servidor PHP que consulta a Hubspot evitando la paginación",
+				"parameters": {
+					"hs_object": {
+						"type": "string"
+					},
+					"hs_properties": {
+						"type": "string"
+					},
+					"hs_associations": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('REST_HubspotPHP_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous",
+					"authHeaders": {
+						"Authorization": {
+							"type": "SecureString",
+							"value": "**********"
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_src_hubspot_rest_json')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "REST_HubspotPHP",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"hs_object": {
+							"value": "@dataset().object",
+							"type": "Expression"
+						},
+						"hs_properties": {
+							"value": "@dataset().properties",
+							"type": "Expression"
+						},
+						"hs_associations": {
+							"value": "@dataset().associations",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"object": {
+						"type": "String"
+					},
+					"properties": {
+						"type": "String"
+					},
+					"associations": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/REST_HubspotPHP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_snk_hubspot_adls_json')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_linkedservices_trabajofinal",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"folder": {
+						"type": "string"
+					},
+					"file": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().file",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().folder",
+							"type": "Expression"
+						},
+						"fileSystem": "raw"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"startTime": {
+							"type": "string"
+						},
+						"id": {
+							"type": "string"
+						},
+						"incompatibleFeatures": {
+							"type": "array"
+						},
+						"blobValidationErrors": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"scannedBlobCount": {
+							"type": "integer"
+						},
+						"invalidBlobCount": {
+							"type": "integer"
+						},
+						"endTime": {
+							"type": "string"
+						},
+						"properties": {
+							"type": "object",
+							"properties": {
+								"city": {
+									"type": "string"
+								},
+								"codigo_grupo": {
+									"type": "string"
+								},
+								"codigo_lider": {
+									"type": "string"
+								},
+								"condicion": {
+									"type": "string"
+								},
+								"country": {
+									"type": "string"
+								},
+								"createdate": {
+									"type": "string"
+								},
+								"distrito": {
+									"type": "string"
+								},
+								"dni": {
+									"type": "string"
+								},
+								"edad": {
+									"type": "string"
+								},
+								"fecha_de_nacimiento": {
+									"type": "string"
+								},
+								"firstname": {
+									"type": "string"
+								},
+								"gerencia": {
+									"type": "string"
+								},
+								"gerente_de_negocio": {
+									"type": "string"
+								},
+								"hs_object_id": {
+									"type": "string"
+								},
+								"hubspot_owner_id": {
+									"type": "string"
+								},
+								"industry": {
+									"type": "string"
+								},
+								"lastmodifieddate": {
+									"type": "string"
+								},
+								"lastname": {
+									"type": "string"
+								},
+								"link_de_mapa": {
+									"type": "string"
+								},
+								"mobilephone": {
+									"type": "string"
+								},
+								"state": {
+									"type": "string"
+								},
+								"tipo_de_contacto": {
+									"type": "string"
+								},
+								"tipo_de_lider": {
+									"type": "string"
+								},
+								"zona": {
+									"type": "string"
+								}
+							}
+						},
+						"createdAt": {
+							"type": "string"
+						},
+						"updatedAt": {
+							"type": "string"
+						},
+						"archived": {
+							"type": "boolean"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLS_linkedservices_trabajofinal')]"
+			]
 		}
 	]
 }

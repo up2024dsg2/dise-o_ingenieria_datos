@@ -8,8 +8,17 @@
 		"ADLS_linkedservices_trabajofinal_accountKey": {
 			"value": ""
 		},
+		"APIREST_GGLEncuesta_clientSecret": {
+			"value": ""
+		},
 		"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 			"value": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
+		},
+		"APIREST_GGLEncuesta_properties_typeProperties_url": {
+			"value": "@{concat('https://sheets.googleapis.com/v4/spreadsheets/',linkedService().spreadsheetId,'/values/',linkedService().range)}"
+		},
+		"APIREST_GGLEncuesta_properties_typeProperties_clientId": {
+			"value": "892588869947-01khdgf2l3euv57ra1cfccbaa4p08k48.apps.googleusercontent.com"
 		},
 		"APIREST_HSAtenciones_properties_typeProperties_url": {
 			"value": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=deals&properties=',linkedService().hs_deal_properties,'&associations=',linkedService().hs_associations)}"
@@ -22,6 +31,9 @@
 		},
 		"AZKV_hubspot_properties_typeProperties_baseUrl": {
 			"value": "https://AZKVuptrabajofinal.vault.azure.net/"
+		},
+		"REST_HubspotPHP_properties_typeProperties_url": {
+			"value": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=',linkedService().hs_object,'&properties=',linkedService().hs_properties,'&associations=',linkedService().hs_associations)}"
 		},
 		"containerUri": {
 			"value": ""

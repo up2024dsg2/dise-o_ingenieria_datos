@@ -11,9 +11,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS_linkedservices_trabajofinal'"
 		},
+		"APIREST_GGLEncuesta_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'APIREST_GGLEncuesta'"
+		},
 		"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
+		},
+		"APIREST_GGLEncuesta_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{concat('https://sheets.googleapis.com/v4/spreadsheets/',linkedService().spreadsheetId,'/values/',linkedService().range)}"
+		},
+		"APIREST_GGLEncuesta_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "892588869947-01khdgf2l3euv57ra1cfccbaa4p08k48.apps.googleusercontent.com"
 		},
 		"APIREST_HSAtenciones_properties_typeProperties_url": {
 			"type": "string",
@@ -30,6 +42,10 @@
 		"AZKV_hubspot_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://AZKVuptrabajofinal.vault.azure.net/"
+		},
+		"REST_HubspotPHP_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=',linkedService().hs_object,'&properties=',linkedService().hs_properties,'&associations=',linkedService().hs_associations)}"
 		},
 		"containerUri": {
 			"type": "string",
@@ -61,8 +77,17 @@
 					"ADLS_linkedservices_trabajofinal_accountKey": {
 						"value": "[parameters('ADLS_linkedservices_trabajofinal_accountKey')]"
 					},
+					"APIREST_GGLEncuesta_clientSecret": {
+						"value": "[parameters('APIREST_GGLEncuesta_clientSecret')]"
+					},
 					"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 						"value": "[parameters('ADLS_linkedservices_trabajofinal_properties_typeProperties_url')]"
+					},
+					"APIREST_GGLEncuesta_properties_typeProperties_url": {
+						"value": "[parameters('APIREST_GGLEncuesta_properties_typeProperties_url')]"
+					},
+					"APIREST_GGLEncuesta_properties_typeProperties_clientId": {
+						"value": "[parameters('APIREST_GGLEncuesta_properties_typeProperties_clientId')]"
 					},
 					"APIREST_HSAtenciones_properties_typeProperties_url": {
 						"value": "[parameters('APIREST_HSAtenciones_properties_typeProperties_url')]"
@@ -75,6 +100,9 @@
 					},
 					"AZKV_hubspot_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AZKV_hubspot_properties_typeProperties_baseUrl')]"
+					},
+					"REST_HubspotPHP_properties_typeProperties_url": {
+						"value": "[parameters('REST_HubspotPHP_properties_typeProperties_url')]"
 					}
 				}
 			},
