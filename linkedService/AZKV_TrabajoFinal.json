@@ -1,0 +1,10 @@
+{
+	"name": "AZKV_TrabajoFinal",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://AZKVTrabajoFinal.vault.azure.net/"
+		}
+	}
+}
