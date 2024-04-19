@@ -38,13 +38,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ds_ggl_encuesta_in_json",
+						"referenceName": "ds_src_ggl_encuesta_json",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_ggl_encuesta_out_json",
+						"referenceName": "ds_sk_ggl_encuesta_json",
 						"type": "DatasetReference"
 					}
 				]

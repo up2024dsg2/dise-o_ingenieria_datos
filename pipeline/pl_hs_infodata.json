@@ -38,20 +38,31 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ds_hs_atenciones_in_json",
-						"type": "DatasetReference"
+						"referenceName": "ds_src_hubspot_rest_json",
+						"type": "DatasetReference",
+						"parameters": {
+							"object": "deals",
+							"properties": "hs_object_id,dealname,dealtype,etapa_de_ejecucion,fecha_de_ejecucion,horario_de_atencion,fecha_entrega_resultados,resultado_de_mamas,resultados_de_cuello_uterino,amount,tipo_de_pago,abono_1,abono_1_fecha,abono_1_tipo",
+							"associations": "contacts"
+						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_hs_atenciones_out_json",
-						"type": "DatasetReference"
+						"referenceName": "ds_snk_hubspot_adls_json",
+						"type": "DatasetReference",
+						"parameters": {
+							"folder": "/Output",
+							"file": "hs_atenciones.json"
+						}
 					}
 				]
 			},
 			{
 				"name": "cp_rest_to_json_centrosmedicos",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -62,43 +73,14 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "RestSource",
-						"httpRequestTimeout": "00:01:40",
-						"requestInterval": "00.00:00:00.010",
-						"requestMethod": "GET",
-						"paginationRules": {
-							"supportRFC5988": "true"
-						}
-					},
-					"sink": {
-						"type": "JsonSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings",
-							"copyBehavior": "FlattenHierarchy"
-						},
-						"formatSettings": {
-							"type": "JsonWriteSettings"
-						}
-					},
 					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "ds_hs_centrosmedicos_in_json",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "ds_hs_centrosmedicos_out_json",
-						"type": "DatasetReference"
-					}
-				]
+				}
 			},
 			{
 				"name": "cp_rest_to_json_pacientes",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -109,39 +91,8 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "RestSource",
-						"httpRequestTimeout": "00:01:40",
-						"requestInterval": "00.00:00:00.010",
-						"requestMethod": "GET",
-						"paginationRules": {
-							"supportRFC5988": "true"
-						}
-					},
-					"sink": {
-						"type": "JsonSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings",
-							"copyBehavior": "FlattenHierarchy"
-						},
-						"formatSettings": {
-							"type": "JsonWriteSettings"
-						}
-					},
 					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "ds_hs_pacientes_in_json",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "ds_hs_pacientes_out_json",
-						"type": "DatasetReference"
-					}
-				]
+				}
 			}
 		],
 		"folder": {

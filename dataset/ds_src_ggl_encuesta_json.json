@@ -1,5 +1,5 @@
 {
-	"name": "ds_ggl_encuesta_in_json",
+	"name": "ds_src_ggl_encuesta_json",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "APIREST_GGLEncuesta",

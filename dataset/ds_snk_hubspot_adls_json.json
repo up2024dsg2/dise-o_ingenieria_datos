@@ -1,24 +1,59 @@
 {
-	"name": "ds_sk_ggl_encuesta_json",
+	"name": "ds_snk_hubspot_adls_json",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ADLS_linkedservices_trabajofinal",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"folder": {
+				"type": "string"
+			},
+			"file": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "ggl_encuesta.json",
-				"folderPath": "output",
+				"fileName": {
+					"value": "@dataset().file",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folder",
+					"type": "Expression"
+				},
 				"fileSystem": "raw"
 			}
 		},
 		"schema": {
 			"type": "object",
 			"properties": {
+				"startTime": {
+					"type": "string"
+				},
 				"id": {
+					"type": "string"
+				},
+				"incompatibleFeatures": {
+					"type": "array"
+				},
+				"blobValidationErrors": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"scannedBlobCount": {
+					"type": "integer"
+				},
+				"invalidBlobCount": {
+					"type": "integer"
+				},
+				"endTime": {
 					"type": "string"
 				},
 				"properties": {

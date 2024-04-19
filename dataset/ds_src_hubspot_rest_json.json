@@ -1,0 +1,37 @@
+{
+	"name": "ds_src_hubspot_rest_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "REST_HubspotPHP",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"hs_object": {
+					"value": "@dataset().object",
+					"type": "Expression"
+				},
+				"hs_properties": {
+					"value": "@dataset().properties",
+					"type": "Expression"
+				},
+				"hs_associations": {
+					"value": "@dataset().associations",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"object": {
+				"type": "String"
+			},
+			"properties": {
+				"type": "String"
+			},
+			"associations": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	}
+}
