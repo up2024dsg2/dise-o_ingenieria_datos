@@ -8,12 +8,14 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
+			"sheetName": "Encuesta",
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "ggl_encuesta.xlsx",
 				"folderPath": "Output",
 				"fileSystem": "raw"
 			},
+			"range": "A1:Z600",
 			"firstRowAsHeader": false
 		},
 		"schema": []
