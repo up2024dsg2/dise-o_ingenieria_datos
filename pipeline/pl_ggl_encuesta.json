@@ -44,7 +44,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_sk_ggl_encuesta_json",
+						"referenceName": "ds_snk_ggl_encuesta_json",
 						"type": "DatasetReference"
 					}
 				]
