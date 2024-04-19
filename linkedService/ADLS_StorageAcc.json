@@ -1,0 +1,11 @@
+{
+	"name": "ADLS_StorageAcc",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"sasUri": "https://sa2024uptrabajofinaldev.file.core.windows.net/?sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2024-04-19T23:44:10Z&st=2024-04-19T15:44:10Z&spr=https&sig=HYnv5RLFMjqGgZT5geodoUDhYvHsh%2FEoQCnN7pxwT%2Bg%3D?sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2024-04-19T23:44:10Z&st=2024-04-19T15:44:10Z&spr=https&sig=HYnv5RLFMjqGgZT5geodoUDhYvHsh%2FEoQCnN7pxwT%2Bg%3D"
+		}
+	}
+}
