@@ -1,0 +1,21 @@
+{
+	"name": "ds_snk_ggl_encuesta_xlsx",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS2_TrabajoFinal",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "ggl_encuesta.xlsx",
+				"folderPath": "Output",
+				"fileSystem": "raw"
+			},
+			"firstRowAsHeader": false
+		},
+		"schema": []
+	}
+}

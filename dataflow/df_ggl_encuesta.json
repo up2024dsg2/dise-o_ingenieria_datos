@@ -1,0 +1,66 @@
+{
+	"name": "df_ggl_encuesta",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "GGLS_Encuesta",
+						"type": "LinkedServiceReference"
+					},
+					"name": "gglencuesta"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_snk_ggl_encuesta_json",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          column_1 as string,",
+				"          column_2 as string,",
+				"          column_3 as string,",
+				"          column_4 as string,",
+				"          column_5 as string,",
+				"          column_6 as string,",
+				"          column_7 as string,",
+				"          column_8 as string,",
+				"          column_9 as string,",
+				"          column_10 as string,",
+				"          column_11 as string,",
+				"          column_12 as string,",
+				"          column_13 as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     store: 'googlesheets',",
+				"     format: 'rest',",
+				"     spreadSheetId: '1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14',",
+				"     startCell: 'A1',",
+				"     endCell: 'Z600',",
+				"     sheetName: 'Respuestas de formulario 1') ~> gglencuesta",
+				"gglencuesta sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          id as string,",
+				"          properties as (city as string, codigo_grupo as string, codigo_lider as string, condicion as string, country as string, createdate as string, distrito as string, dni as string, edad as string, fecha_de_nacimiento as string, firstname as string, gerencia as string, gerente_de_negocio as string, hs_object_id as string, hubspot_owner_id as string, industry as string, lastmodifieddate as string, lastname as string, link_de_mapa as string, mobilephone as string, state as string, tipo_de_contacto as string, tipo_de_lider as string, zona as string),",
+				"          createdAt as string,",
+				"          updatedAt as string,",
+				"          archived as boolean",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

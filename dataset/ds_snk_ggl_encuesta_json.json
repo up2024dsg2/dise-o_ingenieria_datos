@@ -2,7 +2,7 @@
 	"name": "ds_snk_ggl_encuesta_json",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ADLS_linkedservices_trabajofinal",
+			"referenceName": "ADLS2_TrabajoFinal",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "ggl_encuesta.json",
-				"folderPath": "output",
+				"folderPath": "Output",
 				"fileSystem": "raw"
 			}
 		},
