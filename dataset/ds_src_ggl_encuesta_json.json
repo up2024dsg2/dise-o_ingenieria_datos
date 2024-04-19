@@ -1,14 +1,6 @@
 {
 	"name": "ds_src_ggl_encuesta_json",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "APIREST_GGLEncuesta",
-			"type": "LinkedServiceReference",
-			"parameters": {
-				"spreadsheetId": "1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14",
-				"range": "A1:Z500"
-			}
-		},
 		"annotations": [],
 		"type": "RestResource",
 		"schema": []
