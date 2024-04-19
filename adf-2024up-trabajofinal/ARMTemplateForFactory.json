@@ -65,7 +65,7 @@
 								"parameters": {},
 								"datasetParameters": {
 									"gglencuestags": {},
-									"gglencuestaxlsx": {}
+									"gglencuestaavro": {}
 								},
 								"linkedServiceParameters": {}
 							},
@@ -626,11 +626,11 @@
 					],
 					"sinks": [
 						{
-							"dataset": {
-								"referenceName": "ds_snk_ggl_encuesta_json",
-								"type": "DatasetReference"
+							"linkedService": {
+								"referenceName": "ADLS2_TrabajoFinal",
+								"type": "LinkedServiceReference"
 							},
-							"name": "gglencuestaxlsx",
+							"name": "gglencuestaavro",
 							"rejectedDataLinkedService": {
 								"referenceName": "ADLS2_TrabajoFinal",
 								"type": "LinkedServiceReference"
@@ -649,18 +649,22 @@
 						"     sheetName: 'Respuestas de formulario 1') ~> gglencuestags",
 						"gglencuestags sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     format: 'avro',",
+						"     fileSystem: 'raw',",
+						"     folderPath: 'Output',",
+						"     partitionFileNames:['gglencuesta.avro'],",
 						"     umask: 0664,",
 						"     preCommands: [],",
 						"     postCommands: [],",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     saveOrder: 1) ~> gglencuestaxlsx"
+						"     saveOrder: 1,",
+						"     partitionBy('hash', 1)) ~> gglencuestaavro"
 					]
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/GGLS_Encuesta')]",
-				"[concat(variables('factoryId'), '/datasets/ds_snk_ggl_encuesta_json')]",
 				"[concat(variables('factoryId'), '/linkedServices/ADLS2_TrabajoFinal')]"
 			]
 		},

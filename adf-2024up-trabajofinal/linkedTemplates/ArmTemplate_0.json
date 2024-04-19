@@ -358,6 +358,66 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/df_ggl_encuesta')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "GGLS_Encuesta",
+								"type": "LinkedServiceReference"
+							},
+							"name": "gglencuestags"
+						}
+					],
+					"sinks": [
+						{
+							"linkedService": {
+								"referenceName": "ADLS2_TrabajoFinal",
+								"type": "LinkedServiceReference"
+							},
+							"name": "gglencuestaavro",
+							"rejectedDataLinkedService": {
+								"referenceName": "ADLS2_TrabajoFinal",
+								"type": "LinkedServiceReference"
+							}
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     store: 'googlesheets',",
+						"     format: 'rest',",
+						"     spreadSheetId: '1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14',",
+						"     startCell: 'A1',",
+						"     endCell: 'Z600',",
+						"     sheetName: 'Respuestas de formulario 1') ~> gglencuestags",
+						"gglencuestags sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'avro',",
+						"     fileSystem: 'raw',",
+						"     folderPath: 'Output',",
+						"     partitionFileNames:['gglencuesta.avro'],",
+						"     umask: 0664,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     saveOrder: 1,",
+						"     partitionBy('hash', 1)) ~> gglencuestaavro"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/GGLS_Encuesta')]",
+				"[concat(variables('factoryId'), '/linkedServices/ADLS2_TrabajoFinal')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_snk_ggl_encuesta_xlsx')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -462,6 +522,56 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ADLS2_TrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_ggl_encuesta')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "df_ggl_encuesta",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_ggl_encuesta",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"gglencuestags": {},
+									"gglencuestaavro": {}
+								},
+								"linkedServiceParameters": {}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Google"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_ggl_encuesta')]"
 			]
 		},
 		{
@@ -663,112 +773,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_src_hubspot_rest_json')]",
 				"[concat(variables('factoryId'), '/datasets/ds_snk_hubspot_adls_json')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df_ggl_encuesta')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"linkedService": {
-								"referenceName": "GGLS_Encuesta",
-								"type": "LinkedServiceReference"
-							},
-							"name": "gglencuestags"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "ds_snk_ggl_encuesta_json",
-								"type": "DatasetReference"
-							},
-							"name": "gglencuestaxlsx",
-							"rejectedDataLinkedService": {
-								"referenceName": "ADLS2_TrabajoFinal",
-								"type": "LinkedServiceReference"
-							}
-						}
-					],
-					"transformations": [],
-					"scriptLines": [
-						"source(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     store: 'googlesheets',",
-						"     format: 'rest',",
-						"     spreadSheetId: '1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14',",
-						"     startCell: 'A1',",
-						"     endCell: 'Z600',",
-						"     sheetName: 'Respuestas de formulario 1') ~> gglencuestags",
-						"gglencuestags sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     umask: 0664,",
-						"     preCommands: [],",
-						"     postCommands: [],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     saveOrder: 1) ~> gglencuestaxlsx"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/GGLS_Encuesta')]",
-				"[concat(variables('factoryId'), '/datasets/ds_snk_ggl_encuesta_json')]",
-				"[concat(variables('factoryId'), '/linkedServices/ADLS2_TrabajoFinal')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pl_ggl_encuesta')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "df_ggl_encuesta",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "df_ggl_encuesta",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"gglencuestags": {},
-									"gglencuestaxlsx": {}
-								},
-								"linkedServiceParameters": {}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "Google"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/df_ggl_encuesta')]"
 			]
 		}
 	]
