@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "cp_rest_to_json_atenciones",
+				"name": "cp_rest2json_atenciones",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -59,11 +59,16 @@
 				]
 			},
 			{
-				"name": "cp_rest_to_json_centrosmedicos",
+				"name": "cp_rest2json_centrosmedicos",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "cp_rest2json_atenciones",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -73,15 +78,60 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_src_hubspot_rest_json",
+						"type": "DatasetReference",
+						"parameters": {
+							"object": "companies",
+							"properties": "name,state,city,distrito,address,tipo_de_centro_medico,etapa_de_centro_medico,numero_de_telefono_1,numero_de_telefono_2,numero_de_telefono_movil_1,numero_de_telefono_movil_2,link_en_mapa,website,hubspot_owner_id",
+							"associations": "_"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_snk_hubspot_adls_json",
+						"type": "DatasetReference",
+						"parameters": {
+							"folder": "Output",
+							"file": "hs_centrosmedicos.json"
+						}
+					}
+				]
 			},
 			{
-				"name": "cp_rest_to_json_pacientes",
+				"name": "cp_rest2json_pacientes",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "cp_rest2json_centrosmedicos",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -91,8 +141,47 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_src_hubspot_rest_json",
+						"type": "DatasetReference",
+						"parameters": {
+							"object": "contacts",
+							"properties": "firstname,lastname,fecha_de_nacimiento,edad,dni,mobilephone,country,state,city,distrito,tipo_de_contacto,hubspot_owner_id,link_de_mapa,zona,condicion,tipo_de_lider,gerencia,gerente_de_negocio,industry,codigo_grupo,codigo_lider",
+							"associations": "_"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_snk_hubspot_adls_json",
+						"type": "DatasetReference",
+						"parameters": {
+							"folder": "Output",
+							"file": "hs_pacientes.json"
+						}
+					}
+				]
 			}
 		],
 		"folder": {
