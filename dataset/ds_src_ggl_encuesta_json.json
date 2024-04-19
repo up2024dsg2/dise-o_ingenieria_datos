@@ -1,8 +1,0 @@
-{
-	"name": "ds_src_ggl_encuesta_json",
-	"properties": {
-		"annotations": [],
-		"type": "RestResource",
-		"schema": []
-	}
-}
