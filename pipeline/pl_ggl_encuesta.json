@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
-				"type": "Copy",
+				"name": "df_ggl_encuesta",
+				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -15,24 +15,16 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"sink": {
-						"type": "JsonSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings",
-							"copyBehavior": "FlattenHierarchy"
-						},
-						"formatSettings": {
-							"type": "JsonWriteSettings"
-						}
+					"dataflow": {
+						"referenceName": "df_ggl_encuesta",
+						"type": "DataFlowReference"
 					},
-					"enableStaging": false
-				},
-				"outputs": [
-					{
-						"referenceName": "ds_snk_ggl_encuesta_json",
-						"type": "DatasetReference"
-					}
-				]
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"folder": {

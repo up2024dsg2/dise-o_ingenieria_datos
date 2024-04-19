@@ -9,7 +9,7 @@
 						"referenceName": "GGLS_Encuesta",
 						"type": "LinkedServiceReference"
 					},
-					"name": "gglencuesta"
+					"name": "gglencuestags"
 				}
 			],
 			"sinks": [
@@ -18,7 +18,7 @@
 						"referenceName": "ds_snk_ggl_encuesta_json",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "gglencuestaxlsx"
 				}
 			],
 			"transformations": [],
@@ -45,8 +45,8 @@
 				"     spreadSheetId: '1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14',",
 				"     startCell: 'A1',",
 				"     endCell: 'Z600',",
-				"     sheetName: 'Respuestas de formulario 1') ~> gglencuesta",
-				"gglencuesta sink(allowSchemaDrift: true,",
+				"     sheetName: 'Respuestas de formulario 1') ~> gglencuestags",
+				"gglencuestags sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          id as string,",
@@ -59,7 +59,7 @@
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> gglencuestaxlsx"
 			]
 		}
 	}
