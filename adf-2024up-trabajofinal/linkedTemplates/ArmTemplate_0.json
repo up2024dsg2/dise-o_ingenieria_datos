@@ -11,41 +11,29 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS_linkedservices_trabajofinal'"
 		},
-		"APIREST_GGLEncuesta_clientSecret": {
+		"ADLS2_TrabajoFinal_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'clientSecret' of 'APIREST_GGLEncuesta'"
+			"metadata": "Secure string for 'accountKey' of 'ADLS2_TrabajoFinal'"
+		},
+		"GGLS_Encuesta_apiToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'apiToken' of 'GGLS_Encuesta'"
 		},
 		"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
 		},
-		"APIREST_GGLEncuesta_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "@{concat('https://sheets.googleapis.com/v4/spreadsheets/',linkedService().spreadsheetId,'/values/',linkedService().range)}"
-		},
-		"APIREST_GGLEncuesta_properties_typeProperties_clientId": {
-			"type": "string",
-			"defaultValue": "892588869947-01khdgf2l3euv57ra1cfccbaa4p08k48.apps.googleusercontent.com"
-		},
-		"APIREST_HSAtenciones_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=deals&properties=',linkedService().hs_deal_properties,'&associations=',linkedService().hs_associations)}"
-		},
-		"APIREST_HSCentrosMedicos_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=companies&properties=',linkedService().hs_companies_properties)}"
-		},
-		"APIREST_HSPacientes_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=contacts&properties=',linkedService().hs_contact_properties)}"
-		},
-		"AZKV_hubspot_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://AZKVuptrabajofinal.vault.azure.net/"
-		},
 		"REST_HubspotPHP_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=',linkedService().hs_object,'&properties=',linkedService().hs_properties,'&associations=',linkedService().hs_associations)}"
+		},
+		"AZKV_TrabajoFinal_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://AZKVTrabajoFinal.vault.azure.net/"
+		},
+		"ADLS2_TrabajoFinal_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
 		}
 	},
 	"variables": {
@@ -65,136 +53,6 @@
 						"type": "SecureString",
 						"value": "[parameters('ADLS_linkedservices_trabajofinal_accountKey')]"
 					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/APIREST_GGLEncuesta')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"spreadsheetId": {
-						"type": "string",
-						"defaultValue": "1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14"
-					},
-					"range": {
-						"type": "string",
-						"defaultValue": "A1:Z500"
-					}
-				},
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('APIREST_GGLEncuesta_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "OAuth2ClientCredential",
-					"clientId": "[parameters('APIREST_GGLEncuesta_properties_typeProperties_clientId')]",
-					"clientSecret": {
-						"type": "SecureString",
-						"value": "[parameters('APIREST_GGLEncuesta_clientSecret')]"
-					},
-					"tokenEndpoint": "https://oauth2.googleapis.com/token"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/APIREST_HSAtenciones')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"hs_deal_properties": {
-						"type": "String",
-						"defaultValue": "hs_object_id,dealname,dealtype,etapa_de_ejecucion,fecha_de_ejecucion,horario_de_atencion,fecha_entrega_resultados,resultado_de_mamas,resultados_de_cuello_uterino,amount,tipo_de_pago,abono_1,abono_1_fecha,abono_1_tipo"
-					},
-					"hs_associations": {
-						"type": "string",
-						"defaultValue": "contacts"
-					}
-				},
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('APIREST_HSAtenciones_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous",
-					"authHeaders": {
-						"Authorization": {
-							"type": "SecureString",
-							"value": "**********"
-						}
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/APIREST_HSCentrosMedicos')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Consulta de Centros Médicos",
-				"parameters": {
-					"hs_companies_properties": {
-						"type": "String",
-						"defaultValue": "name,state,city,distrito,address,tipo_de_centro_medico,etapa_de_centro_medico,numero_de_telefono_1,numero_de_telefono_2,numero_de_telefono_movil_1,numero_de_telefono_movil_2,link_en_mapa,website,hubspot_owner_id"
-					}
-				},
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('APIREST_HSCentrosMedicos_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous",
-					"authHeaders": {
-						"Authorization": {
-							"type": "SecureString",
-							"value": "**********"
-						}
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/APIREST_HSPacientes')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"hs_contact_properties": {
-						"type": "String",
-						"defaultValue": "firstname,lastname,fecha_de_nacimiento,edad,dni,mobilephone,country,state,city,distrito,tipo_de_contacto,hubspot_owner_id,link_de_mapa,zona,condicion,tipo_de_lider,gerencia,gerente_de_negocio,industry,codigo_grupo,codigo_lider"
-					}
-				},
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('APIREST_HSPacientes_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous",
-					"authHeaders": {
-						"Authorization": {
-							"type": "SecureString",
-							"value": "**********"
-						}
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AZKV_hubspot')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('AZKV_hubspot_properties_typeProperties_baseUrl')]"
 				}
 			},
 			"dependsOn": []
@@ -233,26 +91,50 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_src_ggl_encuesta_json')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/AZKV_TrabajoFinal')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"linkedServiceName": {
-					"referenceName": "APIREST_GGLEncuesta",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"spreadsheetId": "1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14",
-						"range": "A1:Z500"
-					}
-				},
 				"annotations": [],
-				"type": "RestResource",
-				"typeProperties": {},
-				"schema": []
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AZKV_TrabajoFinal_properties_typeProperties_baseUrl')]"
+				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/APIREST_GGLEncuesta')]"
-			]
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ADLS2_TrabajoFinal')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('ADLS2_TrabajoFinal_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('ADLS2_TrabajoFinal_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/GGLS_Encuesta')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "GoogleSheets",
+				"typeProperties": {
+					"apiToken": {
+						"type": "SecureString",
+						"value": "[parameters('GGLS_Encuesta_apiToken')]"
+					}
+				}
+			},
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ds_snk_ggl_encuesta_json')]",
@@ -260,7 +142,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "ADLS_linkedservices_trabajofinal",
+					"referenceName": "ADLS2_TrabajoFinal",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -269,150 +151,14 @@
 					"location": {
 						"type": "AzureBlobFSLocation",
 						"fileName": "ggl_encuesta.json",
-						"folderPath": "output",
+						"folderPath": "Output",
 						"fileSystem": "raw"
 					}
 				},
-				"schema": {
-					"type": "object",
-					"properties": {
-						"id": {
-							"type": "string"
-						},
-						"properties": {
-							"type": "object",
-							"properties": {
-								"city": {
-									"type": "string"
-								},
-								"codigo_grupo": {
-									"type": "string"
-								},
-								"codigo_lider": {
-									"type": "string"
-								},
-								"condicion": {
-									"type": "string"
-								},
-								"country": {
-									"type": "string"
-								},
-								"createdate": {
-									"type": "string"
-								},
-								"distrito": {
-									"type": "string"
-								},
-								"dni": {
-									"type": "string"
-								},
-								"edad": {
-									"type": "string"
-								},
-								"fecha_de_nacimiento": {
-									"type": "string"
-								},
-								"firstname": {
-									"type": "string"
-								},
-								"gerencia": {
-									"type": "string"
-								},
-								"gerente_de_negocio": {
-									"type": "string"
-								},
-								"hs_object_id": {
-									"type": "string"
-								},
-								"hubspot_owner_id": {
-									"type": "string"
-								},
-								"industry": {
-									"type": "string"
-								},
-								"lastmodifieddate": {
-									"type": "string"
-								},
-								"lastname": {
-									"type": "string"
-								},
-								"link_de_mapa": {
-									"type": "string"
-								},
-								"mobilephone": {
-									"type": "string"
-								},
-								"state": {
-									"type": "string"
-								},
-								"tipo_de_contacto": {
-									"type": "string"
-								},
-								"tipo_de_lider": {
-									"type": "string"
-								},
-								"zona": {
-									"type": "string"
-								}
-							}
-						},
-						"createdAt": {
-							"type": "string"
-						},
-						"updatedAt": {
-							"type": "string"
-						},
-						"archived": {
-							"type": "boolean"
-						}
-					}
-				}
+				"schema": {}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLS_linkedservices_trabajofinal')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_src_hubspot_rest_json')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "REST_HubspotPHP",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"hs_object": {
-							"value": "@dataset().object",
-							"type": "Expression"
-						},
-						"hs_properties": {
-							"value": "@dataset().properties",
-							"type": "Expression"
-						},
-						"hs_associations": {
-							"value": "@dataset().associations",
-							"type": "Expression"
-						}
-					}
-				},
-				"parameters": {
-					"object": {
-						"type": "String"
-					},
-					"properties": {
-						"type": "String"
-					},
-					"associations": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "RestResource",
-				"typeProperties": {},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/REST_HubspotPHP')]"
+				"[concat(variables('factoryId'), '/linkedServices/ADLS2_TrabajoFinal')]"
 			]
 		},
 		{
@@ -569,72 +315,153 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pl_ggl_encuesta')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/ds_src_hubspot_rest_json')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+				"linkedServiceName": {
+					"referenceName": "REST_HubspotPHP",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"hs_object": {
+							"value": "@dataset().object",
+							"type": "Expression"
 						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "RestSource",
-								"httpRequestTimeout": "00:01:40",
-								"requestInterval": "00.00:00:00.010",
-								"requestMethod": "GET",
-								"paginationRules": {
-									"supportRFC5988": "true"
-								}
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings",
-									"copyBehavior": "FlattenHierarchy"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings"
-								}
-							},
-							"enableStaging": false
+						"hs_properties": {
+							"value": "@dataset().properties",
+							"type": "Expression"
 						},
-						"inputs": [
-							{
-								"referenceName": "ds_src_ggl_encuesta_json",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_snk_ggl_encuesta_json",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"hs_associations": {
+							"value": "@dataset().associations",
+							"type": "Expression"
+						}
 					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
 				},
-				"folder": {
-					"name": "Google"
+				"parameters": {
+					"object": {
+						"type": "String"
+					},
+					"properties": {
+						"type": "String"
+					},
+					"associations": {
+						"type": "String"
+					}
 				},
-				"annotations": []
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {},
+				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_src_ggl_encuesta_json')]",
-				"[concat(variables('factoryId'), '/datasets/ds_snk_ggl_encuesta_json')]"
+				"[concat(variables('factoryId'), '/linkedServices/REST_HubspotPHP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_snk_ggl_encuesta_xlsx')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS2_TrabajoFinal",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Encuesta",
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "ggl_encuesta.xlsx",
+						"folderPath": "Output",
+						"fileSystem": "raw"
+					},
+					"range": "A1:Z600",
+					"firstRowAsHeader": false
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLS2_TrabajoFinal')]"
 			]
 		},
 		{
@@ -836,6 +663,112 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_src_hubspot_rest_json')]",
 				"[concat(variables('factoryId'), '/datasets/ds_snk_hubspot_adls_json')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_ggl_encuesta')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "GGLS_Encuesta",
+								"type": "LinkedServiceReference"
+							},
+							"name": "gglencuestags"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_snk_ggl_encuesta_json",
+								"type": "DatasetReference"
+							},
+							"name": "gglencuestaxlsx",
+							"rejectedDataLinkedService": {
+								"referenceName": "ADLS2_TrabajoFinal",
+								"type": "LinkedServiceReference"
+							}
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     store: 'googlesheets',",
+						"     format: 'rest',",
+						"     spreadSheetId: '1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14',",
+						"     startCell: 'A1',",
+						"     endCell: 'Z600',",
+						"     sheetName: 'Respuestas de formulario 1') ~> gglencuestags",
+						"gglencuestags sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0664,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     saveOrder: 1) ~> gglencuestaxlsx"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/GGLS_Encuesta')]",
+				"[concat(variables('factoryId'), '/datasets/ds_snk_ggl_encuesta_json')]",
+				"[concat(variables('factoryId'), '/linkedServices/ADLS2_TrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_ggl_encuesta')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "df_ggl_encuesta",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_ggl_encuesta",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"gglencuestags": {},
+									"gglencuestaxlsx": {}
+								},
+								"linkedServiceParameters": {}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Google"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_ggl_encuesta')]"
 			]
 		}
 	]

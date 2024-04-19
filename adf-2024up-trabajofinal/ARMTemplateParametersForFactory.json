@@ -8,32 +8,23 @@
 		"ADLS_linkedservices_trabajofinal_accountKey": {
 			"value": ""
 		},
-		"APIREST_GGLEncuesta_clientSecret": {
+		"ADLS2_TrabajoFinal_accountKey": {
+			"value": ""
+		},
+		"GGLS_Encuesta_apiToken": {
 			"value": ""
 		},
 		"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 			"value": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
 		},
-		"APIREST_GGLEncuesta_properties_typeProperties_url": {
-			"value": "@{concat('https://sheets.googleapis.com/v4/spreadsheets/',linkedService().spreadsheetId,'/values/',linkedService().range)}"
-		},
-		"APIREST_GGLEncuesta_properties_typeProperties_clientId": {
-			"value": "892588869947-01khdgf2l3euv57ra1cfccbaa4p08k48.apps.googleusercontent.com"
-		},
-		"APIREST_HSAtenciones_properties_typeProperties_url": {
-			"value": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=deals&properties=',linkedService().hs_deal_properties,'&associations=',linkedService().hs_associations)}"
-		},
-		"APIREST_HSCentrosMedicos_properties_typeProperties_url": {
-			"value": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=companies&properties=',linkedService().hs_companies_properties)}"
-		},
-		"APIREST_HSPacientes_properties_typeProperties_url": {
-			"value": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=contacts&properties=',linkedService().hs_contact_properties)}"
-		},
-		"AZKV_hubspot_properties_typeProperties_baseUrl": {
-			"value": "https://AZKVuptrabajofinal.vault.azure.net/"
-		},
 		"REST_HubspotPHP_properties_typeProperties_url": {
 			"value": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=',linkedService().hs_object,'&properties=',linkedService().hs_properties,'&associations=',linkedService().hs_associations)}"
+		},
+		"AZKV_TrabajoFinal_properties_typeProperties_baseUrl": {
+			"value": "https://AZKVTrabajoFinal.vault.azure.net/"
+		},
+		"ADLS2_TrabajoFinal_properties_typeProperties_url": {
+			"value": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
 		}
 	}
 }
