@@ -99,7 +99,7 @@
 						"parameters": {
 							"object": "companies",
 							"properties": "name,state,city,distrito,address,tipo_de_centro_medico,etapa_de_centro_medico,numero_de_telefono_1,numero_de_telefono_2,numero_de_telefono_movil_1,numero_de_telefono_movil_2,link_en_mapa,website,hubspot_owner_id",
-							"associations": "_"
+							"associations": "contacts"
 						}
 					}
 				],
@@ -139,7 +139,8 @@
 					"sink": {
 						"type": "JsonSink",
 						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
 						},
 						"formatSettings": {
 							"type": "JsonWriteSettings"
@@ -154,7 +155,7 @@
 						"parameters": {
 							"object": "contacts",
 							"properties": "firstname,lastname,fecha_de_nacimiento,edad,dni,mobilephone,country,state,city,distrito,tipo_de_contacto,hubspot_owner_id,link_de_mapa,zona,condicion,tipo_de_lider,gerencia,gerente_de_negocio,industry,codigo_grupo,codigo_lider",
-							"associations": "_"
+							"associations": "deals"
 						}
 					}
 				],
@@ -163,7 +164,7 @@
 						"referenceName": "ds_snk_hubspot_adls_json",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "Output",
+							"folder": "/Output",
 							"file": "hs_pacientes.json"
 						}
 					}
