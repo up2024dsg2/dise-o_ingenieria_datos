@@ -99,7 +99,7 @@
 						"referenceName": "ds_snk_hubspot_adls_json",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "output",
+							"folder": "Output",
 							"file": "hs_pacientes.json"
 						}
 					}
