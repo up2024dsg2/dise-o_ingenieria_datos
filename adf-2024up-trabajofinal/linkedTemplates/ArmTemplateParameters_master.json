@@ -12,7 +12,7 @@
 			"value": ""
 		},
 		"ADLS2_TrabajoFinal_properties_typeProperties_url": {
-			"value": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
+			"value": "https://sa2024uptrabajofinal.dfs.core.windows.net/"
 		},
 		"AZKV_TrabajoFinal_properties_typeProperties_baseUrl": {
 			"value": "https://AZKVTrabajoFinal.vault.azure.net/"
