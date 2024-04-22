@@ -2,7 +2,7 @@
 	"name": "ds_snk_hubspot_adls_json",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ADLS_linkedservices_trabajofinal",
+			"referenceName": "ADLS2_TrabajoFinal",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
