@@ -1,0 +1,17 @@
+{
+	"name": "01_CREATE_TABLE_VIEW",
+	"properties": {
+		"content": {
+			"query": "USE datascience;\nGO;\n\n--- Creando external Table en base a los parquet\nCREATE EXTERNAL TABLE master.borrador2(\nid INT,\ncity nvarchar(50),\ncodigo_lider INT\n) with (\n    LOCATION    ='/master/pacientes.parquet',\n    DATA_SOURCE = UPExternalDataSource,\n    FILE_FORMAT = UPParquetFileFormat \n);\ngo\n\nSelect top 100 * from master.borrador2\n\n\n\n--Table Type: Catalogo\nCREATE VIEW business.ProductCategory \nAS\n SELECT \n CAST (ProductCategoryID AS INT) as ProductCategoryID, CAST(Name AS VARCHAR(20)) AS ProductCategoryName from\n OPENROWSET (\n BULK 'https://sa2024uptrabajofinal.dfs.core.windows.net/master/*.parquet',\n FORMAT ='PARQUET'\n ) as [r];\nGO\n\n--Table Type: Maestro\nCREATE VIEW business.Product\n AS\n SELECT \n CAST (ProductID AS INT) as ProductID,\n CAST (ProductSubcategoryID AS INT) as ProductSubcategoryID,\n CAST (Name AS VARCHAR(50)) as Name,\n CAST (ProductNumber AS VARCHAR(25)) as ProductNumber,\n CAST (MakeFlag AS CHAR(1)) as MakeFlag,\n CAST (FinishedGoodsFlag AS VARCHAR(5)) as FinishedGoodsFlag,\n CAST (Color AS VARCHAR(15)) as Color,\n CAST (SafetyStockLevel AS SMALLINT) as SafetyStockLevel,\n CAST (ReorderPoint AS SMALLINT) as ReorderPoint,\n CAST (StandardCost AS MONEY) as StandardCost,\n CAST (ListPrice AS MONEY) as ListPrice,\n CAST (Size AS VARCHAR(5)) as Size,\n CAST (DaysToManufacture AS INT) as DaysToManufacture,\n CAST (ProductLine AS CHAR(2)) as ProductLine,\n CAST (Class AS CHAR(2)) as Class,\n CAST (Style AS CHAR(2)) as Style,\n CAST (SellStartDate AS DATETIME) as SellStartDate,\n CAST (SellEndDate AS DATETIME) as SellEndDate,\n CAST (DiscontinuedDate AS DATETIME) as DiscontinuedDate,\n CAST(r.filepath(1) AS VARCHAR(4)) as Year, \n CAST(r.filepath(2) AS VARCHAR(2)) as Month\n FROM\n OPENROWSET (\n BULK 'https://stacdatasciencelabpayano.dfs.core.windows.net/raw/advw/data/product/Year=*/Month=*/*.parquet',\n FORMAT ='PARQUET'\n ) as [r];\n GO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "datascience",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
