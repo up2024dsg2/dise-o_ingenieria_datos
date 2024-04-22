@@ -122,15 +122,6 @@
 							},
 							{
 								"source": {
-									"path": "$['properties']['fecha_de_ejecucion']"
-								},
-								"sink": {
-									"name": "fecha_de_ejecucion",
-									"type": "Date"
-								}
-							},
-							{
-								"source": {
 									"path": "$['properties']['fecha_entrega_resultados']"
 								},
 								"sink": {
