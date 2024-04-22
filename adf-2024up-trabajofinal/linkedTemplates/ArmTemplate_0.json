@@ -11,19 +11,11 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS2_TrabajoFinal'"
 		},
-		"ADLS_linkedservices_trabajofinal_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'ADLS_linkedservices_trabajofinal'"
-		},
 		"GGLS_Encuesta_apiToken": {
 			"type": "secureString",
 			"metadata": "Secure string for 'apiToken' of 'GGLS_Encuesta'"
 		},
 		"ADLS2_TrabajoFinal_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
-		},
-		"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
 		},
@@ -52,23 +44,6 @@
 					"accountKey": {
 						"type": "SecureString",
 						"value": "[parameters('ADLS2_TrabajoFinal_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ADLS_linkedservices_trabajofinal')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('ADLS_linkedservices_trabajofinal_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('ADLS_linkedservices_trabajofinal_accountKey')]"
 					}
 				}
 			},

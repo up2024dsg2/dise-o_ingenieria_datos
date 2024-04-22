@@ -11,19 +11,11 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS2_TrabajoFinal'"
 		},
-		"ADLS_linkedservices_trabajofinal_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'ADLS_linkedservices_trabajofinal'"
-		},
 		"GGLS_Encuesta_apiToken": {
 			"type": "secureString",
 			"metadata": "Secure string for 'apiToken' of 'GGLS_Encuesta'"
 		},
 		"ADLS2_TrabajoFinal_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
-		},
-		"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
 		},
@@ -65,17 +57,11 @@
 					"ADLS2_TrabajoFinal_accountKey": {
 						"value": "[parameters('ADLS2_TrabajoFinal_accountKey')]"
 					},
-					"ADLS_linkedservices_trabajofinal_accountKey": {
-						"value": "[parameters('ADLS_linkedservices_trabajofinal_accountKey')]"
-					},
 					"GGLS_Encuesta_apiToken": {
 						"value": "[parameters('GGLS_Encuesta_apiToken')]"
 					},
 					"ADLS2_TrabajoFinal_properties_typeProperties_url": {
 						"value": "[parameters('ADLS2_TrabajoFinal_properties_typeProperties_url')]"
-					},
-					"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
-						"value": "[parameters('ADLS_linkedservices_trabajofinal_properties_typeProperties_url')]"
 					},
 					"AZKV_TrabajoFinal_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AZKV_TrabajoFinal_properties_typeProperties_baseUrl')]"

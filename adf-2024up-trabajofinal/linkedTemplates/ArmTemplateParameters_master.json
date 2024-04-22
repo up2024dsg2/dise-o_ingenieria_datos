@@ -8,16 +8,10 @@
 		"ADLS2_TrabajoFinal_accountKey": {
 			"value": ""
 		},
-		"ADLS_linkedservices_trabajofinal_accountKey": {
-			"value": ""
-		},
 		"GGLS_Encuesta_apiToken": {
 			"value": ""
 		},
 		"ADLS2_TrabajoFinal_properties_typeProperties_url": {
-			"value": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
-		},
-		"ADLS_linkedservices_trabajofinal_properties_typeProperties_url": {
 			"value": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
 		},
 		"AZKV_TrabajoFinal_properties_typeProperties_baseUrl": {
