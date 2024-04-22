@@ -52,7 +52,7 @@
 						"referenceName": "ds_snk_hubspot_adls_json",
 						"type": "DatasetReference",
 						"parameters": {
-							"folder": "/Output",
+							"folder": "Output",
 							"file": "hs_atenciones.json"
 						}
 					}
