@@ -115,7 +115,7 @@
 				]
 			},
 			{
-				"name": "cp_rest2json_pacientes",
+				"name": "cp_rest2json_lideres",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -165,7 +165,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"folder": "Output",
-							"file": "hs_pacientes.json"
+							"file": "hs_lideres.json"
 						}
 					}
 				]
