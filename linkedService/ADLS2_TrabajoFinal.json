@@ -5,8 +5,8 @@
 		"annotations": [],
 		"type": "AzureBlobFS",
 		"typeProperties": {
-			"url": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDA4NEQ3QUNCLTk5REEtNEFBMy1BMkMwLTQ0OTU2QUFCMkQzRV8xMmNhZjc1NC1mZDViLTRlMTQtOGM1Mi1kNmI1MWFiN2ZjNjEiDQp9"
+			"url": "https://sa2024uptrabajofinal.dfs.core.windows.net/",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDA4NEQ3QUNCLTk5REEtNEFBMy1BMkMwLTQ0OTU2QUFCMkQzRV8wNDcwYmQxNC1hOWYyLTQ0MTktYjFjNi1hZjRlMWQ0MTMzNzciDQp9"
 		}
 	}
 }
