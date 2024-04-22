@@ -1,5 +1,5 @@
 {
-	"name": "pl_ggl_encuesta",
+	"name": "pl_src2lnd_ggl_encuesta",
 	"properties": {
 		"activities": [
 			{
@@ -28,7 +28,7 @@
 			}
 		],
 		"folder": {
-			"name": "Google"
+			"name": "01 - Landing/Google"
 		},
 		"annotations": []
 	}

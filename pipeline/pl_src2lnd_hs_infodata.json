@@ -1,5 +1,5 @@
 {
-	"name": "pl_hs_infodata",
+	"name": "pl_src2lnd_hs_infodata",
 	"properties": {
 		"activities": [
 			{
@@ -172,7 +172,7 @@
 			}
 		],
 		"folder": {
-			"name": "Hubspot"
+			"name": "01 - Landing/Hubspot"
 		},
 		"annotations": []
 	}
