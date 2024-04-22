@@ -1,0 +1,17 @@
+{
+	"name": "00_CREATE_TABLE_SCHEMA",
+	"properties": {
+		"content": {
+			"query": "CREATE DATABASE datascience;\nGO\n\nUSE datascience;\nGO\n\nCREATE SCHEMA master AUTHORIZATION dbo;\nGO\n\nCREATE SCHEMA raw AUTHORIZATION dbo;\nGO\n\nCREATE MASTER KEY ENCRYPTION BY PASSWORD = 'p39345ghJ#KL95909234nl0zBe'\nGO\n\nCREATE DATABASE SCOPED CREDENTIAL UPUserIdentity WITH IDENTITY = 'SHARED ACCESS SIGNATURE',\nSECRET = '<INSERT_SAS>'\nGO\n\nUSE datascience;\nGO\n\nCREATE EXTERNAL DATA SOURCE UPExternalDataSource\nWITH (\n    LOCATION = '<INSERT_STORAGE_ACCOUNT',\n    CREDENTIAL = UPUserIdentity\n);\nGO\n\nCREATE EXTERNAL FILE FORMAT UPParquetFileFormat \nWITH (\n    FORMAT_TYPE = PARQUET,\n    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n);\nGO\n\nCREATE EXTERNAL FILE FORMAT UPCSVFileFormat\nWITH (\n    FORMAT_TYPE = DELIMITEDTEXT,\n    FORMAT_OPTIONS (\n        PARSER_VERSION='2.0',\n        FIELD_TERMINATOR = '|',\n        STRING_DELIMITER = '\"',\n        FIRST_ROW = 2)\n)",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "datascience",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
