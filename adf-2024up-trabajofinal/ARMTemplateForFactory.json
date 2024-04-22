@@ -308,7 +308,7 @@
 						]
 					},
 					{
-						"name": "copy_pacientes",
+						"name": "copy_lideres",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -348,8 +348,8 @@
 								"referenceName": "ds_snk_hubspot_adls_json",
 								"type": "DatasetReference",
 								"parameters": {
-									"folder": "output",
-									"file": "hs_pacientes.json"
+									"folder": "Output",
+									"file": "hs_lideres.json"
 								}
 							}
 						],
@@ -358,7 +358,7 @@
 								"referenceName": "ds_parquet",
 								"type": "DatasetReference",
 								"parameters": {
-									"filename": "pacientes.parket"
+									"filename": "lideres.parquet"
 								}
 							}
 						]
@@ -545,7 +545,7 @@
 						]
 					},
 					{
-						"name": "cp_rest2json_pacientes",
+						"name": "cp_rest2json_lideres",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -595,7 +595,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"folder": "Output",
-									"file": "hs_pacientes.json"
+									"file": "hs_lideres.json"
 								}
 							}
 						]
