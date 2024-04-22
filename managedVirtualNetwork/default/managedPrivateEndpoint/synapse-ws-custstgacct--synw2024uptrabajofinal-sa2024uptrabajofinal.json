@@ -1,0 +1,7 @@
+{
+	"name": "synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/a6aa9980-0950-4314-aeef-30b107945949/resourceGroups/rg-2024up-trabajofinal/providers/Microsoft.Storage/storageAccounts/sa2024uptrabajofinal",
+		"groupId": "dfs"
+	}
+}

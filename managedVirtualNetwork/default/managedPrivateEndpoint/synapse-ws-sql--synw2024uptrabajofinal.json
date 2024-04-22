@@ -1,0 +1,10 @@
+{
+	"name": "synapse-ws-sql--synw2024uptrabajofinal",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/a6aa9980-0950-4314-aeef-30b107945949/resourceGroups/rg-2024up-trabajofinal/providers/Microsoft.Synapse/workspaces/synw2024uptrabajofinal",
+		"groupId": "sql",
+		"fqdns": [
+			"synw2024uptrabajofinal.cd537fd1-8735-47f8-87d2-6858163c5118.sql.azuresynapse.net"
+		]
+	}
+}
