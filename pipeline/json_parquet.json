@@ -272,7 +272,7 @@
 				]
 			},
 			{
-				"name": "copy_pacientes",
+				"name": "copy_lideres",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
