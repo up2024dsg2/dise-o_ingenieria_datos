@@ -348,7 +348,7 @@
 								},
 								"sink": {
 									"name": "codigo_lider",
-									"type": "String"
+									"type": "Int64"
 								}
 							},
 							{
