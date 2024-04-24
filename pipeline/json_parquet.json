@@ -49,15 +49,6 @@
 							"file": "hs_atenciones.json"
 						}
 					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Parquet1",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": "atenciones.parquet"
-						}
-					}
 				]
 			},
 			{
@@ -105,15 +96,6 @@
 						"parameters": {
 							"folder": "Output",
 							"file": "hs_pacientes.json"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Parquet1",
-						"type": "DatasetReference",
-						"parameters": {
-							"filename": "pacientes.parquet"
 						}
 					}
 				]
@@ -181,7 +163,7 @@
 			}
 		],
 		"folder": {
-			"name": "silver"
+			"name": "02 - Silver"
 		},
 		"annotations": []
 	}
