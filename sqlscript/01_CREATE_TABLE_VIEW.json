@@ -7,7 +7,7 @@
 				"language": "sql"
 			},
 			"currentConnection": {
-				"databaseName": "datascience",
+				"databaseName": "datascience2025",
 				"poolName": "Built-in"
 			},
 			"resultLimit": 5000
