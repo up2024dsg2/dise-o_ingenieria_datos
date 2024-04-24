@@ -1,0 +1,10 @@
+{
+	"name": "LINKEDSERVICENEW",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://sa2024uptrabajofinal.dfs.core.windows.net/"
+		}
+	}
+}
