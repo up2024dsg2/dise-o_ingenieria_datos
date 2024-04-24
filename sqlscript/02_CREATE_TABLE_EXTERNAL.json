@@ -1,0 +1,17 @@
+{
+	"name": "02_CREATE_TABLE_EXTERNAL",
+	"properties": {
+		"content": {
+			"query": "USE datascience2022;\nGO\n\nCREATE EXTERNAL TABLE business.DimPerson\n WITH (\n     LOCATION = '/business/lakehouse/dimperson/Year=2022/Month=04/',\n     DATA_SOURCE = ExternalUPDataSource,  \n     FILE_FORMAT = UPParquetFileFormat\n )  \n AS\nWITH CustomerIDNotNull (CustomerID, PersonID, CustomerAlternativeKey)  \nAS  \n(  \n    SELECT c.CustomerID, c.PersonID, c.AccountNumber\n    FROM stagingDim.Customer c \n    WHERE c.PersonID IS NOT NULL \n) \nSELECT c.CustomerID AS CustomerKey, \nc.CustomerAlternativeKey AS CustomerAlternativeKey, \np.Title AS Title, p.FirstName AS FirstName, \np.MiddleName AS MiddleName, p.LastName AS LastName,\np.Suffix AS Suffix  \nFROM stagingDim.Person p  \nINNER JOIN CustomerIDNotNull c\nON c.PersonID = p.BusinessEntityID\nINNER JOIN stagingDim.PersonPhone ph\nON c.PersonID = ph.BusinessEntityID\nINNER JOIN stagingDim.EmailAddress em\nON c.PersonID = em.BusinessEntityID\nGO\n\nCREATE EXTERNAL TABLE business.DimProduct\n WITH (\n     LOCATION = '/business/lakehouse/dimproduct/Year=2022/Month=04/',\n     DATA_SOURCE = ExternalUPDataSource,  \n     FILE_FORMAT = UPParquetFileFormat\n )  \n AS\nSELECT p.ProductID AS ProductID, \np.Name AS ProductName, \np.ProductNumber AS ProductAlternativeKey, \np.FinishedGoodsFlag AS FinishedGoodsFlag, \np.Color AS Color,\np.SafetyStockLevel AS SafetyStockLevel,\np.ReorderPoint AS ReorderPoint,\np.StandardCost AS StandardCost,\np.ListPrice AS ListPrice,\np.Size AS Size,\np.ProductLine AS ProductLine,\np.Class AS Class,\np.Style AS Style,\np.SellStartDate AS SellStartDate,\np.SellEndDate AS SellEndDate,\np.DiscontinuedDate AS DiscontinuedDate,\npc.ProductCategoryName AS ProductCategoryName,\npsc.Name AS ProductSubCategoryName\nFROM stagingDim.Product p  \nINNER JOIN stagingDim.ProductSubcategory psc\nON p.ProductSubCategoryID = psc.ProductSubCategoryID\nINNER JOIN stagingDim.ProductCategory pc\nON pc.ProductCategoryID = psc.ProductCategoryID\nGO\n\nCREATE EXTERNAL TABLE business.FactInternetSales\nWITH (\n     LOCATION = '/business/lakehouse/factinternetsales/Year=2022/Month=04/',\n     DATA_SOURCE = ExternalUPDataSource,  \n     FILE_FORMAT = UPParquetFileFormat\n)  \nAS\nSELECT\nsod.ProductID AS ProductKey,\nConvert(CHAR(8),soh.OrderDate,112) AS OrderDateKey,\nConvert(CHAR(8),soh.DueDate,112) AS DueDateKey,\nsoh.CustomerID AS CustomerKey,\nsoh.SalesOrderNumber,\nsod.SpecialOfferID AS SpecialOfferKey,\nSUM(sod.UnitPrice*sod.OrderQty) AS TotalCost,\nSUM(sod.OrderQty) AS TotalOrderQuantity,\nSUM(sod.UnitPriceDiscount) AS TotalDiscount\nFROM stagingDim.SalesOrderHeader soh \nINNER JOIN stagingDim.SalesOrderDetail sod \nON soh.SalesOrderID = sod.SalesOrderID\nGROUP BY sod.ProductID,sod.SpecialOfferID,soh.OrderDate,soh.DueDate,CustomerID,soh.SalesOrderNumber\nGO\n\n--Transacional con particion\nCREATE EXTERNAL TABLE business.DimDate(\n    DateKey INT,\n    FullDateAlternateKey DATE\n) WITH (\n    LOCATION = '/business/lakehouse/dimdate/DimDate.csv',\n    DATA_SOURCE = ExternalUPDataSource,\n    FILE_FORMAT = UPCSVWithHEADERFORMAT\n);\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
