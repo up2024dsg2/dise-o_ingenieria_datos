@@ -161,7 +161,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Avro_encuesta",
+						"referenceName": "ds_avro_encuesta",
 						"type": "DatasetReference",
 						"parameters": {
 							"folder": "Output",
