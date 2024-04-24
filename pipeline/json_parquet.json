@@ -171,7 +171,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Parquet1",
+						"referenceName": "Parquet2",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "encuesta.parquet"
