@@ -242,7 +242,8 @@
 									"path": "$['associations']['contacts']['results'][0]['id']"
 								},
 								"sink": {
-									"name": "associations_contacts"
+									"name": "associations_contacts",
+									"type": "Int64"
 								}
 							},
 							{
