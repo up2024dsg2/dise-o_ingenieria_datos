@@ -27,17 +27,6 @@
 						"referenceName": "ADLS2_TrabajoFinal",
 						"type": "LinkedServiceReference"
 					}
-				},
-				{
-					"linkedService": {
-						"referenceName": "ADLS2_TrabajoFinal",
-						"type": "LinkedServiceReference"
-					},
-					"name": "ggleResult",
-					"rejectedDataLinkedService": {
-						"referenceName": "ADLS2_TrabajoFinal",
-						"type": "LinkedServiceReference"
-					}
 				}
 			],
 			"transformations": [
@@ -108,19 +97,8 @@
 				"     endCell: 'Z600',",
 				"     sheetName: 'Respuestas de formulario 1') ~> ggleRows",
 				"ggleRows select(mapColumn(",
-				"          {$C01} = column_1,",
-				"          column_2,",
-				"          column_3,",
-				"          column_4,",
-				"          column_5,",
-				"          column_6,",
-				"          column_7,",
-				"          column_8,",
-				"          column_9,",
-				"          column_10,",
-				"          column_11,",
-				"          column_12,",
-				"          column_13",
+				"          each(match(iif(name=='column_1', false(), true())),",
+				"               ggleColumnsKCH#outputs()[1].column_1 = $$)",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
@@ -130,18 +108,7 @@
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: true,",
-				"     saveOrder: 1) ~> ggleColumnsKCH",
-				"select1 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     format: 'avro',",
-				"     fileSystem: 'raw',",
-				"     folderPath: 'Output',",
-				"     umask: 0022,",
-				"     preCommands: [],",
-				"     postCommands: [],",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 2) ~> ggleResult"
+				"     saveOrder: 1) ~> ggleColumnsKCH"
 			]
 		}
 	}
