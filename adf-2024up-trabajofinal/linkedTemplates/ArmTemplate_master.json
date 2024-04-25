@@ -11,21 +11,94 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS2_TrabajoFinal'"
 		},
+		"ADLS_StorageAcc_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLS_StorageAcc'"
+		},
 		"GGLS_Encuesta_apiToken": {
 			"type": "secureString",
 			"metadata": "Secure string for 'apiToken' of 'GGLS_Encuesta'"
+		},
+		"GGL_EncuestaSatisf_apiToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'apiToken' of 'GGL_EncuestaSatisf'"
+		},
+		"REST_GGLSheets_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'REST_GGLSheets'"
+		},
+		"synw2024uptrabajofinal-WorkspaceDefaultSqlServer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'synw2024uptrabajofinal-WorkspaceDefaultSqlServer'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synw2024uptrabajofinal.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
 		"ADLS2_TrabajoFinal_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://sa2024uptrabajofinal.dfs.core.windows.net/"
 		},
+		"ADLS_StorageAcc_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
+		},
 		"AZKV_TrabajoFinal_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://AZKVTrabajoFinal.vault.azure.net/"
 		},
+		"LINKEDSERVICENEW_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://sa2024uptrabajofinal.dfs.core.windows.net/"
+		},
+		"REST_GGLSheets_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{concat('https://sheets.googleapis.com/v4/spreadsheets/',linkedService().spreadsheetId,'/values/',linkedService().range)}"
+		},
+		"REST_GGLSheets_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "207900943194-rog4ubdad8bk4ir3p0e5v9aq0ilblhg1.apps.googleusercontent.com"
+		},
 		"REST_HubspotPHP_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=',linkedService().hs_object,'&properties=',linkedService().hs_properties,'&associations=',linkedService().hs_associations)}"
+		},
+		"synw2024uptrabajofinal-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://sa2024uptrabajofinal.dfs.core.windows.net"
+		},
+		"synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/a6aa9980-0950-4314-aeef-30b107945949/resourceGroups/rg-2024up-trabajofinal/providers/Microsoft.Storage/storageAccounts/sa2024uptrabajofinal"
+		},
+		"synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal_properties_groupId": {
+			"type": "string",
+			"defaultValue": "dfs"
+		},
+		"synapse-ws-sql--synw2024uptrabajofinal_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/a6aa9980-0950-4314-aeef-30b107945949/resourceGroups/rg-2024up-trabajofinal/providers/Microsoft.Synapse/workspaces/synw2024uptrabajofinal"
+		},
+		"synapse-ws-sql--synw2024uptrabajofinal_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sql"
+		},
+		"synapse-ws-sql--synw2024uptrabajofinal_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"synw2024uptrabajofinal.cd537fd1-8735-47f8-87d2-6858163c5118.sql.azuresynapse.net"
+			]
+		},
+		"synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/a6aa9980-0950-4314-aeef-30b107945949/resourceGroups/rg-2024up-trabajofinal/providers/Microsoft.Synapse/workspaces/synw2024uptrabajofinal"
+		},
+		"synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sqlOnDemand"
+		},
+		"synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"synw2024uptrabajofinal-ondemand.cd537fd1-8735-47f8-87d2-6858163c5118.sql.azuresynapse.net"
+			]
 		},
 		"containerUri": {
 			"type": "string",
@@ -57,14 +130,35 @@
 					"ADLS2_TrabajoFinal_accountKey": {
 						"value": "[parameters('ADLS2_TrabajoFinal_accountKey')]"
 					},
+					"ADLS_StorageAcc_accountKey": {
+						"value": "[parameters('ADLS_StorageAcc_accountKey')]"
+					},
 					"GGLS_Encuesta_apiToken": {
 						"value": "[parameters('GGLS_Encuesta_apiToken')]"
+					},
+					"GGL_EncuestaSatisf_apiToken": {
+						"value": "[parameters('GGL_EncuestaSatisf_apiToken')]"
+					},
+					"REST_GGLSheets_clientSecret": {
+						"value": "[parameters('REST_GGLSheets_clientSecret')]"
 					},
 					"ADLS2_TrabajoFinal_properties_typeProperties_url": {
 						"value": "[parameters('ADLS2_TrabajoFinal_properties_typeProperties_url')]"
 					},
+					"ADLS_StorageAcc_properties_typeProperties_url": {
+						"value": "[parameters('ADLS_StorageAcc_properties_typeProperties_url')]"
+					},
 					"AZKV_TrabajoFinal_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AZKV_TrabajoFinal_properties_typeProperties_baseUrl')]"
+					},
+					"LINKEDSERVICENEW_properties_typeProperties_url": {
+						"value": "[parameters('LINKEDSERVICENEW_properties_typeProperties_url')]"
+					},
+					"REST_GGLSheets_properties_typeProperties_url": {
+						"value": "[parameters('REST_GGLSheets_properties_typeProperties_url')]"
+					},
+					"REST_GGLSheets_properties_typeProperties_clientId": {
+						"value": "[parameters('REST_GGLSheets_properties_typeProperties_clientId')]"
 					},
 					"REST_HubspotPHP_properties_typeProperties_url": {
 						"value": "[parameters('REST_HubspotPHP_properties_typeProperties_url')]"
@@ -72,6 +166,56 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "adf-2024up-trabajofinal_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"synw2024uptrabajofinal-WorkspaceDefaultSqlServer_connectionString": {
+						"value": "[parameters('synw2024uptrabajofinal-WorkspaceDefaultSqlServer_connectionString')]"
+					},
+					"synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal_properties_privateLinkResourceId": {
+						"value": "[parameters('synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal_properties_privateLinkResourceId')]"
+					},
+					"synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal_properties_groupId": {
+						"value": "[parameters('synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal_properties_groupId')]"
+					},
+					"synapse-ws-sql--synw2024uptrabajofinal_properties_privateLinkResourceId": {
+						"value": "[parameters('synapse-ws-sql--synw2024uptrabajofinal_properties_privateLinkResourceId')]"
+					},
+					"synapse-ws-sql--synw2024uptrabajofinal_properties_groupId": {
+						"value": "[parameters('synapse-ws-sql--synw2024uptrabajofinal_properties_groupId')]"
+					},
+					"synapse-ws-sql--synw2024uptrabajofinal_properties_fqdns": {
+						"value": "[parameters('synapse-ws-sql--synw2024uptrabajofinal_properties_fqdns')]"
+					},
+					"synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_privateLinkResourceId": {
+						"value": "[parameters('synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_privateLinkResourceId')]"
+					},
+					"synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_groupId": {
+						"value": "[parameters('synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_groupId')]"
+					},
+					"synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_fqdns": {
+						"value": "[parameters('synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_fqdns')]"
+					},
+					"synw2024uptrabajofinal-WorkspaceDefaultStorage_properties_typeProperties_url": {
+						"value": "[parameters('synw2024uptrabajofinal-WorkspaceDefaultStorage_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-2024up-trabajofinal_ArmTemplate_0')]"
+			]
 		}
 	]
 }
