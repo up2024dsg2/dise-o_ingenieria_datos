@@ -5,8 +5,6 @@
 			{
 				"name": "copy_atenciones",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -31,14 +29,226 @@
 					"sink": {
 						"type": "ParquetSink",
 						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings",
-							"copyBehavior": "FlattenHierarchy"
+							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
 							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['id']"
+								},
+								"sink": {
+									"name": "id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['abono_1']"
+								},
+								"sink": {
+									"name": "abono_1"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['abono_1_fecha']"
+								},
+								"sink": {
+									"name": "abono_1_fecha"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['abono_1_tipo']"
+								},
+								"sink": {
+									"name": "abono_1_tipo"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['amount']"
+								},
+								"sink": {
+									"name": "amount"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['createdate']"
+								},
+								"sink": {
+									"name": "createdate"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['dealname']"
+								},
+								"sink": {
+									"name": "dealname"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['dealtype']"
+								},
+								"sink": {
+									"name": "dealtype"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['etapa_de_ejecucion']"
+								},
+								"sink": {
+									"name": "etapa_de_ejecucion"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['fecha_de_ejecucion']"
+								},
+								"sink": {
+									"name": "fecha_de_ejecucion"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['fecha_entrega_resultados']"
+								},
+								"sink": {
+									"name": "fecha_entrega_resultados"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['horario_de_atencion']"
+								},
+								"sink": {
+									"name": "horario_de_atencion"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['hs_lastmodifieddate']"
+								},
+								"sink": {
+									"name": "hs_lastmodifieddate"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['hs_object_id']"
+								},
+								"sink": {
+									"name": "hs_object_id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['resultado_de_mamas']"
+								},
+								"sink": {
+									"name": "resultado_de_mamas"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['resultados_de_cuello_uterino']"
+								},
+								"sink": {
+									"name": "resultados_de_cuello_uterino"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['tipo_de_pago']"
+								},
+								"sink": {
+									"name": "tipo_de_pago"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['company_id']"
+								},
+								"sink": {
+									"name": "company_id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['contact_id']"
+								},
+								"sink": {
+									"name": "contact_id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['createdAt']"
+								},
+								"sink": {
+									"name": "createdAt"
+								}
+							},
+							{
+								"source": {
+									"path": "$['updatedAt']"
+								},
+								"sink": {
+									"name": "updatedAt"
+								}
+							},
+							{
+								"source": {
+									"path": "$['archived']"
+								},
+								"sink": {
+									"name": "archived"
+								}
+							},
+							{
+								"source": {
+									"path": "$['associations']['companies']['results'][0]['id']"
+								},
+								"sink": {
+									"name": "associations_companies_results"
+								}
+							},
+							{
+								"source": {
+									"path": "$['associations']['companies']['results'][0]['type']"
+								},
+								"sink": {
+									"name": "associations_companies_results_2"
+								}
+							},
+							{
+								"source": {
+									"path": "$['associations']['contacts']['results'][0]['id']"
+								},
+								"sink": {
+									"name": "associations_contacts_results"
+								}
+							},
+							{
+								"source": {
+									"path": "$['associations']['contacts']['results'][0]['type']"
+								},
+								"sink": {
+									"name": "associations_contacts_results_2"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
@@ -49,13 +259,20 @@
 							"file": "hs_atenciones.json"
 						}
 					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_parquet",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "atenciones.parquet"
+						}
+					}
 				]
 			},
 			{
 				"name": "copy_lideres",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -77,7 +294,262 @@
 							"type": "JsonReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['id']"
+								},
+								"sink": {
+									"name": "id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['city']"
+								},
+								"sink": {
+									"name": "city"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['codigo_grupo']"
+								},
+								"sink": {
+									"name": "codigo_grupo"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['codigo_lider']"
+								},
+								"sink": {
+									"name": "codigo_lider"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['condicion']"
+								},
+								"sink": {
+									"name": "condicion"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['country']"
+								},
+								"sink": {
+									"name": "country"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['createdate']"
+								},
+								"sink": {
+									"name": "createdate"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['distrito']"
+								},
+								"sink": {
+									"name": "distrito"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['dni']"
+								},
+								"sink": {
+									"name": "dni"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['edad']"
+								},
+								"sink": {
+									"name": "edad"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['fecha_de_nacimiento']"
+								},
+								"sink": {
+									"name": "fecha_de_nacimiento"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['firstname']"
+								},
+								"sink": {
+									"name": "firstname"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['gerencia']"
+								},
+								"sink": {
+									"name": "gerencia"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['gerente_de_negocio']"
+								},
+								"sink": {
+									"name": "gerente_de_negocio"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['hs_object_id']"
+								},
+								"sink": {
+									"name": "hs_object_id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['hubspot_owner_id']"
+								},
+								"sink": {
+									"name": "hubspot_owner_id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['industry']"
+								},
+								"sink": {
+									"name": "industry"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['lastmodifieddate']"
+								},
+								"sink": {
+									"name": "lastmodifieddate"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['lastname']"
+								},
+								"sink": {
+									"name": "lastname"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['link_de_mapa']"
+								},
+								"sink": {
+									"name": "link_de_mapa"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['mobilephone']"
+								},
+								"sink": {
+									"name": "mobilephone"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['state']"
+								},
+								"sink": {
+									"name": "state"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['tipo_de_contacto']"
+								},
+								"sink": {
+									"name": "tipo_de_contacto"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['tipo_de_lider']"
+								},
+								"sink": {
+									"name": "tipo_de_lider"
+								}
+							},
+							{
+								"source": {
+									"path": "$['properties']['zona']"
+								},
+								"sink": {
+									"name": "zona"
+								}
+							},
+							{
+								"source": {
+									"path": "$['createdAt']"
+								},
+								"sink": {
+									"name": "createdAt"
+								}
+							},
+							{
+								"source": {
+									"path": "$['updatedAt']"
+								},
+								"sink": {
+									"name": "updatedAt"
+								}
+							},
+							{
+								"source": {
+									"path": "$['archived']"
+								},
+								"sink": {
+									"name": "archived"
+								}
+							},
+							{
+								"source": {
+									"path": "$['associations']['deals']['results'][0]['id']"
+								},
+								"sink": {
+									"name": "associations_deals_results'][0]['id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['associations']['deals']['results'][0]['type']"
+								},
+								"sink": {
+									"name": "type"
+								}
+							}
+						],
+						"mapComplexValuesToString": false
+					}
 				},
 				"inputs": [
 					{
@@ -86,6 +558,15 @@
 						"parameters": {
 							"folder": "Output",
 							"file": "hs_pacientes.json"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_parquet",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "lideres.parquet"
 						}
 					}
 				]
