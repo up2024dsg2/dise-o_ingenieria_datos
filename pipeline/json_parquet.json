@@ -44,7 +44,8 @@
 									"path": "$['id']"
 								},
 								"sink": {
-									"name": "id"
+									"name": "id",
+									"type": "String"
 								}
 							},
 							{
@@ -52,7 +53,8 @@
 									"path": "$['properties']['abono_1']"
 								},
 								"sink": {
-									"name": "abono_1"
+									"name": "abono_1",
+									"type": "String"
 								}
 							},
 							{
@@ -60,7 +62,8 @@
 									"path": "$['properties']['abono_1_fecha']"
 								},
 								"sink": {
-									"name": "abono_1_fecha"
+									"name": "abono_1_fecha",
+									"type": "String"
 								}
 							},
 							{
@@ -68,7 +71,8 @@
 									"path": "$['properties']['abono_1_tipo']"
 								},
 								"sink": {
-									"name": "abono_1_tipo"
+									"name": "abono_1_tipo",
+									"type": "String"
 								}
 							},
 							{
@@ -76,7 +80,8 @@
 									"path": "$['properties']['amount']"
 								},
 								"sink": {
-									"name": "amount"
+									"name": "amount",
+									"type": "String"
 								}
 							},
 							{
@@ -84,7 +89,8 @@
 									"path": "$['properties']['createdate']"
 								},
 								"sink": {
-									"name": "createdate"
+									"name": "createdate",
+									"type": "String"
 								}
 							},
 							{
@@ -92,7 +98,8 @@
 									"path": "$['properties']['dealname']"
 								},
 								"sink": {
-									"name": "dealname"
+									"name": "dealname",
+									"type": "String"
 								}
 							},
 							{
@@ -100,7 +107,8 @@
 									"path": "$['properties']['dealtype']"
 								},
 								"sink": {
-									"name": "dealtype"
+									"name": "dealtype",
+									"type": "String"
 								}
 							},
 							{
@@ -108,7 +116,8 @@
 									"path": "$['properties']['etapa_de_ejecucion']"
 								},
 								"sink": {
-									"name": "etapa_de_ejecucion"
+									"name": "etapa_de_ejecucion",
+									"type": "String"
 								}
 							},
 							{
@@ -116,7 +125,8 @@
 									"path": "$['properties']['fecha_de_ejecucion']"
 								},
 								"sink": {
-									"name": "fecha_de_ejecucion"
+									"name": "fecha_de_ejecucion",
+									"type": "String"
 								}
 							},
 							{
@@ -124,7 +134,8 @@
 									"path": "$['properties']['fecha_entrega_resultados']"
 								},
 								"sink": {
-									"name": "fecha_entrega_resultados"
+									"name": "fecha_entrega_resultados",
+									"type": "String"
 								}
 							},
 							{
@@ -132,7 +143,8 @@
 									"path": "$['properties']['horario_de_atencion']"
 								},
 								"sink": {
-									"name": "horario_de_atencion"
+									"name": "horario_de_atencion",
+									"type": "String"
 								}
 							},
 							{
@@ -140,7 +152,8 @@
 									"path": "$['properties']['hs_lastmodifieddate']"
 								},
 								"sink": {
-									"name": "hs_lastmodifieddate"
+									"name": "hs_lastmodifieddate",
+									"type": "String"
 								}
 							},
 							{
@@ -148,7 +161,8 @@
 									"path": "$['properties']['hs_object_id']"
 								},
 								"sink": {
-									"name": "hs_object_id"
+									"name": "hs_object_id",
+									"type": "String"
 								}
 							},
 							{
@@ -156,7 +170,8 @@
 									"path": "$['properties']['resultado_de_mamas']"
 								},
 								"sink": {
-									"name": "resultado_de_mamas"
+									"name": "resultado_de_mamas",
+									"type": "String"
 								}
 							},
 							{
@@ -164,7 +179,8 @@
 									"path": "$['properties']['resultados_de_cuello_uterino']"
 								},
 								"sink": {
-									"name": "resultados_de_cuello_uterino"
+									"name": "resultados_de_cuello_uterino",
+									"type": "String"
 								}
 							},
 							{
@@ -172,7 +188,8 @@
 									"path": "$['properties']['tipo_de_pago']"
 								},
 								"sink": {
-									"name": "tipo_de_pago"
+									"name": "tipo_de_pago",
+									"type": "String"
 								}
 							},
 							{
@@ -180,7 +197,8 @@
 									"path": "$['properties']['company_id']"
 								},
 								"sink": {
-									"name": "company_id"
+									"name": "company_id",
+									"type": "String"
 								}
 							},
 							{
@@ -188,7 +206,8 @@
 									"path": "$['properties']['contact_id']"
 								},
 								"sink": {
-									"name": "contact_id"
+									"name": "contact_id",
+									"type": "String"
 								}
 							},
 							{
@@ -196,7 +215,8 @@
 									"path": "$['createdAt']"
 								},
 								"sink": {
-									"name": "createdAt"
+									"name": "createdAt",
+									"type": "String"
 								}
 							},
 							{
@@ -204,7 +224,8 @@
 									"path": "$['updatedAt']"
 								},
 								"sink": {
-									"name": "updatedAt"
+									"name": "updatedAt",
+									"type": "String"
 								}
 							},
 							{
@@ -212,7 +233,8 @@
 									"path": "$['archived']"
 								},
 								"sink": {
-									"name": "archived"
+									"name": "archived",
+									"type": "String"
 								}
 							},
 							{
@@ -220,7 +242,8 @@
 									"path": "$['associations']['companies']['results'][0]['id']"
 								},
 								"sink": {
-									"name": "associations_companies_results"
+									"name": "associations_companies_results",
+									"type": "String"
 								}
 							},
 							{
@@ -228,7 +251,8 @@
 									"path": "$['associations']['companies']['results'][0]['type']"
 								},
 								"sink": {
-									"name": "associations_companies_results_2"
+									"name": "associations_companies_results_2",
+									"type": "String"
 								}
 							},
 							{
@@ -236,7 +260,8 @@
 									"path": "$['associations']['contacts']['results'][0]['id']"
 								},
 								"sink": {
-									"name": "associations_contacts_results"
+									"name": "associations_contacts_results",
+									"type": "String"
 								}
 							},
 							{
@@ -244,10 +269,12 @@
 									"path": "$['associations']['contacts']['results'][0]['type']"
 								},
 								"sink": {
-									"name": "associations_contacts_results_2"
+									"name": "associations_contacts_results_2",
+									"type": "String"
 								}
 							}
-						]
+						],
+						"mapComplexValuesToString": true
 					}
 				},
 				"inputs": [
