@@ -35,9 +35,6 @@
 				}
 			],
 			"scriptLines": [
-				"parameters{",
-				"     parameter1 as string (ggleColumnsKCH#outputs()[1].column_1)",
-				"}",
 				"source(output(",
 				"          column_1 as string,",
 				"          column_2 as string,",
@@ -90,12 +87,10 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"ggleColumns sink(validateSchema: false,",
+				"ggleColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     store: 'cache',",
-				"     format: 'inline',",
-				"     output: true,",
 				"     saveOrder: 0) ~> ggleColumnsKCH"
 			]
 		}
