@@ -1,0 +1,1721 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-2024up-trabajofinal"
+		},
+		"ADLS2_TrabajoFinal_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLS2_TrabajoFinal'"
+		},
+		"ADLS_StorageAcc_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLS_StorageAcc'"
+		},
+		"GGLS_Encuesta_apiToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'apiToken' of 'GGLS_Encuesta'"
+		},
+		"synw2024uptrabajofinal-WorkspaceDefaultSqlServer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'synw2024uptrabajofinal-WorkspaceDefaultSqlServer'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synw2024uptrabajofinal.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"ADLS2_TrabajoFinal_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://sa2024uptrabajofinal.dfs.core.windows.net/"
+		},
+		"ADLS_StorageAcc_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
+		},
+		"AZKV_TrabajoFinal_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://AZKVTrabajoFinal.vault.azure.net/"
+		},
+		"LINKEDSERVICENEW_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://sa2024uptrabajofinal.dfs.core.windows.net/"
+		},
+		"REST_HubspotPHP_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513&action=getRecords&object=',linkedService().hs_object,'&properties=',linkedService().hs_properties,'&associations=',linkedService().hs_associations)}"
+		},
+		"synw2024uptrabajofinal-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://sa2024uptrabajofinal.dfs.core.windows.net"
+		},
+		"synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/a6aa9980-0950-4314-aeef-30b107945949/resourceGroups/rg-2024up-trabajofinal/providers/Microsoft.Storage/storageAccounts/sa2024uptrabajofinal"
+		},
+		"synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal_properties_groupId": {
+			"type": "string",
+			"defaultValue": "dfs"
+		},
+		"synapse-ws-sql--synw2024uptrabajofinal_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/a6aa9980-0950-4314-aeef-30b107945949/resourceGroups/rg-2024up-trabajofinal/providers/Microsoft.Synapse/workspaces/synw2024uptrabajofinal"
+		},
+		"synapse-ws-sql--synw2024uptrabajofinal_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sql"
+		},
+		"synapse-ws-sql--synw2024uptrabajofinal_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"synw2024uptrabajofinal.cd537fd1-8735-47f8-87d2-6858163c5118.sql.azuresynapse.net"
+			]
+		},
+		"synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/a6aa9980-0950-4314-aeef-30b107945949/resourceGroups/rg-2024up-trabajofinal/providers/Microsoft.Synapse/workspaces/synw2024uptrabajofinal"
+		},
+		"synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sqlOnDemand"
+		},
+		"synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"synw2024uptrabajofinal-ondemand.cd537fd1-8735-47f8-87d2-6858163c5118.sql.azuresynapse.net"
+			]
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/json_parquet')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "copy_atenciones",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['id']"
+										},
+										"sink": {
+											"name": "id",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['abono_1']"
+										},
+										"sink": {
+											"name": "abono_1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['abono_1_fecha']"
+										},
+										"sink": {
+											"name": "abono_1_fecha",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['abono_1_tipo']"
+										},
+										"sink": {
+											"name": "abono_1_tipo",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['amount']"
+										},
+										"sink": {
+											"name": "amount",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['createdate']"
+										},
+										"sink": {
+											"name": "createdate",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['dealname']"
+										},
+										"sink": {
+											"name": "dealname",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['dealtype']"
+										},
+										"sink": {
+											"name": "dealtype",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['etapa_de_ejecucion']"
+										},
+										"sink": {
+											"name": "etapa_de_ejecucion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['fecha_de_ejecucion']"
+										},
+										"sink": {
+											"name": "fecha_de_ejecucion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['fecha_entrega_resultados']"
+										},
+										"sink": {
+											"name": "fecha_entrega_resultados",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['horario_de_atencion']"
+										},
+										"sink": {
+											"name": "horario_de_atencion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['hs_lastmodifieddate']"
+										},
+										"sink": {
+											"name": "hs_lastmodifieddate",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['hs_object_id']"
+										},
+										"sink": {
+											"name": "hs_object_id",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['resultado_de_mamas']"
+										},
+										"sink": {
+											"name": "resultado_de_mamas",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['resultados_de_cuello_uterino']"
+										},
+										"sink": {
+											"name": "resultados_de_cuello_uterino",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['tipo_de_pago']"
+										},
+										"sink": {
+											"name": "tipo_de_pago",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['company_id']"
+										},
+										"sink": {
+											"name": "company_id",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['contact_id']"
+										},
+										"sink": {
+											"name": "contact_id",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['createdAt']"
+										},
+										"sink": {
+											"name": "createdAt",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['updatedAt']"
+										},
+										"sink": {
+											"name": "updatedAt",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['archived']"
+										},
+										"sink": {
+											"name": "archived",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['associations']['companies']['results'][0]['id']"
+										},
+										"sink": {
+											"name": "associations_companies_results",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['associations']['companies']['results'][0]['type']"
+										},
+										"sink": {
+											"name": "associations_companies_results_2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['associations']['contacts']['results'][0]['id']"
+										},
+										"sink": {
+											"name": "associations_contacts_results",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['associations']['contacts']['results'][0]['type']"
+										},
+										"sink": {
+											"name": "associations_contacts_results_2",
+											"type": "String"
+										}
+									}
+								],
+								"mapComplexValuesToString": true
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_snk_hubspot_adls_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"folder": "Output",
+									"file": "hs_atenciones.json"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "atenciones.parquet"
+								}
+							}
+						]
+					},
+					{
+						"name": "copy_lideres",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['id']"
+										},
+										"sink": {
+											"name": "id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['city']"
+										},
+										"sink": {
+											"name": "city"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['codigo_grupo']"
+										},
+										"sink": {
+											"name": "codigo_grupo"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['codigo_lider']"
+										},
+										"sink": {
+											"name": "codigo_lider"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['condicion']"
+										},
+										"sink": {
+											"name": "condicion"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['country']"
+										},
+										"sink": {
+											"name": "country"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['createdate']"
+										},
+										"sink": {
+											"name": "createdate"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['distrito']"
+										},
+										"sink": {
+											"name": "distrito"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['dni']"
+										},
+										"sink": {
+											"name": "dni"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['edad']"
+										},
+										"sink": {
+											"name": "edad"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['fecha_de_nacimiento']"
+										},
+										"sink": {
+											"name": "fecha_de_nacimiento"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['firstname']"
+										},
+										"sink": {
+											"name": "firstname"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['gerencia']"
+										},
+										"sink": {
+											"name": "gerencia"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['gerente_de_negocio']"
+										},
+										"sink": {
+											"name": "gerente_de_negocio"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['hs_object_id']"
+										},
+										"sink": {
+											"name": "hs_object_id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['hubspot_owner_id']"
+										},
+										"sink": {
+											"name": "hubspot_owner_id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['industry']"
+										},
+										"sink": {
+											"name": "industry"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['lastmodifieddate']"
+										},
+										"sink": {
+											"name": "lastmodifieddate"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['lastname']"
+										},
+										"sink": {
+											"name": "lastname"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['link_de_mapa']"
+										},
+										"sink": {
+											"name": "link_de_mapa"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['mobilephone']"
+										},
+										"sink": {
+											"name": "mobilephone"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['state']"
+										},
+										"sink": {
+											"name": "state"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['tipo_de_contacto']"
+										},
+										"sink": {
+											"name": "tipo_de_contacto"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['tipo_de_lider']"
+										},
+										"sink": {
+											"name": "tipo_de_lider"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['zona']"
+										},
+										"sink": {
+											"name": "zona"
+										}
+									},
+									{
+										"source": {
+											"path": "$['createdAt']"
+										},
+										"sink": {
+											"name": "createdAt"
+										}
+									},
+									{
+										"source": {
+											"path": "$['updatedAt']"
+										},
+										"sink": {
+											"name": "updatedAt"
+										}
+									},
+									{
+										"source": {
+											"path": "$['archived']"
+										},
+										"sink": {
+											"name": "archived"
+										}
+									},
+									{
+										"source": {
+											"path": "$['associations']['deals']['results'][0]['id']"
+										},
+										"sink": {
+											"name": "associations_deals_results'][0]['id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['associations']['deals']['results'][0]['type']"
+										},
+										"sink": {
+											"name": "type"
+										}
+									}
+								],
+								"mapComplexValuesToString": false
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_snk_hubspot_adls_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"folder": "Output",
+									"file": "hs_pacientes.json"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "lideres.parquet"
+								}
+							}
+						]
+					},
+					{
+						"name": "copy_encuesta",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AvroSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings",
+									"copyBehavior": "FlattenHierarchy"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Avro1",
+								"type": "DatasetReference",
+								"parameters": {
+									"file": "Output",
+									"filename": "gglencuesta.avro"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Parquet2",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "encuesta.parquet"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "02 - Silver"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-04-25T04:06:35Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_snk_hubspot_adls_json')]",
+				"[concat(variables('factoryId'), '/datasets/ds_parquet')]",
+				"[concat(variables('factoryId'), '/datasets/Avro1')]",
+				"[concat(variables('factoryId'), '/datasets/Parquet2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_src2lnd_ggl_encuesta')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "df_ggl_encuesta",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_ggl_encuesta",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"gglencuestags": {},
+									"gglencuestaavro": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "IRTrabajoFinal",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "01 - Bronze/Landing"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-04-25T03:28:25Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_ggl_encuesta')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_src2lnd_hs_infodata')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "cp_rest2json_atenciones",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings",
+									"copyBehavior": "FlattenHierarchy"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_src_hubspot_rest_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"object": "deals",
+									"properties": "hs_object_id,dealname,dealtype,etapa_de_ejecucion,fecha_de_ejecucion,horario_de_atencion,fecha_entrega_resultados,resultado_de_mamas,resultados_de_cuello_uterino,amount,tipo_de_pago,abono_1,abono_1_fecha,abono_1_tipo",
+									"associations": "contacts,companies"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_snk_hubspot_adls_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"folder": "Output",
+									"file": "hs_atenciones.json"
+								}
+							}
+						]
+					},
+					{
+						"name": "cp_rest2json_centrosmedicos",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings",
+									"copyBehavior": "FlattenHierarchy"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_src_hubspot_rest_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"object": "companies",
+									"properties": "name,state,city,distrito,address,tipo_de_centro_medico,etapa_de_centro_medico,numero_de_telefono_1,numero_de_telefono_2,numero_de_telefono_movil_1,numero_de_telefono_movil_2,link_en_mapa,website,hubspot_owner_id",
+									"associations": "contacts"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_snk_hubspot_adls_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"folder": "Output",
+									"file": "hs_centrosmedicos.json"
+								}
+							}
+						]
+					},
+					{
+						"name": "cp_rest2json_lideres",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings",
+									"copyBehavior": "FlattenHierarchy"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_src_hubspot_rest_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"object": "contacts",
+									"properties": "firstname,lastname,fecha_de_nacimiento,edad,dni,mobilephone,country,state,city,distrito,tipo_de_contacto,hubspot_owner_id,link_de_mapa,zona,condicion,tipo_de_lider,gerencia,gerente_de_negocio,industry,codigo_grupo,codigo_lider",
+									"associations": "deals"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_snk_hubspot_adls_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"folder": "Output",
+									"file": "hs_lideres.json"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "01 - Bronze/Landing"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-04-25T03:11:49Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_src_hubspot_rest_json')]",
+				"[concat(variables('factoryId'), '/datasets/ds_snk_hubspot_adls_json')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Avro1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LINKEDSERVICENEW",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"file": {
+						"type": "string"
+					},
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Avro",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().file",
+							"type": "Expression"
+						},
+						"fileSystem": "raw"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LINKEDSERVICENEW')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Parquet2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LINKEDSERVICENEW",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"fileSystem": "master"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LINKEDSERVICENEW')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_avro_encuesta')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS2_TrabajoFinal",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"folder": {
+						"type": "string"
+					},
+					"file": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Avro",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().file",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().folder",
+							"type": "Expression"
+						},
+						"fileSystem": "raw"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLS2_TrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_parquet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS2_TrabajoFinal",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"fileSystem": "master"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLS2_TrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_snk_ggl_encuesta_json')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS2_TrabajoFinal",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "ggl_encuesta.json",
+						"folderPath": "Output",
+						"fileSystem": "raw"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLS2_TrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_snk_hubspot_adls_json')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS2_TrabajoFinal",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"folder": {
+						"type": "string"
+					},
+					"file": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().file",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().folder",
+							"type": "Expression"
+						},
+						"fileSystem": "raw"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"startTime": {
+							"type": "string"
+						},
+						"id": {
+							"type": "string"
+						},
+						"incompatibleFeatures": {
+							"type": "array"
+						},
+						"blobValidationErrors": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"scannedBlobCount": {
+							"type": "integer"
+						},
+						"invalidBlobCount": {
+							"type": "integer"
+						},
+						"endTime": {
+							"type": "string"
+						},
+						"properties": {
+							"type": "object",
+							"properties": {
+								"city": {
+									"type": "string"
+								},
+								"codigo_grupo": {
+									"type": "string"
+								},
+								"codigo_lider": {
+									"type": "string"
+								},
+								"condicion": {
+									"type": "string"
+								},
+								"country": {
+									"type": "string"
+								},
+								"createdate": {
+									"type": "string"
+								},
+								"distrito": {
+									"type": "string"
+								},
+								"dni": {
+									"type": "string"
+								},
+								"edad": {
+									"type": "string"
+								},
+								"fecha_de_nacimiento": {
+									"type": "string"
+								},
+								"firstname": {
+									"type": "string"
+								},
+								"gerencia": {
+									"type": "string"
+								},
+								"gerente_de_negocio": {
+									"type": "string"
+								},
+								"hs_object_id": {
+									"type": "string"
+								},
+								"hubspot_owner_id": {
+									"type": "string"
+								},
+								"industry": {
+									"type": "string"
+								},
+								"lastmodifieddate": {
+									"type": "string"
+								},
+								"lastname": {
+									"type": "string"
+								},
+								"link_de_mapa": {
+									"type": "string"
+								},
+								"mobilephone": {
+									"type": "string"
+								},
+								"state": {
+									"type": "string"
+								},
+								"tipo_de_contacto": {
+									"type": "string"
+								},
+								"tipo_de_lider": {
+									"type": "string"
+								},
+								"zona": {
+									"type": "string"
+								}
+							}
+						},
+						"createdAt": {
+							"type": "string"
+						},
+						"updatedAt": {
+							"type": "string"
+						},
+						"archived": {
+							"type": "boolean"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLS2_TrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_src_hubspot_rest_json')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "REST_HubspotPHP",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"hs_object": {
+							"value": "@dataset().object",
+							"type": "Expression"
+						},
+						"hs_properties": {
+							"value": "@dataset().properties",
+							"type": "Expression"
+						},
+						"hs_associations": {
+							"value": "@dataset().associations",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"object": {
+						"type": "String"
+					},
+					"properties": {
+						"type": "String"
+					},
+					"associations": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/REST_HubspotPHP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ADLS2_TrabajoFinal')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('ADLS2_TrabajoFinal_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('ADLS2_TrabajoFinal_accountKey')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "IRTrabajoFinal",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ADLS_StorageAcc')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('ADLS_StorageAcc_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('ADLS_StorageAcc_accountKey')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "IRTrabajoFinal",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AZKV_TrabajoFinal')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AZKV_TrabajoFinal_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/GGLS_Encuesta')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "GoogleSheets",
+				"typeProperties": {
+					"apiToken": {
+						"type": "SecureString",
+						"value": "[parameters('GGLS_Encuesta_apiToken')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "IRTrabajoFinal",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LINKEDSERVICENEW')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('LINKEDSERVICENEW_properties_typeProperties_url')]"
+				},
+				"connectVia": {
+					"referenceName": "IRTrabajoFinal",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/REST_HubspotPHP')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Conexión a API en servidor PHP que consulta a Hubspot evitando la paginación",
+				"parameters": {
+					"hs_object": {
+						"type": "string"
+					},
+					"hs_properties": {
+						"type": "string"
+					},
+					"hs_associations": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('REST_HubspotPHP_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous",
+					"authHeaders": {
+						"Authorization": {
+							"type": "SecureString",
+							"value": "**********"
+						}
+					}
+				},
+				"connectVia": {
+					"referenceName": "IRTrabajoFinal",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/synw2024uptrabajofinal-WorkspaceDefaultSqlServer')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"DBName": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('synw2024uptrabajofinal-WorkspaceDefaultSqlServer_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "IRTrabajoFinal",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/synw2024uptrabajofinal-WorkspaceDefaultStorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('synw2024uptrabajofinal-WorkspaceDefaultStorage_properties_typeProperties_url')]"
+				},
+				"connectVia": {
+					"referenceName": "IRTrabajoFinal",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AutoResolveIntegrationRuntime')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 0
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/IRTrabajoFinal')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 10,
+							"cleanup": false,
+							"customProperties": []
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_ggl_encuesta')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "GGLS_Encuesta",
+								"type": "LinkedServiceReference"
+							},
+							"name": "gglencuestags"
+						}
+					],
+					"sinks": [
+						{
+							"linkedService": {
+								"referenceName": "ADLS2_TrabajoFinal",
+								"type": "LinkedServiceReference"
+							},
+							"name": "gglencuestaavro",
+							"rejectedDataLinkedService": {
+								"referenceName": "ADLS2_TrabajoFinal",
+								"type": "LinkedServiceReference"
+							}
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     store: 'googlesheets',",
+						"     format: 'rest',",
+						"     spreadSheetId: '1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14',",
+						"     startCell: 'A1',",
+						"     endCell: 'Z600',",
+						"     sheetName: 'Respuestas de formulario 1') ~> gglencuestags",
+						"gglencuestags sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'avro',",
+						"     fileSystem: 'raw',",
+						"     folderPath: 'Output',",
+						"     partitionFileNames:['gglencuesta.avro'],",
+						"     umask: 0664,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     saveOrder: 1,",
+						"     partitionBy('hash', 1)) ~> gglencuestaavro"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/GGLS_Encuesta')]",
+				"[concat(variables('factoryId'), '/linkedServices/ADLS2_TrabajoFinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/WorkspaceSystemIdentity')]",
+			"type": "Microsoft.DataFactory/factories/credentials",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "ManagedIdentity",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+			"apiVersion": "2018-06-01",
+			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal_properties_groupId')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/synapse-ws-sql--synw2024uptrabajofinal')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('synapse-ws-sql--synw2024uptrabajofinal_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('synapse-ws-sql--synw2024uptrabajofinal_properties_groupId')]",
+				"fqdns": "[parameters('synapse-ws-sql--synw2024uptrabajofinal_properties_fqdns')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/synapse-ws-sqlOnDemand--synw2024uptrabajofinal')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_groupId')]",
+				"fqdns": "[parameters('synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_fqdns')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		}
+	]
+}
