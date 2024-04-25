@@ -1,5 +1,5 @@
 {
-	"name": "ds_avro_encuesta",
+	"name": "ds_srcNsnk_avro",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ADLS2_TrabajoFinal",

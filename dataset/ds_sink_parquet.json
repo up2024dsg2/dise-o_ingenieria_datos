@@ -1,5 +1,5 @@
 {
-	"name": "ds_parquet",
+	"name": "ds_sink_parquet",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ADLS2_TrabajoFinal",

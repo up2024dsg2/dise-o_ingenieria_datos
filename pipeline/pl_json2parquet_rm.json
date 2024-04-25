@@ -1,9 +1,9 @@
 {
-	"name": "json_parquet",
+	"name": "pl_json2parquet_rm",
 	"properties": {
 		"activities": [
 			{
-				"name": "copy_atenciones",
+				"name": "r2m_copy_atenciones",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -289,7 +289,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_parquet",
+						"referenceName": "ds_sink_parquet",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "atenciones.parquet"
@@ -298,7 +298,7 @@
 				]
 			},
 			{
-				"name": "copy_lideres",
+				"name": "r2m_copy_lideres",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -324,7 +324,8 @@
 					"sink": {
 						"type": "ParquetSink",
 						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
 						},
 						"formatSettings": {
 							"type": "ParquetWriteSettings"
@@ -584,13 +585,13 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"folder": "Output",
-							"file": "hs_pacientes.json"
+							"file": "hs_lideres.json"
 						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_parquet",
+						"referenceName": "ds_sink_parquet",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "lideres.parquet"
@@ -599,7 +600,7 @@
 				]
 			},
 			{
-				"name": "copy_encuesta",
+				"name": "r2m_copy_encuesta",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -632,6 +633,151 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "column_1",
+									"type": "string | null",
+									"physicalType": "string | null"
+								},
+								"sink": {
+									"name": "column_1",
+									"type": "string | null"
+								}
+							},
+							{
+								"source": {
+									"name": "column_2",
+									"type": "string | null",
+									"physicalType": "string | null"
+								},
+								"sink": {
+									"name": "column_2",
+									"type": "string | null"
+								}
+							},
+							{
+								"source": {
+									"name": "column_3",
+									"type": "string | null",
+									"physicalType": "string | null"
+								},
+								"sink": {
+									"name": "column_3",
+									"type": "string | null"
+								}
+							},
+							{
+								"source": {
+									"name": "column_4",
+									"type": "string | null",
+									"physicalType": "string | null"
+								},
+								"sink": {
+									"name": "column_4",
+									"type": "string | null"
+								}
+							},
+							{
+								"source": {
+									"name": "column_5",
+									"type": "string | null",
+									"physicalType": "string | null"
+								},
+								"sink": {
+									"name": "column_5",
+									"type": "string | null"
+								}
+							},
+							{
+								"source": {
+									"name": "column_6",
+									"type": "string | null",
+									"physicalType": "string | null"
+								},
+								"sink": {
+									"name": "column_6",
+									"type": "string | null"
+								}
+							},
+							{
+								"source": {
+									"name": "column_7",
+									"type": "string | null",
+									"physicalType": "string | null"
+								},
+								"sink": {
+									"name": "column_7",
+									"type": "string | null"
+								}
+							},
+							{
+								"source": {
+									"name": "column_8",
+									"type": "string | null",
+									"physicalType": "string | null"
+								},
+								"sink": {
+									"name": "column_8",
+									"type": "string | null"
+								}
+							},
+							{
+								"source": {
+									"name": "column_9",
+									"type": "string | null",
+									"physicalType": "string | null"
+								},
+								"sink": {
+									"name": "column_9",
+									"type": "string | null"
+								}
+							},
+							{
+								"source": {
+									"name": "column_10",
+									"type": "string | null",
+									"physicalType": "string | null"
+								},
+								"sink": {
+									"name": "column_10",
+									"type": "string | null"
+								}
+							},
+							{
+								"source": {
+									"name": "column_11",
+									"type": "string | null",
+									"physicalType": "string | null"
+								},
+								"sink": {
+									"name": "column_11",
+									"type": "string | null"
+								}
+							},
+							{
+								"source": {
+									"name": "column_12",
+									"type": "string | null",
+									"physicalType": "string | null"
+								},
+								"sink": {
+									"name": "column_12",
+									"type": "string | null"
+								}
+							},
+							{
+								"source": {
+									"name": "column_13",
+									"type": "string | null",
+									"physicalType": "string | null"
+								},
+								"sink": {
+									"name": "column_13",
+									"type": "string | null"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -641,17 +787,17 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Avro1",
+						"referenceName": "ds_srcNsnk_avro",
 						"type": "DatasetReference",
 						"parameters": {
-							"file": "Output",
-							"filename": "gglencuesta.avro"
+							"folder": "Output",
+							"file": "ggl_encuesta.avro"
 						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Parquet2",
+						"referenceName": "ds_sink_parquet",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "encuesta.parquet"
