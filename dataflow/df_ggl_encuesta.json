@@ -97,7 +97,7 @@
 				"     endCell: 'Z600',",
 				"     sheetName: 'Respuestas de formulario 1') ~> ggleRows",
 				"ggleRows select(mapColumn(",
-				"          each(match(iif(name=='column_1', false(), true())),",
+				"          each(match(type=='string'),",
 				"               ggleColumnsKCH#outputs()[1].column_1 = $$)",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
