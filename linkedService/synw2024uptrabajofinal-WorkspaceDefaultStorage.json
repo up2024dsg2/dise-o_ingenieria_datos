@@ -1,6 +1,6 @@
 {
 	"name": "synw2024uptrabajofinal-WorkspaceDefaultStorage",
-	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"typeProperties": {
 			"url": "https://sa2024uptrabajofinal.dfs.core.windows.net"

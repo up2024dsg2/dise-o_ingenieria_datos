@@ -1,6 +1,6 @@
 {
 	"name": "synw2024uptrabajofinal-WorkspaceDefaultSqlServer",
-	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"typeProperties": {
 			"connectionString": "Data Source=tcp:synw2024uptrabajofinal.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"

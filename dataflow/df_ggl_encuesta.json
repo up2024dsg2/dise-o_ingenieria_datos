@@ -40,7 +40,7 @@
 				"     format: 'avro',",
 				"     fileSystem: 'raw',",
 				"     folderPath: 'Output',",
-				"     partitionFileNames:['ggl_encuesta.avro'],",
+				"     partitionFileNames:['gglencuesta.avro'],",
 				"     umask: 0664,",
 				"     preCommands: [],",
 				"     postCommands: [],",
