@@ -6,51 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-2024up-trabajofinal"
-		},
-		"synw2024uptrabajofinal-WorkspaceDefaultSqlServer_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'synw2024uptrabajofinal-WorkspaceDefaultSqlServer'",
-			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synw2024uptrabajofinal.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
-		},
-		"synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal_properties_privateLinkResourceId": {
-			"type": "string",
-			"defaultValue": "/subscriptions/a6aa9980-0950-4314-aeef-30b107945949/resourceGroups/rg-2024up-trabajofinal/providers/Microsoft.Storage/storageAccounts/sa2024uptrabajofinal"
-		},
-		"synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal_properties_groupId": {
-			"type": "string",
-			"defaultValue": "dfs"
-		},
-		"synapse-ws-sql--synw2024uptrabajofinal_properties_privateLinkResourceId": {
-			"type": "string",
-			"defaultValue": "/subscriptions/a6aa9980-0950-4314-aeef-30b107945949/resourceGroups/rg-2024up-trabajofinal/providers/Microsoft.Synapse/workspaces/synw2024uptrabajofinal"
-		},
-		"synapse-ws-sql--synw2024uptrabajofinal_properties_groupId": {
-			"type": "string",
-			"defaultValue": "sql"
-		},
-		"synapse-ws-sql--synw2024uptrabajofinal_properties_fqdns": {
-			"type": "array",
-			"defaultValue": [
-				"synw2024uptrabajofinal.cd537fd1-8735-47f8-87d2-6858163c5118.sql.azuresynapse.net"
-			]
-		},
-		"synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_privateLinkResourceId": {
-			"type": "string",
-			"defaultValue": "/subscriptions/a6aa9980-0950-4314-aeef-30b107945949/resourceGroups/rg-2024up-trabajofinal/providers/Microsoft.Synapse/workspaces/synw2024uptrabajofinal"
-		},
-		"synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_groupId": {
-			"type": "string",
-			"defaultValue": "sqlOnDemand"
-		},
-		"synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_fqdns": {
-			"type": "array",
-			"defaultValue": [
-				"synw2024uptrabajofinal-ondemand.cd537fd1-8735-47f8-87d2-6858163c5118.sql.azuresynapse.net"
-			]
-		},
-		"synw2024uptrabajofinal-WorkspaceDefaultStorage_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://sa2024uptrabajofinal.dfs.core.windows.net"
 		}
 	},
 	"variables": {
@@ -58,34 +13,251 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/default/synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal')]",
-			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"name": "[concat(parameters('factoryName'), '/ds_snk_hubspot_adls_json')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"privateLinkResourceId": "[parameters('synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal_properties_privateLinkResourceId')]",
-				"groupId": "[parameters('synapse-ws-custstgacct--synw2024uptrabajofinal-sa2024uptrabajofinal_properties_groupId')]"
+				"linkedServiceName": {
+					"referenceName": "ADLS2_TrabajoFinal",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"folder": {
+						"type": "string"
+					},
+					"file": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().file",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().folder",
+							"type": "Expression"
+						},
+						"fileSystem": "raw"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"startTime": {
+							"type": "string"
+						},
+						"id": {
+							"type": "string"
+						},
+						"incompatibleFeatures": {
+							"type": "array"
+						},
+						"blobValidationErrors": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"scannedBlobCount": {
+							"type": "integer"
+						},
+						"invalidBlobCount": {
+							"type": "integer"
+						},
+						"endTime": {
+							"type": "string"
+						},
+						"properties": {
+							"type": "object",
+							"properties": {
+								"city": {
+									"type": "string"
+								},
+								"codigo_grupo": {
+									"type": "string"
+								},
+								"codigo_lider": {
+									"type": "string"
+								},
+								"condicion": {
+									"type": "string"
+								},
+								"country": {
+									"type": "string"
+								},
+								"createdate": {
+									"type": "string"
+								},
+								"distrito": {
+									"type": "string"
+								},
+								"dni": {
+									"type": "string"
+								},
+								"edad": {
+									"type": "string"
+								},
+								"fecha_de_nacimiento": {
+									"type": "string"
+								},
+								"firstname": {
+									"type": "string"
+								},
+								"gerencia": {
+									"type": "string"
+								},
+								"gerente_de_negocio": {
+									"type": "string"
+								},
+								"hs_object_id": {
+									"type": "string"
+								},
+								"hubspot_owner_id": {
+									"type": "string"
+								},
+								"industry": {
+									"type": "string"
+								},
+								"lastmodifieddate": {
+									"type": "string"
+								},
+								"lastname": {
+									"type": "string"
+								},
+								"link_de_mapa": {
+									"type": "string"
+								},
+								"mobilephone": {
+									"type": "string"
+								},
+								"state": {
+									"type": "string"
+								},
+								"tipo_de_contacto": {
+									"type": "string"
+								},
+								"tipo_de_lider": {
+									"type": "string"
+								},
+								"zona": {
+									"type": "string"
+								}
+							}
+						},
+						"createdAt": {
+							"type": "string"
+						},
+						"updatedAt": {
+							"type": "string"
+						},
+						"archived": {
+							"type": "boolean"
+						}
+					}
+				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/default/synapse-ws-sql--synw2024uptrabajofinal')]",
-			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"name": "[concat(parameters('factoryName'), '/ds_src_hubspot_rest_json')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"privateLinkResourceId": "[parameters('synapse-ws-sql--synw2024uptrabajofinal_properties_privateLinkResourceId')]",
-				"groupId": "[parameters('synapse-ws-sql--synw2024uptrabajofinal_properties_groupId')]",
-				"fqdns": "[parameters('synapse-ws-sql--synw2024uptrabajofinal_properties_fqdns')]"
+				"linkedServiceName": {
+					"referenceName": "REST_HubspotPHP",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"hs_object": {
+							"value": "@dataset().object",
+							"type": "Expression"
+						},
+						"hs_properties": {
+							"value": "@dataset().properties",
+							"type": "Expression"
+						},
+						"hs_associations": {
+							"value": "@dataset().associations",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"object": {
+						"type": "String"
+					},
+					"properties": {
+						"type": "String"
+					},
+					"associations": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {},
+				"schema": []
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/default/synapse-ws-sqlOnDemand--synw2024uptrabajofinal')]",
-			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"name": "[concat(parameters('factoryName'), '/df_ggl_encuesta')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"privateLinkResourceId": "[parameters('synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_privateLinkResourceId')]",
-				"groupId": "[parameters('synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_groupId')]",
-				"fqdns": "[parameters('synapse-ws-sqlOnDemand--synw2024uptrabajofinal_properties_fqdns')]"
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "GGLS_Encuesta",
+								"type": "LinkedServiceReference"
+							},
+							"name": "gglencuestags"
+						}
+					],
+					"sinks": [
+						{
+							"linkedService": {
+								"referenceName": "ADLS2_TrabajoFinal",
+								"type": "LinkedServiceReference"
+							},
+							"name": "gglencuestaavro",
+							"rejectedDataLinkedService": {
+								"referenceName": "ADLS2_TrabajoFinal",
+								"type": "LinkedServiceReference"
+							}
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     store: 'googlesheets',",
+						"     format: 'rest',",
+						"     spreadSheetId: '1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14',",
+						"     startCell: 'A1',",
+						"     endCell: 'Z600',",
+						"     sheetName: 'Respuestas de formulario 1') ~> gglencuestags",
+						"gglencuestags sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'avro',",
+						"     fileSystem: 'raw',",
+						"     folderPath: 'Output',",
+						"     partitionFileNames:['gglencuesta.avro'],",
+						"     umask: 0664,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     saveOrder: 1,",
+						"     partitionBy('hash', 1)) ~> gglencuestaavro"
+					]
+				}
 			},
 			"dependsOn": []
 		},
@@ -145,7 +317,7 @@
 						]
 					},
 					{
-						"name": "copy_pacientes",
+						"name": "copy_lideres",
 						"type": "Copy",
 						"state": "Inactive",
 						"onInactiveMarkAs": "Succeeded",
@@ -170,16 +342,7 @@
 									"type": "JsonReadSettings"
 								}
 							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings",
-									"copyBehavior": "FlattenHierarchy"
-								},
-								"formatSettings": {
-									"type": "ParquetWriteSettings"
-								}
-							},
+							"sink": {},
 							"enableStaging": false
 						},
 						"inputs": [
@@ -264,7 +427,9 @@
 				"annotations": [],
 				"lastPublishTime": "2024-04-25T03:09:03Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_snk_hubspot_adls_json')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_src2lnd_ggl_encuesta')]",
@@ -295,9 +460,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "IRTrabajoFinal",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -312,7 +477,9 @@
 				"annotations": [],
 				"lastPublishTime": "2024-04-25T03:09:03Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_ggl_encuesta')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_src2lnd_hs_infodata')]",
@@ -498,46 +665,10 @@
 				"annotations": [],
 				"lastPublishTime": "2024-04-25T03:09:03Z"
 			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/synw2024uptrabajofinal-WorkspaceDefaultSqlServer')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"DBName": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlDW",
-				"typeProperties": {
-					"connectionString": "[parameters('synw2024uptrabajofinal-WorkspaceDefaultSqlServer_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "AutoResolveIntegrationRuntime",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/synw2024uptrabajofinal-WorkspaceDefaultStorage')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('synw2024uptrabajofinal-WorkspaceDefaultStorage_properties_typeProperties_url')]"
-				},
-				"connectVia": {
-					"referenceName": "AutoResolveIntegrationRuntime",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_src_hubspot_rest_json')]",
+				"[concat(variables('factoryId'), '/datasets/ds_snk_hubspot_adls_json')]"
+			]
 		}
 	]
 }

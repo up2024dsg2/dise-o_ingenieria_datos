@@ -19,14 +19,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'apiToken' of 'GGLS_Encuesta'"
 		},
-		"GGL_EncuestaSatisf_apiToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'apiToken' of 'GGL_EncuestaSatisf'"
-		},
-		"REST_GGLSheets_clientSecret": {
-			"type": "secureString",
-			"metadata": "Secure string for 'clientSecret' of 'REST_GGLSheets'"
-		},
 		"synw2024uptrabajofinal-WorkspaceDefaultSqlServer_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'synw2024uptrabajofinal-WorkspaceDefaultSqlServer'",
@@ -47,14 +39,6 @@
 		"LINKEDSERVICENEW_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://sa2024uptrabajofinal.dfs.core.windows.net/"
-		},
-		"REST_GGLSheets_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "@{concat('https://sheets.googleapis.com/v4/spreadsheets/',linkedService().spreadsheetId,'/values/',linkedService().range)}"
-		},
-		"REST_GGLSheets_properties_typeProperties_clientId": {
-			"type": "string",
-			"defaultValue": "207900943194-rog4ubdad8bk4ir3p0e5v9aq0ilblhg1.apps.googleusercontent.com"
 		},
 		"REST_HubspotPHP_properties_typeProperties_url": {
 			"type": "string",
@@ -161,7 +145,7 @@
 						]
 					},
 					{
-						"name": "copy_pacientes",
+						"name": "copy_lideres",
 						"type": "Copy",
 						"state": "Inactive",
 						"onInactiveMarkAs": "Succeeded",
@@ -186,16 +170,7 @@
 									"type": "JsonReadSettings"
 								}
 							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings",
-									"copyBehavior": "FlattenHierarchy"
-								},
-								"formatSettings": {
-									"type": "ParquetWriteSettings"
-								}
-							},
+							"sink": {},
 							"enableStaging": false
 						},
 						"inputs": [
@@ -315,9 +290,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "IRTrabajoFinal",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -333,7 +308,8 @@
 				"lastPublishTime": "2024-04-25T03:09:03Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/df_ggl_encuesta')]"
+				"[concat(variables('factoryId'), '/dataflows/df_ggl_encuesta')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
 			]
 		},
 		{
@@ -695,113 +671,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_snk_ggl_encuesta_xlsx')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADLS2_TrabajoFinal",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Encuesta",
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "ggl_encuesta.xlsx",
-						"folderPath": "Output",
-						"fileSystem": "raw"
-					},
-					"range": "A1:Z600",
-					"firstRowAsHeader": false
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLS2_TrabajoFinal')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ds_snk_hubspot_adls_json')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1010,9 +879,15 @@
 						"type": "SecureString",
 						"value": "[parameters('ADLS2_TrabajoFinal_accountKey')]"
 					}
+				},
+				"connectVia": {
+					"referenceName": "IRTrabajoFinal",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ADLS_StorageAcc')]",
@@ -1027,9 +902,15 @@
 						"type": "SecureString",
 						"value": "[parameters('ADLS_StorageAcc_accountKey')]"
 					}
+				},
+				"connectVia": {
+					"referenceName": "IRTrabajoFinal",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AZKV_TrabajoFinal')]",
@@ -1056,25 +937,15 @@
 						"type": "SecureString",
 						"value": "[parameters('GGLS_Encuesta_apiToken')]"
 					}
+				},
+				"connectVia": {
+					"referenceName": "IRTrabajoFinal",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/GGL_EncuestaSatisf')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "GoogleSheets",
-				"typeProperties": {
-					"apiToken": {
-						"type": "SecureString",
-						"value": "[parameters('GGL_EncuestaSatisf_apiToken')]"
-					}
-				}
-			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/LINKEDSERVICENEW')]",
@@ -1085,42 +956,15 @@
 				"type": "AzureBlobFS",
 				"typeProperties": {
 					"url": "[parameters('LINKEDSERVICENEW_properties_typeProperties_url')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/REST_GGLSheets')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"spreadsheetId": {
-						"type": "string",
-						"defaultValue": "1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14"
-					},
-					"range": {
-						"type": "String",
-						"defaultValue": "A1:Z500"
-					}
 				},
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('REST_GGLSheets_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "OAuth2ClientCredential",
-					"clientId": "[parameters('REST_GGLSheets_properties_typeProperties_clientId')]",
-					"clientSecret": {
-						"type": "SecureString",
-						"value": "[parameters('REST_GGLSheets_clientSecret')]"
-					},
-					"tokenEndpoint": "https://accounts.google.com/o/oauth2/token",
-					"scope": "https://www.googleapis.com/auth/spreadsheets",
-					"resource": "https://sheets.googleapis.com/v4/spreadsheets/"
+				"connectVia": {
+					"referenceName": "IRTrabajoFinal",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/REST_HubspotPHP')]",
@@ -1151,9 +995,15 @@
 							"value": "**********"
 						}
 					}
+				},
+				"connectVia": {
+					"referenceName": "IRTrabajoFinal",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/synw2024uptrabajofinal-WorkspaceDefaultSqlServer')]",
@@ -1171,12 +1021,12 @@
 					"connectionString": "[parameters('synw2024uptrabajofinal-WorkspaceDefaultSqlServer_connectionString')]"
 				},
 				"connectVia": {
-					"referenceName": "AutoResolveIntegrationRuntime",
+					"referenceName": "IRTrabajoFinal",
 					"type": "IntegrationRuntimeReference"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
 			]
 		},
 		{
@@ -1190,12 +1040,12 @@
 					"url": "[parameters('synw2024uptrabajofinal-WorkspaceDefaultStorage_properties_typeProperties_url')]"
 				},
 				"connectVia": {
-					"referenceName": "AutoResolveIntegrationRuntime",
+					"referenceName": "IRTrabajoFinal",
 					"type": "IntegrationRuntimeReference"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
 			]
 		},
 		{
@@ -1337,6 +1187,27 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/IRTrabajoFinal')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 10,
+							"cleanup": false,
+							"customProperties": []
+						}
+					}
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }
