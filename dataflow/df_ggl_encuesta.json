@@ -36,19 +36,7 @@
 			],
 			"scriptLines": [
 				"parameters{",
-				"     C01 as string (ggleColumnsKCH#outputs()[1].column_1),",
-				"     C02 as string (ggleColumnsKCH#outputs()[1].column_2),",
-				"     C03 as string (ggleColumnsKCH#outputs()[1].column_3),",
-				"     C04 as string (ggleColumnsKCH#outputs()[1].column_4),",
-				"     C05 as string (ggleColumnsKCH#outputs()[1].column_5),",
-				"     C06 as string (ggleColumnsKCH#outputs()[1].column_6),",
-				"     C07 as string (ggleColumnsKCH#outputs()[1].column_7),",
-				"     C08 as string (ggleColumnsKCH#outputs()[1].column_8),",
-				"     C09 as string (ggleColumnsKCH#outputs()[1].column_9),",
-				"     C10 as string (ggleColumnsKCH#outputs()[1].column_10),",
-				"     C11 as string (ggleColumnsKCH#outputs()[1].column_11),",
-				"     C12 as string (ggleColumnsKCH#outputs()[1].column_12),",
-				"     C13 as string (ggleColumnsKCH#outputs()[1].column_13)",
+				"     parameter1 as string (ggleColumnsKCH#outputs()[1].column_1)",
 				"}",
 				"source(output(",
 				"          column_1 as string,",
@@ -97,8 +85,8 @@
 				"     endCell: 'Z600',",
 				"     sheetName: 'Respuestas de formulario 1') ~> ggleRows",
 				"ggleRows select(mapColumn(",
-				"          each(match(type=='string'),",
-				"               ggleColumnsKCH#outputs()[1].column_1 = $$)",
+				"          each(match(position==1),",
+				"               $parameter1 = $$)",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
@@ -108,7 +96,7 @@
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: true,",
-				"     saveOrder: 1) ~> ggleColumnsKCH"
+				"     saveOrder: 0) ~> ggleColumnsKCH"
 			]
 		}
 	}
