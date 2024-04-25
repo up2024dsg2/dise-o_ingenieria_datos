@@ -760,7 +760,7 @@
 					"name": "02 - Silver"
 				},
 				"annotations": [],
-				"lastPublishTime": "2024-04-25T03:09:03Z"
+				"lastPublishTime": "2024-04-25T04:06:35Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_snk_hubspot_adls_json')]",
@@ -813,7 +813,7 @@
 					"name": "01 - Bronze/Landing"
 				},
 				"annotations": [],
-				"lastPublishTime": "2024-04-25T03:09:03Z"
+				"lastPublishTime": "2024-04-25T03:28:25Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/df_ggl_encuesta')]",
@@ -1002,7 +1002,7 @@
 					"name": "01 - Bronze/Landing"
 				},
 				"annotations": [],
-				"lastPublishTime": "2024-04-25T03:09:03Z"
+				"lastPublishTime": "2024-04-25T03:11:49Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_src_hubspot_rest_json')]",
