@@ -6,6 +6,10 @@
 		"type": "AzureBlobFS",
 		"typeProperties": {
 			"url": "https://sa2024uptrabajofinal.dfs.core.windows.net/"
+		},
+		"connectVia": {
+			"referenceName": "IRTrabajoFinal",
+			"type": "IntegrationRuntimeReference"
 		}
 	}
 }
