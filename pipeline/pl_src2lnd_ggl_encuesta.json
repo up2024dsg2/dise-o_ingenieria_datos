@@ -30,6 +30,8 @@
 		"folder": {
 			"name": "01 - Bronze/Landing"
 		},
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2024-04-25T03:09:03Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }
