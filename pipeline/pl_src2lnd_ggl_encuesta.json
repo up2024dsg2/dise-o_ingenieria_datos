@@ -17,13 +17,31 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "df_ggl_encuesta",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"parameters": {
+							"C01": "ggleColumnsKCH#outputs()[1].column_1",
+							"C02": "ggleColumnsKCH#outputs()[1].column_2",
+							"C03": "ggleColumnsKCH#outputs()[1].column_3",
+							"C04": "ggleColumnsKCH#outputs()[1].column_4",
+							"C05": "ggleColumnsKCH#outputs()[1].column_5",
+							"C06": "ggleColumnsKCH#outputs()[1].column_6",
+							"C07": "ggleColumnsKCH#outputs()[1].column_7",
+							"C08": "ggleColumnsKCH#outputs()[1].column_8",
+							"C09": "ggleColumnsKCH#outputs()[1].column_9",
+							"C10": "ggleColumnsKCH#outputs()[1].column_10",
+							"C11": "ggleColumnsKCH#outputs()[1].column_11",
+							"C12": "ggleColumnsKCH#outputs()[1].column_12",
+							"C13": "ggleColumnsKCH#outputs()[1].column_13"
+						}
 					},
 					"integrationRuntime": {
 						"referenceName": "IRTrabajoFinal",
 						"type": "IntegrationRuntimeReference"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
 				}
 			}
 		],

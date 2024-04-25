@@ -9,45 +9,139 @@
 						"referenceName": "GGLS_Encuesta",
 						"type": "LinkedServiceReference"
 					},
-					"name": "gglencuestags"
+					"name": "ggleColumns",
+					"description": "GGLS_Encuesta Columnas"
+				},
+				{
+					"linkedService": {
+						"referenceName": "GGLS_Encuesta",
+						"type": "LinkedServiceReference"
+					},
+					"name": "ggleRows"
 				}
 			],
 			"sinks": [
+				{
+					"name": "ggleColumnsKCH",
+					"rejectedDataLinkedService": {
+						"referenceName": "ADLS2_TrabajoFinal",
+						"type": "LinkedServiceReference"
+					}
+				},
 				{
 					"linkedService": {
 						"referenceName": "ADLS2_TrabajoFinal",
 						"type": "LinkedServiceReference"
 					},
-					"name": "gglencuestaavro",
+					"name": "ggleResult",
 					"rejectedDataLinkedService": {
 						"referenceName": "ADLS2_TrabajoFinal",
 						"type": "LinkedServiceReference"
 					}
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "select1"
+				}
+			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
+				"parameters{",
+				"     C01 as string (ggleColumnsKCH#outputs()[1].column_1),",
+				"     C02 as string (ggleColumnsKCH#outputs()[1].column_2),",
+				"     C03 as string (ggleColumnsKCH#outputs()[1].column_3),",
+				"     C04 as string (ggleColumnsKCH#outputs()[1].column_4),",
+				"     C05 as string (ggleColumnsKCH#outputs()[1].column_5),",
+				"     C06 as string (ggleColumnsKCH#outputs()[1].column_6),",
+				"     C07 as string (ggleColumnsKCH#outputs()[1].column_7),",
+				"     C08 as string (ggleColumnsKCH#outputs()[1].column_8),",
+				"     C09 as string (ggleColumnsKCH#outputs()[1].column_9),",
+				"     C10 as string (ggleColumnsKCH#outputs()[1].column_10),",
+				"     C11 as string (ggleColumnsKCH#outputs()[1].column_11),",
+				"     C12 as string (ggleColumnsKCH#outputs()[1].column_12),",
+				"     C13 as string (ggleColumnsKCH#outputs()[1].column_13)",
+				"}",
+				"source(output(",
+				"          column_1 as string,",
+				"          column_2 as string,",
+				"          column_3 as string,",
+				"          column_4 as string,",
+				"          column_5 as string,",
+				"          column_6 as string,",
+				"          column_7 as string,",
+				"          column_8 as string,",
+				"          column_9 as string,",
+				"          column_10 as string,",
+				"          column_11 as string,",
+				"          column_12 as string,",
+				"          column_13 as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     store: 'googlesheets',",
 				"     format: 'rest',",
 				"     spreadSheetId: '1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14',",
 				"     startCell: 'A1',",
+				"     endCell: 'Z1',",
+				"     sheetName: 'Respuestas de formulario 1') ~> ggleColumns",
+				"source(output(",
+				"          column_1 as string,",
+				"          column_2 as string,",
+				"          column_3 as integer,",
+				"          column_4 as string,",
+				"          column_5 as string,",
+				"          column_6 as string,",
+				"          column_7 as string,",
+				"          column_8 as string,",
+				"          column_9 as string,",
+				"          column_10 as string,",
+				"          column_11 as string,",
+				"          column_12 as string,",
+				"          column_13 as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     store: 'googlesheets',",
+				"     format: 'rest',",
+				"     spreadSheetId: '1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14',",
+				"     startCell: 'A2',",
 				"     endCell: 'Z600',",
-				"     sheetName: 'Respuestas de formulario 1') ~> gglencuestags",
-				"gglencuestags sink(allowSchemaDrift: true,",
+				"     sheetName: 'Respuestas de formulario 1') ~> ggleRows",
+				"ggleRows select(mapColumn(",
+				"          {$C01} = column_1,",
+				"          column_2,",
+				"          column_3,",
+				"          column_4,",
+				"          column_5,",
+				"          column_6,",
+				"          column_7,",
+				"          column_8,",
+				"          column_9,",
+				"          column_10,",
+				"          column_11,",
+				"          column_12,",
+				"          column_13",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"ggleColumns sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: true,",
+				"     saveOrder: 1) ~> ggleColumnsKCH",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'avro',",
 				"     fileSystem: 'raw',",
 				"     folderPath: 'Output',",
-				"     partitionFileNames:['gglencuesta.avro'],",
-				"     umask: 0664,",
+				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 1,",
-				"     partitionBy('hash', 1)) ~> gglencuestaavro"
+				"     saveOrder: 2) ~> ggleResult"
 			]
 		}
 	}
