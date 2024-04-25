@@ -5,6 +5,8 @@
 			{
 				"name": "copy_atenciones",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -300,6 +302,8 @@
 			{
 				"name": "copy_lideres",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -601,6 +605,8 @@
 			{
 				"name": "copy_encuesta",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -782,7 +788,8 @@
 									"path": "$['properties']['link_en_mapa']"
 								},
 								"sink": {
-									"name": "link_en_mapa"
+									"name": "link_en_mapa",
+									"type": "String"
 								}
 							},
 							{
