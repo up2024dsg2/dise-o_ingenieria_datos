@@ -1,0 +1,13 @@
+PROYECTO FINAL 
+**************
+
+MODULO1: INGENIERIA DE DATOS
+UNIV: UNIVERSIDAD PACÍFICO
+PERIODO: 2024-04
+FECHA: 28/01/24
+
+PARICIPANTES:
+Darwin Curisinche
+Ingrid Tacsi
+Bryan Chávez
+Pablo Gerónimo
