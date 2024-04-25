@@ -2,7 +2,9 @@
 	"name": "adf-2024up-trabajofinal",
 	"properties": {
 		"globalConfigurations": {
-			"PipelineBillingEnabled": "false"
+			"PipelineBillingEnabled": "false",
+			"factoryStagingLSReferenceName": "ADLS2_TrabajoFinal",
+			"factoryStagingLSType": "LinkedServiceReference"
 		}
 	},
 	"location": "eastus",
