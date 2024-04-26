@@ -7,7 +7,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "pl_get_keyvalue",
+						"activity": "kvhapikey",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -52,7 +52,7 @@
 							"properties": "hs_object_id,dealname,dealtype,etapa_de_ejecucion,fecha_de_ejecucion,horario_de_atencion,fecha_entrega_resultados,resultado_de_mamas,resultados_de_cuello_uterino,amount,tipo_de_pago,abono_1,abono_1_fecha,abono_1_tipo",
 							"associations": "contacts,companies",
 							"hapikey": {
-								"value": "@activity('pl_get_keyvalue').output.pipelineReturnValue",
+								"value": "@variables('hs_hapikey')",
 								"type": "Expression"
 							}
 						}
@@ -74,7 +74,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "pl_get_keyvalue",
+						"activity": "kvhapikey",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -119,7 +119,7 @@
 							"properties": "name,state,city,distrito,address,tipo_de_centro_medico,etapa_de_centro_medico,numero_de_telefono_1,numero_de_telefono_2,numero_de_telefono_movil_1,numero_de_telefono_movil_2,link_en_mapa,website,hubspot_owner_id",
 							"associations": "contacts",
 							"hapikey": {
-								"value": "@activity('pl_get_keyvalue').output.pipelineReturnValue",
+								"value": "@variables('hs_hapikey')",
 								"type": "Expression"
 							}
 						}
@@ -141,7 +141,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "pl_get_keyvalue",
+						"activity": "kvhapikey",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -186,7 +186,7 @@
 							"properties": "firstname,lastname,fecha_de_nacimiento,edad,dni,mobilephone,country,state,city,distrito,tipo_de_contacto,hubspot_owner_id,link_de_mapa,zona,condicion,tipo_de_lider,gerencia,gerente_de_negocio,industry,codigo_grupo,codigo_lider",
 							"associations": "deals",
 							"hapikey": {
-								"value": "@activity('pl_get_keyvalue').output.pipelineReturnValue",
+								"value": "@variables('hs_hapikey')",
 								"type": "Expression"
 							}
 						}
@@ -204,22 +204,60 @@
 				]
 			},
 			{
-				"name": "pl_get_keyvalue",
-				"type": "ExecutePipeline",
+				"name": "kvsecrets",
+				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
 					"secureInput": false
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "pl_keyvault_secrets",
-						"type": "PipelineReference"
+					"method": "GET",
+					"url": "https://azvk-trabajofinal.vault.azure.net/secrets/Hubspot-hapikey/8a424102233a424da699412864cd4646?api-version=7.0",
+					"connectVia": {
+						"referenceName": "IRTrabajoFinal",
+						"type": "IntegrationRuntimeReference"
 					},
-					"waitOnCompletion": true
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://vault.azure.net"
+					}
+				}
+			},
+			{
+				"name": "kvhapikey",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "kvsecrets",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "hs_hapikey",
+					"value": {
+						"value": "@activity('kvsecrets').output.pipelineReturnValue.kv_hapikey",
+						"type": "Expression"
+					}
 				}
 			}
 		],
+		"variables": {
+			"hs_hapikey": {
+				"type": "String"
+			}
+		},
 		"folder": {
 			"name": "01 - Bronze/Landing"
 		},
