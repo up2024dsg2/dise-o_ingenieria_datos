@@ -10,14 +10,28 @@
 					"timeout": "0.12:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
+					"secureOutput": true,
 					"secureInput": false
 				},
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "df_ggl_encuesta",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"ggleEncuestaAvro": {
+								"folder": "Output",
+								"file": "ggl_encuesta.avro"
+							}
+						},
+						"linkedServiceParameters": {
+							"ggleEncuestaAvro": {
+								"schemaLinkedService": {
+									"folder": "Output",
+									"file": "ggl_encuesta.avro"
+								}
+							}
+						}
 					},
 					"integrationRuntime": {
 						"referenceName": "IRTrabajoFinal",

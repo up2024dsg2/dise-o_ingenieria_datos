@@ -29,9 +29,9 @@
 					}
 				},
 				{
-					"linkedService": {
-						"referenceName": "ADLS2_TrabajoFinal",
-						"type": "LinkedServiceReference"
+					"dataset": {
+						"referenceName": "ds_srcNsnk_avro",
+						"type": "DatasetReference"
 					},
 					"name": "ggleEncuestaAvro",
 					"rejectedDataLinkedService": {
@@ -136,15 +136,14 @@
 				"     postCommands: []) ~> ggleEnCache",
 				"ggleEnChangeColName sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'avro',",
-				"     fileSystem: 'raw',",
-				"     folderPath: 'Output',",
+				"     partitionFileNames:['ggl_encuesta.avro'],",
 				"     umask: 0775,",
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 2) ~> ggleEncuestaAvro"
+				"     saveOrder: 2,",
+				"     partitionBy('hash', 1)) ~> ggleEncuestaAvro"
 			]
 		}
 	}
