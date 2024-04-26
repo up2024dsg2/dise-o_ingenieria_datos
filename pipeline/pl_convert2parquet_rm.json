@@ -848,7 +848,8 @@
 									"path": "$['id']"
 								},
 								"sink": {
-									"name": "id"
+									"name": "id",
+									"type": "String"
 								}
 							},
 							{
@@ -856,7 +857,8 @@
 									"path": "$['properties']['city']"
 								},
 								"sink": {
-									"name": "city"
+									"name": "city",
+									"type": "String"
 								}
 							},
 							{
@@ -864,7 +866,8 @@
 									"path": "$['properties']['codigo_grupo']"
 								},
 								"sink": {
-									"name": "codigo_grupo"
+									"name": "codigo_grupo",
+									"type": "String"
 								}
 							},
 							{
@@ -872,7 +875,8 @@
 									"path": "$['properties']['codigo_lider']"
 								},
 								"sink": {
-									"name": "codigo_lider"
+									"name": "codigo_lider",
+									"type": "String"
 								}
 							},
 							{
@@ -880,7 +884,8 @@
 									"path": "$['properties']['condicion']"
 								},
 								"sink": {
-									"name": "condicion"
+									"name": "condicion",
+									"type": "String"
 								}
 							},
 							{
@@ -888,7 +893,8 @@
 									"path": "$['properties']['country']"
 								},
 								"sink": {
-									"name": "country"
+									"name": "country",
+									"type": "String"
 								}
 							},
 							{
@@ -896,7 +902,8 @@
 									"path": "$['properties']['createdate']"
 								},
 								"sink": {
-									"name": "createdate"
+									"name": "createdate",
+									"type": "String"
 								}
 							},
 							{
@@ -904,7 +911,8 @@
 									"path": "$['properties']['distrito']"
 								},
 								"sink": {
-									"name": "distrito"
+									"name": "distrito",
+									"type": "String"
 								}
 							},
 							{
@@ -912,7 +920,8 @@
 									"path": "$['properties']['dni']"
 								},
 								"sink": {
-									"name": "dni"
+									"name": "dni",
+									"type": "String"
 								}
 							},
 							{
@@ -920,7 +929,8 @@
 									"path": "$['properties']['edad']"
 								},
 								"sink": {
-									"name": "edad"
+									"name": "edad",
+									"type": "String"
 								}
 							},
 							{
@@ -928,7 +938,8 @@
 									"path": "$['properties']['fecha_de_nacimiento']"
 								},
 								"sink": {
-									"name": "fecha_de_nacimiento"
+									"name": "fecha_de_nacimiento",
+									"type": "String"
 								}
 							},
 							{
@@ -936,7 +947,8 @@
 									"path": "$['properties']['firstname']"
 								},
 								"sink": {
-									"name": "firstname"
+									"name": "firstname",
+									"type": "String"
 								}
 							},
 							{
@@ -944,7 +956,8 @@
 									"path": "$['properties']['gerencia']"
 								},
 								"sink": {
-									"name": "gerencia"
+									"name": "gerencia",
+									"type": "String"
 								}
 							},
 							{
@@ -952,7 +965,8 @@
 									"path": "$['properties']['gerente_de_negocio']"
 								},
 								"sink": {
-									"name": "gerente_de_negocio"
+									"name": "gerente_de_negocio",
+									"type": "String"
 								}
 							},
 							{
@@ -960,7 +974,8 @@
 									"path": "$['properties']['hs_object_id']"
 								},
 								"sink": {
-									"name": "hs_object_id"
+									"name": "hs_object_id",
+									"type": "String"
 								}
 							},
 							{
@@ -968,7 +983,8 @@
 									"path": "$['properties']['hubspot_owner_id']"
 								},
 								"sink": {
-									"name": "hubspot_owner_id"
+									"name": "hubspot_owner_id",
+									"type": "String"
 								}
 							},
 							{
@@ -976,7 +992,8 @@
 									"path": "$['properties']['industry']"
 								},
 								"sink": {
-									"name": "industry"
+									"name": "industry",
+									"type": "String"
 								}
 							},
 							{
@@ -984,7 +1001,8 @@
 									"path": "$['properties']['lastmodifieddate']"
 								},
 								"sink": {
-									"name": "lastmodifieddate"
+									"name": "lastmodifieddate",
+									"type": "String"
 								}
 							},
 							{
@@ -992,7 +1010,8 @@
 									"path": "$['properties']['lastname']"
 								},
 								"sink": {
-									"name": "lastname"
+									"name": "lastname",
+									"type": "String"
 								}
 							},
 							{
@@ -1000,7 +1019,8 @@
 									"path": "$['properties']['link_de_mapa']"
 								},
 								"sink": {
-									"name": "link_de_mapa"
+									"name": "link_de_mapa",
+									"type": "String"
 								}
 							},
 							{
@@ -1008,7 +1028,8 @@
 									"path": "$['properties']['mobilephone']"
 								},
 								"sink": {
-									"name": "mobilephone"
+									"name": "mobilephone",
+									"type": "String"
 								}
 							},
 							{
@@ -1016,7 +1037,8 @@
 									"path": "$['properties']['state']"
 								},
 								"sink": {
-									"name": "state"
+									"name": "state",
+									"type": "String"
 								}
 							},
 							{
@@ -1024,7 +1046,8 @@
 									"path": "$['properties']['tipo_de_contacto']"
 								},
 								"sink": {
-									"name": "tipo_de_contacto"
+									"name": "tipo_de_contacto",
+									"type": "String"
 								}
 							},
 							{
@@ -1032,7 +1055,8 @@
 									"path": "$['properties']['tipo_de_lider']"
 								},
 								"sink": {
-									"name": "tipo_de_lider"
+									"name": "tipo_de_lider",
+									"type": "String"
 								}
 							},
 							{
@@ -1040,7 +1064,8 @@
 									"path": "$['properties']['zona']"
 								},
 								"sink": {
-									"name": "zona"
+									"name": "zona",
+									"type": "String"
 								}
 							},
 							{
@@ -1048,7 +1073,8 @@
 									"path": "$['createdAt']"
 								},
 								"sink": {
-									"name": "createdAt"
+									"name": "createdAt",
+									"type": "String"
 								}
 							},
 							{
@@ -1056,7 +1082,8 @@
 									"path": "$['updatedAt']"
 								},
 								"sink": {
-									"name": "updatedAt"
+									"name": "updatedAt",
+									"type": "String"
 								}
 							},
 							{
@@ -1064,7 +1091,8 @@
 									"path": "$['archived']"
 								},
 								"sink": {
-									"name": "archived"
+									"name": "archived",
+									"type": "String"
 								}
 							},
 							{
@@ -1072,7 +1100,8 @@
 									"path": "$['associations']['deals']['results'][0]['id']"
 								},
 								"sink": {
-									"name": "associations_deals_results'][0]['id"
+									"name": "associations_deals_results'][0]['id",
+									"type": "String"
 								}
 							},
 							{
@@ -1080,7 +1109,8 @@
 									"path": "$['associations']['deals']['results'][0]['type']"
 								},
 								"sink": {
-									"name": "type"
+									"name": "type",
+									"type": "String"
 								}
 							}
 						],
