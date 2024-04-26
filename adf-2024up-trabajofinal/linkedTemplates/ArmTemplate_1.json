@@ -13,157 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_snk_hubspot_adls_json')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADLS2_TrabajoFinal",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"folder": {
-						"type": "string"
-					},
-					"file": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().file",
-							"type": "Expression"
-						},
-						"folderPath": {
-							"value": "@dataset().folder",
-							"type": "Expression"
-						},
-						"fileSystem": "raw"
-					}
-				},
-				"schema": {
-					"type": "object",
-					"properties": {
-						"startTime": {
-							"type": "string"
-						},
-						"id": {
-							"type": "string"
-						},
-						"incompatibleFeatures": {
-							"type": "array"
-						},
-						"blobValidationErrors": {
-							"type": "array",
-							"items": {
-								"type": "string"
-							}
-						},
-						"scannedBlobCount": {
-							"type": "integer"
-						},
-						"invalidBlobCount": {
-							"type": "integer"
-						},
-						"endTime": {
-							"type": "string"
-						},
-						"properties": {
-							"type": "object",
-							"properties": {
-								"city": {
-									"type": "string"
-								},
-								"codigo_grupo": {
-									"type": "string"
-								},
-								"codigo_lider": {
-									"type": "string"
-								},
-								"condicion": {
-									"type": "string"
-								},
-								"country": {
-									"type": "string"
-								},
-								"createdate": {
-									"type": "string"
-								},
-								"distrito": {
-									"type": "string"
-								},
-								"dni": {
-									"type": "string"
-								},
-								"edad": {
-									"type": "string"
-								},
-								"fecha_de_nacimiento": {
-									"type": "string"
-								},
-								"firstname": {
-									"type": "string"
-								},
-								"gerencia": {
-									"type": "string"
-								},
-								"gerente_de_negocio": {
-									"type": "string"
-								},
-								"hs_object_id": {
-									"type": "string"
-								},
-								"hubspot_owner_id": {
-									"type": "string"
-								},
-								"industry": {
-									"type": "string"
-								},
-								"lastmodifieddate": {
-									"type": "string"
-								},
-								"lastname": {
-									"type": "string"
-								},
-								"link_de_mapa": {
-									"type": "string"
-								},
-								"mobilephone": {
-									"type": "string"
-								},
-								"state": {
-									"type": "string"
-								},
-								"tipo_de_contacto": {
-									"type": "string"
-								},
-								"tipo_de_lider": {
-									"type": "string"
-								},
-								"zona": {
-									"type": "string"
-								}
-							}
-						},
-						"createdAt": {
-							"type": "string"
-						},
-						"updatedAt": {
-							"type": "string"
-						},
-						"archived": {
-							"type": "boolean"
-						}
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ds_src_hubspot_rest_json')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -205,70 +54,13 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/df_ggl_encuesta')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"linkedService": {
-								"referenceName": "GGLS_Encuesta",
-								"type": "LinkedServiceReference"
-							},
-							"name": "gglencuestags"
-						}
-					],
-					"sinks": [
-						{
-							"linkedService": {
-								"referenceName": "ADLS2_TrabajoFinal",
-								"type": "LinkedServiceReference"
-							},
-							"name": "gglencuestaavro",
-							"rejectedDataLinkedService": {
-								"referenceName": "ADLS2_TrabajoFinal",
-								"type": "LinkedServiceReference"
-							}
-						}
-					],
-					"transformations": [],
-					"scriptLines": [
-						"source(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     store: 'googlesheets',",
-						"     format: 'rest',",
-						"     spreadSheetId: '1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14',",
-						"     startCell: 'A1',",
-						"     endCell: 'Z600',",
-						"     sheetName: 'Respuestas de formulario 1') ~> gglencuestags",
-						"gglencuestags sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     format: 'avro',",
-						"     fileSystem: 'raw',",
-						"     folderPath: 'Output',",
-						"     partitionFileNames:['gglencuesta.avro'],",
-						"     umask: 0664,",
-						"     preCommands: [],",
-						"     postCommands: [],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     saveOrder: 1,",
-						"     partitionBy('hash', 1)) ~> gglencuestaavro"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/json_parquet')]",
+			"name": "[concat(parameters('factoryName'), '/pl_convert2parquet_rm')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "copy_atenciones",
+						"name": "r2m_copy_atenciones",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -554,7 +346,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_parquet",
+								"referenceName": "ds_sink_parquet",
 								"type": "DatasetReference",
 								"parameters": {
 									"filename": "atenciones.parquet"
@@ -563,7 +355,7 @@
 						]
 					},
 					{
-						"name": "copy_lideres",
+						"name": "r2m_copy_lideres",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -589,7 +381,8 @@
 							"sink": {
 								"type": "ParquetSink",
 								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
+									"type": "AzureBlobFSWriteSettings",
+									"copyBehavior": "FlattenHierarchy"
 								},
 								"formatSettings": {
 									"type": "ParquetWriteSettings"
@@ -849,13 +642,13 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"folder": "Output",
-									"file": "hs_pacientes.json"
+									"file": "hs_lideres.json"
 								}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_parquet",
+								"referenceName": "ds_sink_parquet",
 								"type": "DatasetReference",
 								"parameters": {
 									"filename": "lideres.parquet"
@@ -864,7 +657,7 @@
 						]
 					},
 					{
-						"name": "copy_encuesta",
+						"name": "r2m_copy_encuesta",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -897,6 +690,151 @@
 							"enableStaging": false,
 							"translator": {
 								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Marca_temporal",
+											"type": "string | null",
+											"physicalType": "string | null"
+										},
+										"sink": {
+											"name": "Marca_temporal",
+											"type": "string | null"
+										}
+									},
+									{
+										"source": {
+											"name": "Nombres",
+											"type": "string | null",
+											"physicalType": "string | null"
+										},
+										"sink": {
+											"name": "Nombres",
+											"type": "string | null"
+										}
+									},
+									{
+										"source": {
+											"name": "DNI",
+											"type": "string | null",
+											"physicalType": "string | null"
+										},
+										"sink": {
+											"name": "DNI",
+											"type": "string | null"
+										}
+									},
+									{
+										"source": {
+											"name": "Tuviste_algun_inconveniente_en_la_coordinacion_con_nuestra_asesora_Indicar_si_hubo_y_si_no_colocar_NO",
+											"type": "string | null",
+											"physicalType": "string | null"
+										},
+										"sink": {
+											"name": "Tuviste_algun_inconveniente_en_la_coordinacion_con_nuestra_asesora_Indicar_si_hubo_y_si_no_colocar_NO",
+											"type": "string | null"
+										}
+									},
+									{
+										"source": {
+											"name": "Como_calificas_el_nivel_de_amabilidad_de_tu_asesora",
+											"type": "string | null",
+											"physicalType": "string | null"
+										},
+										"sink": {
+											"name": "Como_calificas_el_nivel_de_amabilidad_de_tu_asesora",
+											"type": "string | null"
+										}
+									},
+									{
+										"source": {
+											"name": "Como_calificas_la_claridad_de_informacion_brindada_por_la_asesora",
+											"type": "string | null",
+											"physicalType": "string | null"
+										},
+										"sink": {
+											"name": "Como_calificas_la_claridad_de_informacion_brindada_por_la_asesora",
+											"type": "string | null"
+										}
+									},
+									{
+										"source": {
+											"name": "Como_calificas_en_general_el_trabajo_de_la_asesora_durante_todo_tu_proceso",
+											"type": "string | null",
+											"physicalType": "string | null"
+										},
+										"sink": {
+											"name": "Como_calificas_en_general_el_trabajo_de_la_asesora_durante_todo_tu_proceso",
+											"type": "string | null"
+										}
+									},
+									{
+										"source": {
+											"name": "Que_tan_facil_se_te_hizo_llegar_al_centro_medico",
+											"type": "string | null",
+											"physicalType": "string | null"
+										},
+										"sink": {
+											"name": "Que_tan_facil_se_te_hizo_llegar_al_centro_medico",
+											"type": "string | null"
+										}
+									},
+									{
+										"source": {
+											"name": "Como_calificar_el_horario_asignado_para_tu_atencion",
+											"type": "string | null",
+											"physicalType": "string | null"
+										},
+										"sink": {
+											"name": "Como_calificar_el_horario_asignado_para_tu_atencion",
+											"type": "string | null"
+										}
+									},
+									{
+										"source": {
+											"name": "Que_tal_te_parecio_la_atencion_y_los_profesionales_en_el_centro_medico",
+											"type": "string | null",
+											"physicalType": "string | null"
+										},
+										"sink": {
+											"name": "Que_tal_te_parecio_la_atencion_y_los_profesionales_en_el_centro_medico",
+											"type": "string | null"
+										}
+									},
+									{
+										"source": {
+											"name": "Si_tienes_alguna_observacion_o_comentario_sobre_el_centro_medico_ayudanos_a_llenando_este_campo",
+											"type": "string | null",
+											"physicalType": "string | null"
+										},
+										"sink": {
+											"name": "Si_tienes_alguna_observacion_o_comentario_sobre_el_centro_medico_ayudanos_a_llenando_este_campo",
+											"type": "string | null"
+										}
+									},
+									{
+										"source": {
+											"name": "Califica_del_1_al_10_esta_campana",
+											"type": "string | null",
+											"physicalType": "string | null"
+										},
+										"sink": {
+											"name": "Califica_del_1_al_10_esta_campana",
+											"type": "string | null"
+										}
+									},
+									{
+										"source": {
+											"name": "Quieres_agregar_alguna_sugerencia_o_reportar_algun_incidente_adicional_algo_que_mejorar",
+											"type": "string | null",
+											"physicalType": "string | null"
+										},
+										"sink": {
+											"name": "Quieres_agregar_alguna_sugerencia_o_reportar_algun_incidente_adicional_algo_que_mejorar",
+											"type": "string | null"
+										}
+									}
+								],
 								"typeConversion": true,
 								"typeConversionSettings": {
 									"allowDataTruncation": true,
@@ -906,20 +844,352 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "Avro1",
+								"referenceName": "ds_srcNsnk_avro",
 								"type": "DatasetReference",
 								"parameters": {
-									"file": "Output",
-									"filename": "gglencuesta.avro"
+									"folder": "Output",
+									"file": "ggl_encuesta.avro"
 								}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "Parquet2",
+								"referenceName": "ds_sink_parquet",
 								"type": "DatasetReference",
 								"parameters": {
 									"filename": "encuesta.parquet"
+								}
+							}
+						]
+					},
+					{
+						"name": "r2m_copy_centrosmedicos",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings",
+									"copyBehavior": "FlattenHierarchy"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['id']"
+										},
+										"sink": {
+											"name": "id",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['city']"
+										},
+										"sink": {
+											"name": "city",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['codigo_grupo']"
+										},
+										"sink": {
+											"name": "codigo_grupo",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['codigo_lider']"
+										},
+										"sink": {
+											"name": "codigo_lider",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['condicion']"
+										},
+										"sink": {
+											"name": "condicion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['country']"
+										},
+										"sink": {
+											"name": "country",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['createdate']"
+										},
+										"sink": {
+											"name": "createdate",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['distrito']"
+										},
+										"sink": {
+											"name": "distrito",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['dni']"
+										},
+										"sink": {
+											"name": "dni",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['edad']"
+										},
+										"sink": {
+											"name": "edad",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['fecha_de_nacimiento']"
+										},
+										"sink": {
+											"name": "fecha_de_nacimiento",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['firstname']"
+										},
+										"sink": {
+											"name": "firstname",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['gerencia']"
+										},
+										"sink": {
+											"name": "gerencia",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['gerente_de_negocio']"
+										},
+										"sink": {
+											"name": "gerente_de_negocio",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['hs_object_id']"
+										},
+										"sink": {
+											"name": "hs_object_id",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['hubspot_owner_id']"
+										},
+										"sink": {
+											"name": "hubspot_owner_id",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['industry']"
+										},
+										"sink": {
+											"name": "industry",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['lastmodifieddate']"
+										},
+										"sink": {
+											"name": "lastmodifieddate",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['lastname']"
+										},
+										"sink": {
+											"name": "lastname",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['link_de_mapa']"
+										},
+										"sink": {
+											"name": "link_de_mapa",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['mobilephone']"
+										},
+										"sink": {
+											"name": "mobilephone",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['state']"
+										},
+										"sink": {
+											"name": "state",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['tipo_de_contacto']"
+										},
+										"sink": {
+											"name": "tipo_de_contacto",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['tipo_de_lider']"
+										},
+										"sink": {
+											"name": "tipo_de_lider",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['properties']['zona']"
+										},
+										"sink": {
+											"name": "zona",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['createdAt']"
+										},
+										"sink": {
+											"name": "createdAt",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['updatedAt']"
+										},
+										"sink": {
+											"name": "updatedAt",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['archived']"
+										},
+										"sink": {
+											"name": "archived",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['associations']['deals']['results'][0]['id']"
+										},
+										"sink": {
+											"name": "associations_deals_results'][0]['id",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['associations']['deals']['results'][0]['type']"
+										},
+										"sink": {
+											"name": "type",
+											"type": "String"
+										}
+									}
+								],
+								"mapComplexValuesToString": false
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_snk_hubspot_adls_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"folder": "Output",
+									"file": "hs_centrosmedicos.json"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_sink_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "centrosmedicos.parquet"
 								}
 							}
 						]
@@ -934,59 +1204,7 @@
 				"annotations": [],
 				"lastPublishTime": "2024-04-25T04:06:35Z"
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_snk_hubspot_adls_json')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pl_src2lnd_ggl_encuesta')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "df_ggl_encuesta",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "df_ggl_encuesta",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"gglencuestags": {},
-									"gglencuestaavro": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IRTrabajoFinal",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "01 - Bronze/Landing"
-				},
-				"annotations": [],
-				"lastPublishTime": "2024-04-25T03:28:25Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/df_ggl_encuesta')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_src2lnd_hs_infodata')]",
@@ -1173,8 +1391,213 @@
 				"lastPublishTime": "2024-04-25T03:11:49Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_src_hubspot_rest_json')]",
-				"[concat(variables('factoryId'), '/datasets/ds_snk_hubspot_adls_json')]"
+				"[concat(variables('factoryId'), '/datasets/ds_src_hubspot_rest_json')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_ggl_encuesta')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "GGLS_Encuesta",
+								"type": "LinkedServiceReference"
+							},
+							"name": "ggleEncuestaColumns",
+							"description": "GGLS_Encuesta"
+						},
+						{
+							"linkedService": {
+								"referenceName": "GGLS_Encuesta",
+								"type": "LinkedServiceReference"
+							},
+							"name": "ggleEncuestaRows"
+						}
+					],
+					"sinks": [
+						{
+							"name": "ggleEnCache",
+							"rejectedDataLinkedService": {
+								"referenceName": "ADLS2_TrabajoFinal",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"dataset": {
+								"referenceName": "ds_srcNsnk_avro",
+								"type": "DatasetReference"
+							},
+							"name": "ggleEncuestaAvro",
+							"rejectedDataLinkedService": {
+								"referenceName": "ADLS2_TrabajoFinal",
+								"type": "LinkedServiceReference"
+							}
+						}
+					],
+					"transformations": [
+						{
+							"name": "ggleEnChangeColName"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          column_1 as string,",
+						"          column_2 as string,",
+						"          column_3 as string,",
+						"          column_4 as string,",
+						"          column_5 as string,",
+						"          column_6 as string,",
+						"          column_7 as string,",
+						"          column_8 as string,",
+						"          column_9 as string,",
+						"          column_10 as string,",
+						"          column_11 as string,",
+						"          column_12 as string,",
+						"          column_13 as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     store: 'googlesheets',",
+						"     format: 'rest',",
+						"     spreadSheetId: '1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14',",
+						"     startCell: 'A1',",
+						"     endCell: 'Z1',",
+						"     sheetName: 'Respuestas de formulario 1') ~> ggleEncuestaColumns",
+						"source(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     store: 'googlesheets',",
+						"     format: 'rest',",
+						"     spreadSheetId: '1gt7dbxTUuHvkgCycHTo7I7Sd2XPJyIR_vpdHpmQrb14',",
+						"     startCell: 'A2',",
+						"     endCell: 'Z600',",
+						"     sheetName: 'Respuestas de formulario 1') ~> ggleEncuestaRows",
+						"ggleEncuestaRows select(mapColumn(",
+						"          each(match(type=='string' && name=='column_1'),",
+						"               replace(ggleEnCache#outputs()[1].column_1, ' ','_') = $$),",
+						"          each(match(type=='string' && name=='column_2'),",
+						"               replace(ggleEnCache#outputs()[1].column_2, ' ','_') = $$),",
+						"          each(match(type=='string' && name=='column_3'),",
+						"               replace(ggleEnCache#outputs()[1].column_3, ' ','_') = $$),",
+						"          each(match(type=='string' && name=='column_4'),",
+						"               replace(ggleEnCache#outputs()[1].column_4, ' ','_') = $$),",
+						"          each(match(type=='string' && name=='column_5'),",
+						"               replace(ggleEnCache#outputs()[1].column_5, ' ','_') = $$),",
+						"          each(match(type=='string' && name=='column_6'),",
+						"               replace(ggleEnCache#outputs()[1].column_6, ' ','_') = $$),",
+						"          each(match(type=='string' && name=='column_7'),",
+						"               replace(ggleEnCache#outputs()[1].column_7, ' ','_') = $$),",
+						"          each(match(type=='string' && name=='column_8'),",
+						"               replace(ggleEnCache#outputs()[1].column_8, ' ','_') = $$),",
+						"          each(match(type=='string' && name=='column_9'),",
+						"               replace(ggleEnCache#outputs()[1].column_9, ' ','_') = $$),",
+						"          each(match(type=='string' && name=='column_10'),",
+						"               replace(ggleEnCache#outputs()[1].column_10, ' ','_') = $$),",
+						"          each(match(type=='string' && name=='column_11'),",
+						"               replace(ggleEnCache#outputs()[1].column_11, ' ','_') = $$),",
+						"          each(match(type=='string' && name=='column_12'),",
+						"               replace(ggleEnCache#outputs()[1].column_12, ' ','_') = $$),",
+						"          each(match(type=='string' && name=='column_13'),",
+						"               replace(ggleEnCache#outputs()[1].column_13, ' ','_') = $$)",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> ggleEnChangeColName",
+						"ggleEncuestaColumns sink(allowSchemaDrift: true,",
+						"     validateSchema: true,",
+						"     partitionFileNames:['ggl_encuesta.avro'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     store: 'cache',",
+						"     format: 'inline',",
+						"     output: false,",
+						"     saveOrder: 1,",
+						"     partitionBy('hash', 1),",
+						"     preCommands: [],",
+						"     postCommands: []) ~> ggleEnCache",
+						"ggleEnChangeColName sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     partitionFileNames:['ggl_encuesta.avro'],",
+						"     umask: 0775,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     saveOrder: 2,",
+						"     partitionBy('hash', 1)) ~> ggleEncuestaAvro"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_src2lnd_ggl_encuesta')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "df_ggl_encuesta",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": true,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_ggl_encuesta",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ggleEncuestaColumns": {},
+									"ggleEncuestaRows": {},
+									"ggleEnCache": {},
+									"ggleEncuestaAvro": {
+										"folder": "Output",
+										"file": "ggl_encuesta.avro"
+									}
+								},
+								"linkedServiceParameters": {
+									"ggleEncuestaAvro": {
+										"linkedService": {},
+										"schemaLinkedService": {
+											"folder": "Output",
+											"file": "ggl_encuesta.avro"
+										},
+										"rejectedDataLinkedService": {}
+									}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "IRTrabajoFinal",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "None",
+							"cacheSinks": {
+								"firstRowOnly": true
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "01 - Bronze/Landing"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-04-25T03:28:25Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_ggl_encuesta')]"
 			]
 		}
 	]
