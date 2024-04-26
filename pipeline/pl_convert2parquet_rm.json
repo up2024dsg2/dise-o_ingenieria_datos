@@ -289,7 +289,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_sink_parquet",
+						"referenceName": "ds_snk_parquet",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "atenciones.parquet"
@@ -591,7 +591,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_sink_parquet",
+						"referenceName": "ds_snk_parquet",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "lideres.parquet"
@@ -797,7 +797,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_sink_parquet",
+						"referenceName": "ds_snk_parquet",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "encuesta.parquet"
@@ -1129,7 +1129,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_sink_parquet",
+						"referenceName": "ds_snk_parquet",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "centrosmedicos.parquet"
