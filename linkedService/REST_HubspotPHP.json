@@ -21,7 +21,17 @@
 		"typeProperties": {
 			"url": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?action=getRecords&object=',linkedService().hs_object,'&hapikey=',linkedService().hs_hapikey,'&properties=',linkedService().hs_properties,'&associations=',linkedService().hs_associations)}",
 			"enableServerCertificateValidation": true,
-			"authenticationType": "Anonymous"
+			"authenticationType": "Anonymous",
+			"authHeaders": {
+				"Authorization": {
+					"type": "AzureKeyVaultSecret",
+					"store": {
+						"referenceName": "AZKV_TrabajoFinal",
+						"type": "LinkedServiceReference"
+					},
+					"secretName": "Hubspot-PHPServer"
+				}
+			}
 		},
 		"connectVia": {
 			"referenceName": "IRTrabajoFinal",
