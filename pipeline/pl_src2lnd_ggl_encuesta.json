@@ -23,14 +23,6 @@
 								"folder": "Output",
 								"file": "ggl_encuesta.avro"
 							}
-						},
-						"linkedServiceParameters": {
-							"ggleEncuestaAvro": {
-								"schemaLinkedService": {
-									"folder": "Output",
-									"file": "ggl_encuesta.avro"
-								}
-							}
 						}
 					},
 					"integrationRuntime": {
@@ -44,6 +36,11 @@
 				}
 			}
 		],
+		"variables": {
+			"hs_hapikey": {
+				"type": "String"
+			}
+		},
 		"folder": {
 			"name": "01 - Bronze/Landing"
 		},
