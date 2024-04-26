@@ -27,11 +27,22 @@
 						"referenceName": "ADLS2_TrabajoFinal",
 						"type": "LinkedServiceReference"
 					}
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_srcNsnk_avro",
+						"type": "DatasetReference"
+					},
+					"name": "ggleEncuestaAvro",
+					"rejectedDataLinkedService": {
+						"referenceName": "ADLS2_TrabajoFinal",
+						"type": "LinkedServiceReference"
+					}
 				}
 			],
 			"transformations": [
 				{
-					"name": "select1"
+					"name": "ggleEnChangeColName"
 				}
 			],
 			"scriptLines": [
@@ -95,7 +106,7 @@
 				"               ggleEnCache#outputs()[1].column_13 = $$)",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
+				"     skipDuplicateMapOutputs: true) ~> ggleEnChangeColName",
 				"ggleEncuestaColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: true,",
 				"     partitionFileNames:['ggl_encuesta.avro'],",
@@ -122,7 +133,15 @@
 				"     ),",
 				"     partitionBy('hash', 1),",
 				"     preCommands: [],",
-				"     postCommands: []) ~> ggleEnCache"
+				"     postCommands: []) ~> ggleEnCache",
+				"ggleEnChangeColName sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0775,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 2) ~> ggleEncuestaAvro"
 			]
 		}
 	}
