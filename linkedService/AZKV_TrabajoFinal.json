@@ -1,6 +1,7 @@
 {
 	"name": "AZKV_TrabajoFinal",
 	"properties": {
+		"description": "KeyVault for data",
 		"annotations": [],
 		"type": "AzureKeyVault",
 		"typeProperties": {
