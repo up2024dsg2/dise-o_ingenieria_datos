@@ -1,9 +1,0 @@
-{
-	"name": "pipeline1",
-	"properties": {
-		"folder": {
-			"name": "01 - Bronze"
-		},
-		"annotations": []
-	}
-}
