@@ -1,5 +1,5 @@
 {
-	"name": "pl_json2parquet_rm",
+	"name": "pl_convert2parquet_rm",
 	"properties": {
 		"activities": [
 			{
