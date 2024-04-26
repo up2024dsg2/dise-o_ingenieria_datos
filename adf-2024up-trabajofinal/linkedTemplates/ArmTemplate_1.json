@@ -13,47 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_src_hubspot_rest_json')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "REST_HubspotPHP",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"hs_object": {
-							"value": "@dataset().object",
-							"type": "Expression"
-						},
-						"hs_properties": {
-							"value": "@dataset().properties",
-							"type": "Expression"
-						},
-						"hs_associations": {
-							"value": "@dataset().associations",
-							"type": "Expression"
-						}
-					}
-				},
-				"parameters": {
-					"object": {
-						"type": "String"
-					},
-					"properties": {
-						"type": "String"
-					},
-					"associations": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "RestResource",
-				"typeProperties": {},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/pl_convert2parquet_rm')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -346,7 +305,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_sink_parquet",
+								"referenceName": "ds_snk_parquet",
 								"type": "DatasetReference",
 								"parameters": {
 									"filename": "atenciones.parquet"
@@ -648,7 +607,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_sink_parquet",
+								"referenceName": "ds_snk_parquet",
 								"type": "DatasetReference",
 								"parameters": {
 									"filename": "lideres.parquet"
@@ -854,7 +813,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_sink_parquet",
+								"referenceName": "ds_snk_parquet",
 								"type": "DatasetReference",
 								"parameters": {
 									"filename": "encuesta.parquet"
@@ -1186,7 +1145,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_sink_parquet",
+								"referenceName": "ds_snk_parquet",
 								"type": "DatasetReference",
 								"parameters": {
 									"filename": "centrosmedicos.parquet"
@@ -1390,9 +1349,7 @@
 				"annotations": [],
 				"lastPublishTime": "2024-04-25T03:11:49Z"
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_src_hubspot_rest_json')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/df_ggl_encuesta')]",
@@ -1476,32 +1433,32 @@
 						"     endCell: 'Z600',",
 						"     sheetName: 'Respuestas de formulario 1') ~> ggleEncuestaRows",
 						"ggleEncuestaRows select(mapColumn(",
-						"          each(match(type=='string' && name=='column_1'),",
-						"               replace(ggleEnCache#outputs()[1].column_1, ' ','_') = $$),",
-						"          each(match(type=='string' && name=='column_2'),",
-						"               replace(ggleEnCache#outputs()[1].column_2, ' ','_') = $$),",
-						"          each(match(type=='string' && name=='column_3'),",
-						"               replace(ggleEnCache#outputs()[1].column_3, ' ','_') = $$),",
-						"          each(match(type=='string' && name=='column_4'),",
-						"               replace(ggleEnCache#outputs()[1].column_4, ' ','_') = $$),",
-						"          each(match(type=='string' && name=='column_5'),",
-						"               replace(ggleEnCache#outputs()[1].column_5, ' ','_') = $$),",
-						"          each(match(type=='string' && name=='column_6'),",
-						"               replace(ggleEnCache#outputs()[1].column_6, ' ','_') = $$),",
-						"          each(match(type=='string' && name=='column_7'),",
-						"               replace(ggleEnCache#outputs()[1].column_7, ' ','_') = $$),",
-						"          each(match(type=='string' && name=='column_8'),",
-						"               replace(ggleEnCache#outputs()[1].column_8, ' ','_') = $$),",
-						"          each(match(type=='string' && name=='column_9'),",
-						"               replace(ggleEnCache#outputs()[1].column_9, ' ','_') = $$),",
-						"          each(match(type=='string' && name=='column_10'),",
-						"               replace(ggleEnCache#outputs()[1].column_10, ' ','_') = $$),",
-						"          each(match(type=='string' && name=='column_11'),",
-						"               replace(ggleEnCache#outputs()[1].column_11, ' ','_') = $$),",
-						"          each(match(type=='string' && name=='column_12'),",
-						"               replace(ggleEnCache#outputs()[1].column_12, ' ','_') = $$),",
-						"          each(match(type=='string' && name=='column_13'),",
-						"               replace(ggleEnCache#outputs()[1].column_13, ' ','_') = $$)",
+						"          each(match(type=='string'&&name=='column_1'),",
+						"               replace(ggleEnCache#outputs()[1].column_1,' ','_') = $$),",
+						"          each(match(type=='string'&&name=='column_2'),",
+						"               replace(ggleEnCache#outputs()[1].column_2,' ','_') = $$),",
+						"          each(match(type=='string'&&name=='column_3'),",
+						"               replace(ggleEnCache#outputs()[1].column_3,' ','_') = $$),",
+						"          each(match(type=='string'&&name=='column_4'),",
+						"               replace(ggleEnCache#outputs()[1].column_4,' ','_') = $$),",
+						"          each(match(type=='string'&&name=='column_5'),",
+						"               replace(ggleEnCache#outputs()[1].column_5,' ','_') = $$),",
+						"          each(match(type=='string'&&name=='column_6'),",
+						"               replace(ggleEnCache#outputs()[1].column_6,' ','_') = $$),",
+						"          each(match(type=='string'&&name=='column_7'),",
+						"               replace(ggleEnCache#outputs()[1].column_7,' ','_') = $$),",
+						"          each(match(type=='string'&&name=='column_8'),",
+						"               replace(ggleEnCache#outputs()[1].column_8,' ','_') = $$),",
+						"          each(match(type=='string'&&name=='column_9'),",
+						"               replace(ggleEnCache#outputs()[1].column_9,' ','_') = $$),",
+						"          each(match(type=='string'&&name=='column_10'),",
+						"               replace(ggleEnCache#outputs()[1].column_10,' ','_') = $$),",
+						"          each(match(type=='string'&&name=='column_11'),",
+						"               replace(ggleEnCache#outputs()[1].column_11,' ','_') = $$),",
+						"          each(match(type=='string'&&name=='column_12'),",
+						"               replace(ggleEnCache#outputs()[1].column_12,' ','_') = $$),",
+						"          each(match(type=='string'&&name=='column_13'),",
+						"               replace(ggleEnCache#outputs()[1].column_13,' ','_') = $$)",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> ggleEnChangeColName",
@@ -1566,12 +1523,10 @@
 								},
 								"linkedServiceParameters": {
 									"ggleEncuestaAvro": {
-										"linkedService": {},
 										"schemaLinkedService": {
 											"folder": "Output",
 											"file": "ggl_encuesta.avro"
-										},
-										"rejectedDataLinkedService": {}
+										}
 									}
 								}
 							},
