@@ -5,6 +5,8 @@
 			{
 				"name": "r2m_copy_atenciones",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -300,6 +302,8 @@
 			{
 				"name": "r2m_copy_lideres",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -808,6 +812,8 @@
 			{
 				"name": "r2m_copy_centrosmedicos",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -848,8 +854,7 @@
 									"path": "$['id']"
 								},
 								"sink": {
-									"name": "id",
-									"type": "String"
+									"name": "id"
 								}
 							},
 							{
@@ -857,8 +862,7 @@
 									"path": "$['properties']['city']"
 								},
 								"sink": {
-									"name": "city",
-									"type": "String"
+									"name": "city"
 								}
 							},
 							{
@@ -866,8 +870,7 @@
 									"path": "$['properties']['codigo_grupo']"
 								},
 								"sink": {
-									"name": "codigo_grupo",
-									"type": "String"
+									"name": "codigo_grupo"
 								}
 							},
 							{
@@ -875,8 +878,7 @@
 									"path": "$['properties']['codigo_lider']"
 								},
 								"sink": {
-									"name": "codigo_lider",
-									"type": "String"
+									"name": "codigo_lider"
 								}
 							},
 							{
@@ -884,8 +886,7 @@
 									"path": "$['properties']['condicion']"
 								},
 								"sink": {
-									"name": "condicion",
-									"type": "String"
+									"name": "condicion"
 								}
 							},
 							{
@@ -893,8 +894,7 @@
 									"path": "$['properties']['country']"
 								},
 								"sink": {
-									"name": "country",
-									"type": "String"
+									"name": "country"
 								}
 							},
 							{
@@ -902,8 +902,7 @@
 									"path": "$['properties']['createdate']"
 								},
 								"sink": {
-									"name": "createdate",
-									"type": "String"
+									"name": "createdate"
 								}
 							},
 							{
@@ -911,8 +910,7 @@
 									"path": "$['properties']['distrito']"
 								},
 								"sink": {
-									"name": "distrito",
-									"type": "String"
+									"name": "distrito"
 								}
 							},
 							{
@@ -920,8 +918,7 @@
 									"path": "$['properties']['dni']"
 								},
 								"sink": {
-									"name": "dni",
-									"type": "String"
+									"name": "dni"
 								}
 							},
 							{
@@ -929,8 +926,7 @@
 									"path": "$['properties']['edad']"
 								},
 								"sink": {
-									"name": "edad",
-									"type": "String"
+									"name": "edad"
 								}
 							},
 							{
@@ -938,8 +934,7 @@
 									"path": "$['properties']['fecha_de_nacimiento']"
 								},
 								"sink": {
-									"name": "fecha_de_nacimiento",
-									"type": "String"
+									"name": "fecha_de_nacimiento"
 								}
 							},
 							{
@@ -947,8 +942,7 @@
 									"path": "$['properties']['firstname']"
 								},
 								"sink": {
-									"name": "firstname",
-									"type": "String"
+									"name": "firstname"
 								}
 							},
 							{
@@ -956,8 +950,7 @@
 									"path": "$['properties']['gerencia']"
 								},
 								"sink": {
-									"name": "gerencia",
-									"type": "String"
+									"name": "gerencia"
 								}
 							},
 							{
@@ -965,8 +958,7 @@
 									"path": "$['properties']['gerente_de_negocio']"
 								},
 								"sink": {
-									"name": "gerente_de_negocio",
-									"type": "String"
+									"name": "gerente_de_negocio"
 								}
 							},
 							{
@@ -974,8 +966,7 @@
 									"path": "$['properties']['hs_object_id']"
 								},
 								"sink": {
-									"name": "hs_object_id",
-									"type": "String"
+									"name": "hs_object_id"
 								}
 							},
 							{
@@ -983,8 +974,7 @@
 									"path": "$['properties']['hubspot_owner_id']"
 								},
 								"sink": {
-									"name": "hubspot_owner_id",
-									"type": "String"
+									"name": "hubspot_owner_id"
 								}
 							},
 							{
@@ -992,8 +982,7 @@
 									"path": "$['properties']['industry']"
 								},
 								"sink": {
-									"name": "industry",
-									"type": "String"
+									"name": "industry"
 								}
 							},
 							{
@@ -1001,8 +990,7 @@
 									"path": "$['properties']['lastmodifieddate']"
 								},
 								"sink": {
-									"name": "lastmodifieddate",
-									"type": "String"
+									"name": "lastmodifieddate"
 								}
 							},
 							{
@@ -1010,8 +998,7 @@
 									"path": "$['properties']['lastname']"
 								},
 								"sink": {
-									"name": "lastname",
-									"type": "String"
+									"name": "lastname"
 								}
 							},
 							{
@@ -1019,8 +1006,7 @@
 									"path": "$['properties']['link_de_mapa']"
 								},
 								"sink": {
-									"name": "link_de_mapa",
-									"type": "String"
+									"name": "link_de_mapa"
 								}
 							},
 							{
@@ -1028,8 +1014,7 @@
 									"path": "$['properties']['mobilephone']"
 								},
 								"sink": {
-									"name": "mobilephone",
-									"type": "String"
+									"name": "mobilephone"
 								}
 							},
 							{
@@ -1037,8 +1022,7 @@
 									"path": "$['properties']['state']"
 								},
 								"sink": {
-									"name": "state",
-									"type": "String"
+									"name": "state"
 								}
 							},
 							{
@@ -1046,8 +1030,7 @@
 									"path": "$['properties']['tipo_de_contacto']"
 								},
 								"sink": {
-									"name": "tipo_de_contacto",
-									"type": "String"
+									"name": "tipo_de_contacto"
 								}
 							},
 							{
@@ -1055,8 +1038,7 @@
 									"path": "$['properties']['tipo_de_lider']"
 								},
 								"sink": {
-									"name": "tipo_de_lider",
-									"type": "String"
+									"name": "tipo_de_lider"
 								}
 							},
 							{
@@ -1064,8 +1046,7 @@
 									"path": "$['properties']['zona']"
 								},
 								"sink": {
-									"name": "zona",
-									"type": "String"
+									"name": "zona"
 								}
 							},
 							{
@@ -1073,8 +1054,7 @@
 									"path": "$['createdAt']"
 								},
 								"sink": {
-									"name": "createdAt",
-									"type": "String"
+									"name": "createdAt"
 								}
 							},
 							{
@@ -1082,8 +1062,7 @@
 									"path": "$['updatedAt']"
 								},
 								"sink": {
-									"name": "updatedAt",
-									"type": "String"
+									"name": "updatedAt"
 								}
 							},
 							{
@@ -1091,8 +1070,7 @@
 									"path": "$['archived']"
 								},
 								"sink": {
-									"name": "archived",
-									"type": "String"
+									"name": "archived"
 								}
 							},
 							{
@@ -1100,8 +1078,7 @@
 									"path": "$['associations']['deals']['results'][0]['id']"
 								},
 								"sink": {
-									"name": "associations_deals_results'][0]['id",
-									"type": "String"
+									"name": "associations_deals_results'][0]['id"
 								}
 							},
 							{
@@ -1109,8 +1086,7 @@
 									"path": "$['associations']['deals']['results'][0]['type']"
 								},
 								"sink": {
-									"name": "type",
-									"type": "String"
+									"name": "type"
 								}
 							}
 						],
