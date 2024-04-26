@@ -1,12 +1,6 @@
 {
 	"name": "adf-2024up-trabajofinal",
 	"properties": {
-		"globalParameters": {
-			"kv_hapikey": {
-				"type": "string",
-				"value": " "
-			}
-		},
 		"globalConfigurations": {
 			"PipelineBillingEnabled": "true",
 			"factoryStagingLSReferenceName": "ADLS2_TrabajoFinal",
