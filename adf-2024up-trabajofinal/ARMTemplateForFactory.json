@@ -11,10 +11,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS2_TrabajoFinal'"
 		},
-		"ADLS_StorageAcc_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'ADLS_StorageAcc'"
-		},
 		"GGLS_Encuesta_apiToken": {
 			"type": "secureString",
 			"metadata": "Secure string for 'apiToken' of 'GGLS_Encuesta'"
@@ -28,17 +24,9 @@
 			"type": "string",
 			"defaultValue": "https://sa2024uptrabajofinal.dfs.core.windows.net/"
 		},
-		"ADLS_StorageAcc_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
-		},
 		"AZKV_TrabajoFinal_properties_typeProperties_baseUrl": {
 			"type": "string",
-			"defaultValue": "https://AZKVTrabajoFinal.vault.azure.net/"
-		},
-		"LINKEDSERVICENEW_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://sa2024uptrabajofinal.dfs.core.windows.net/"
+			"defaultValue": "https://azvk-trabajofinal.vault.azure.net/"
 		},
 		"REST_HubspotPHP_properties_typeProperties_url": {
 			"type": "string",
@@ -1819,33 +1807,11 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ADLS_StorageAcc')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('ADLS_StorageAcc_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('ADLS_StorageAcc_accountKey')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "IRTrabajoFinal",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AZKV_TrabajoFinal')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"description": "KeyVault for data",
 				"annotations": [],
 				"type": "AzureKeyVault",
 				"typeProperties": {
@@ -1866,25 +1832,6 @@
 						"type": "SecureString",
 						"value": "[parameters('GGLS_Encuesta_apiToken')]"
 					}
-				},
-				"connectVia": {
-					"referenceName": "IRTrabajoFinal",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/IRTrabajoFinal')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LINKEDSERVICENEW')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('LINKEDSERVICENEW_properties_typeProperties_url')]"
 				},
 				"connectVia": {
 					"referenceName": "IRTrabajoFinal",

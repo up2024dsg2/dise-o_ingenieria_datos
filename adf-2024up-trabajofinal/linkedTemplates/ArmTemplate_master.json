@@ -11,10 +11,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS2_TrabajoFinal'"
 		},
-		"ADLS_StorageAcc_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'ADLS_StorageAcc'"
-		},
 		"GGLS_Encuesta_apiToken": {
 			"type": "secureString",
 			"metadata": "Secure string for 'apiToken' of 'GGLS_Encuesta'"
@@ -28,17 +24,9 @@
 			"type": "string",
 			"defaultValue": "https://sa2024uptrabajofinal.dfs.core.windows.net/"
 		},
-		"ADLS_StorageAcc_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://sa2024uptrabajofinaldev.dfs.core.windows.net/"
-		},
 		"AZKV_TrabajoFinal_properties_typeProperties_baseUrl": {
 			"type": "string",
-			"defaultValue": "https://AZKVTrabajoFinal.vault.azure.net/"
-		},
-		"LINKEDSERVICENEW_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://sa2024uptrabajofinal.dfs.core.windows.net/"
+			"defaultValue": "https://azvk-trabajofinal.vault.azure.net/"
 		},
 		"REST_HubspotPHP_properties_typeProperties_url": {
 			"type": "string",
@@ -114,9 +102,6 @@
 					"ADLS2_TrabajoFinal_accountKey": {
 						"value": "[parameters('ADLS2_TrabajoFinal_accountKey')]"
 					},
-					"ADLS_StorageAcc_accountKey": {
-						"value": "[parameters('ADLS_StorageAcc_accountKey')]"
-					},
 					"GGLS_Encuesta_apiToken": {
 						"value": "[parameters('GGLS_Encuesta_apiToken')]"
 					},
@@ -128,12 +113,6 @@
 					},
 					"ADLS2_TrabajoFinal_properties_typeProperties_url": {
 						"value": "[parameters('ADLS2_TrabajoFinal_properties_typeProperties_url')]"
-					},
-					"ADLS_StorageAcc_properties_typeProperties_url": {
-						"value": "[parameters('ADLS_StorageAcc_properties_typeProperties_url')]"
-					},
-					"LINKEDSERVICENEW_properties_typeProperties_url": {
-						"value": "[parameters('LINKEDSERVICENEW_properties_typeProperties_url')]"
 					},
 					"REST_HubspotPHP_properties_typeProperties_url": {
 						"value": "[parameters('REST_HubspotPHP_properties_typeProperties_url')]"
