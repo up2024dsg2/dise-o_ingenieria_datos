@@ -17,13 +17,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "df_ggl_encuesta",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"ggleEncuestaAvro": {
-								"folder": "Output",
-								"file": "ggl_encuesta.avro"
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
 						"referenceName": "IRTrabajoFinal",
