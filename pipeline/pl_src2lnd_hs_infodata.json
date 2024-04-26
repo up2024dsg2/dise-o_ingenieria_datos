@@ -67,7 +67,7 @@
 							"properties": "hs_object_id,dealname,dealtype,etapa_de_ejecucion,fecha_de_ejecucion,horario_de_atencion,fecha_entrega_resultados,resultado_de_mamas,resultados_de_cuello_uterino,amount,tipo_de_pago,abono_1,abono_1_fecha,abono_1_tipo",
 							"associations": "contacts,companies",
 							"hapikey": {
-								"value": "@activity('kvsecrets').output.value",
+								"value": "@string(activity('kvsecrets').output.value)",
 								"type": "Expression"
 							}
 						}
@@ -87,7 +87,14 @@
 			{
 				"name": "cp_rest2json_centrosmedicos",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "kvsecrets",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -127,7 +134,7 @@
 							"properties": "name,state,city,distrito,address,tipo_de_centro_medico,etapa_de_centro_medico,numero_de_telefono_1,numero_de_telefono_2,numero_de_telefono_movil_1,numero_de_telefono_movil_2,link_en_mapa,website,hubspot_owner_id",
 							"associations": "contacts",
 							"hapikey": {
-								"value": "@variables('hs_hapikey')",
+								"value": "@string(activity('kvsecrets').output.value)",
 								"type": "Expression"
 							}
 						}
@@ -147,7 +154,14 @@
 			{
 				"name": "cp_rest2json_lideres",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "kvsecrets",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -187,7 +201,7 @@
 							"properties": "firstname,lastname,fecha_de_nacimiento,edad,dni,mobilephone,country,state,city,distrito,tipo_de_contacto,hubspot_owner_id,link_de_mapa,zona,condicion,tipo_de_lider,gerencia,gerente_de_negocio,industry,codigo_grupo,codigo_lider",
 							"associations": "deals",
 							"hapikey": {
-								"value": "@variables('hs_hapikey')",
+								"value": "@string(activity('kvsecrets').output.value)",
 								"type": "Expression"
 							}
 						}
