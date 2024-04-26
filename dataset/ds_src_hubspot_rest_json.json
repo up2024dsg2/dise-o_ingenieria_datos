@@ -16,6 +16,10 @@
 				"hs_associations": {
 					"value": "@dataset().associations",
 					"type": "Expression"
+				},
+				"hs_hapikey": {
+					"value": "@dataset().hapikey",
+					"type": "Expression"
 				}
 			}
 		},
@@ -28,6 +32,9 @@
 			},
 			"associations": {
 				"type": "String"
+			},
+			"hapikey": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
