@@ -19,7 +19,7 @@
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?hapikey=',linkedService().hs_hapikey,'&action=getRecords&object=',linkedService().hs_object,'&properties=',linkedService().hs_properties,'&associations=',linkedService().hs_associations)}",
+			"url": "@{concat('https://power-bi-hubspot-connector.nacdcm.com/index.php?action=getRecords&object=',linkedService().hs_object,'&hapikey=',linkedService().hs_hapikey,'&properties=',linkedService().hs_properties,'&associations=',linkedService().hs_associations)}",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		},
