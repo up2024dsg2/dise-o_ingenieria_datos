@@ -15,11 +15,11 @@
 			],
 			"sinks": [
 				{
-					"linkedService": {
+					"name": "ggleEnCache",
+					"rejectedDataLinkedService": {
 						"referenceName": "ADLS2_TrabajoFinal",
 						"type": "LinkedServiceReference"
-					},
-					"name": "ggleSnk"
+					}
 				}
 			],
 			"transformations": [],
@@ -47,22 +47,17 @@
 				"     startCell: 'A1',",
 				"     endCell: 'Z600',",
 				"     sheetName: 'Respuestas de formulario 1') ~> ggleEncuesta",
-				"ggleEncuesta sink(allowSchemaDrift: false,",
+				"ggleEncuesta sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'delimited',",
-				"     fileSystem: 'raw',",
-				"     folderPath: 'Output',",
-				"     columnDelimiter: ',',",
-				"     escapeChar: '\\\\',",
-				"     quoteChar: '\\\"',",
-				"     columnNamesAsHeader: true,",
 				"     partitionFileNames:['ggl_encuesta.csv'],",
-				"     umask: 0066,",
-				"     preCommands: [],",
-				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> ggleSnk"
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1,",
+				"     preCommands: [],",
+				"     postCommands: []) ~> ggleEnCache"
 			]
 		}
 	}
