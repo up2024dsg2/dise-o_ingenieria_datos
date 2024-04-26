@@ -7,7 +7,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "kvhapikey",
+						"activity": "kvsecrets",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -41,7 +41,22 @@
 							"type": "JsonWriteSettings"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['error_code']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['error_description']"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
@@ -52,7 +67,7 @@
 							"properties": "hs_object_id,dealname,dealtype,etapa_de_ejecucion,fecha_de_ejecucion,horario_de_atencion,fecha_entrega_resultados,resultado_de_mamas,resultados_de_cuello_uterino,amount,tipo_de_pago,abono_1,abono_1_fecha,abono_1_tipo",
 							"associations": "contacts,companies",
 							"hapikey": {
-								"value": "@variables('hs_hapikey')",
+								"value": "@activity('kvsecrets').output.value",
 								"type": "Expression"
 							}
 						}
@@ -72,14 +87,7 @@
 			{
 				"name": "cp_rest2json_centrosmedicos",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "kvhapikey",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -139,14 +147,7 @@
 			{
 				"name": "cp_rest2json_lideres",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "kvhapikey",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -225,30 +226,6 @@
 					"authentication": {
 						"type": "MSI",
 						"resource": "https://vault.azure.net"
-					}
-				}
-			},
-			{
-				"name": "kvhapikey",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "kvsecrets",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "hs_hapikey",
-					"value": {
-						"value": "@activity('kvsecrets').output.value",
-						"type": "Expression"
 					}
 				}
 			}
