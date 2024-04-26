@@ -52,7 +52,7 @@
 							"properties": "hs_object_id,dealname,dealtype,etapa_de_ejecucion,fecha_de_ejecucion,horario_de_atencion,fecha_entrega_resultados,resultado_de_mamas,resultados_de_cuello_uterino,amount,tipo_de_pago,abono_1,abono_1_fecha,abono_1_tipo",
 							"associations": "contacts,companies",
 							"hapikey": {
-								"value": "pat-na1-bb548bcc-957f-47ee-b49c-bbcb46f2c513",
+								"value": "@variables('hs_hapikey')",
 								"type": "Expression"
 							}
 						}
