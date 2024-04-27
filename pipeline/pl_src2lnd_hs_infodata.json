@@ -219,7 +219,7 @@
 					"method": "GET",
 					"url": "https://azvk-trabajofinal.vault.azure.net/secrets/Hubspot-hapikey/8a424102233a424da699412864cd4646?api-version=7.0",
 					"connectVia": {
-						"referenceName": "IRTrabajoFinal",
+						"referenceName": "AutoResolveIntegrationRuntime",
 						"type": "IntegrationRuntimeReference"
 					},
 					"authentication": {
