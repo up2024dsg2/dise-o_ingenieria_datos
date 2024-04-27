@@ -1,0 +1,17 @@
+{
+	"name": "03_TEST",
+	"properties": {
+		"content": {
+			"query": "USE Datascience2025;\nGO\n\n-- TABLAS EXTERNAS MASTER ---\n\nSELECT * FROM master.synLideres\nSELECT * FROM master.synAtenciones\nSELECT * FROM master.synEncuestas\n\n-- TABLAS EXTERNAS BUSINESS ---\n\nSELECT * FROM business.Dim_Atenciones\nSELECT * FROM business.Dim_CentrosMedicos\nSELECT * FROM business.Dim_Tratamientos",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "datascience2025",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
