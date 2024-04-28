@@ -1,5 +1,6 @@
 {
 	"name": "REST_HubspotPHP",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"description": "Conexión a API en servidor PHP que consulta a Hubspot evitando la paginación",
 		"parameters": {
@@ -37,6 +38,5 @@
 			"referenceName": "IRTrabajoFinal",
 			"type": "IntegrationRuntimeReference"
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/linkedservices"
+	}
 }

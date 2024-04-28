@@ -4,8 +4,7 @@
 		"globalConfigurations": {
 			"PipelineBillingEnabled": "true",
 			"factoryStagingLSReferenceName": "ADLS2_TrabajoFinal",
-			"factoryStagingLSType": "LinkedServiceReference",
-			"PolicyValidationEnabled": "true"
+			"factoryStagingLSType": "LinkedServiceReference"
 		}
 	},
 	"location": "eastus",

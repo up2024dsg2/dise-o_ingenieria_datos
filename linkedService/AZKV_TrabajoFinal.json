@@ -1,5 +1,6 @@
 {
 	"name": "AZKV_TrabajoFinal",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"description": "KeyVault for data",
 		"annotations": [],
@@ -7,6 +8,5 @@
 		"typeProperties": {
 			"baseUrl": "https://azvk-trabajofinal.vault.azure.net/"
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/linkedservices"
+	}
 }
